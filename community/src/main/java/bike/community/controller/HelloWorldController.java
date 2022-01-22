@@ -12,5 +12,6 @@ public class HelloWorldController {
     public List<String> hello() {
         return Arrays.asList("안녕하세요", "Hello");
     }
+
 }
 
