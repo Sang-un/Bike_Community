@@ -68,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthTokenFilter authTokenFilter() {
-        return new AuthTokenFilter(tokenUtils, userDetailsService);
+        return new AuthTokenFilter(objectMapper, tokenUtils, userDetailsService);
     }
 
 
