@@ -1,8 +1,11 @@
 package bike.community.controller.user;
 
+import bike.community.controller.CrudInterface;
 import bike.community.model.RespDto;
-import bike.community.model.user.AfterJoinUserDto;
-import bike.community.model.user.JoinUser;
+import bike.community.model.network.Header;
+import bike.community.model.network.request.user.JoinUserRequest;
+import bike.community.model.network.response.post.board.BoardApiResponse;
+import bike.community.model.network.response.post.user.AfterJoinUserResponse;
 import bike.community.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-public class UserController {
+public class UserController{
 
     private final UserService userService;
 
@@ -23,24 +26,19 @@ public class UserController {
         return "hello";
     }
 
-    //권한이 없는 사용자라면 해당 api로 redirect 된다.
-    @GetMapping("/loginForm")
-    public String loginForm() {
-        return "로그인 폼입니다.";
-    }
-
     @PostMapping("/join")
-    public RespDto<AfterJoinUserDto> join(@RequestBody JoinUser user) {
-        return userService.join(user);
+    public Header<AfterJoinUserResponse> join(@RequestBody JoinUserRequest user) {
+        if(userService.findUserByEmail(user.getEmail())) return userService.join(user);
+        return Header.ERROR(); // 이미 존재하는 email이므로 재요청
     }
 
-    @GetMapping("/user/helloUser")
-    public String afterSuccessLogin() {
+    @GetMapping("/user/user-only")
+    public String afterSuccessLoginUser() {
         return "helloUser your login is successful, you have authorization";
     }
 
-    @GetMapping("/admin/helloAdmin")
-    public String afterSuccessLogin2() {
+    @GetMapping("/admin/admin-only")
+    public String afterSuccessLoginAdmin() {
         return "helloAdmin your login is successful, you have authorization";
     }
 

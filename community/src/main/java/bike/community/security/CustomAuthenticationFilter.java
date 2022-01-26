@@ -1,6 +1,5 @@
 package bike.community.security;
 
-import bike.community.model.user.JoinUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
