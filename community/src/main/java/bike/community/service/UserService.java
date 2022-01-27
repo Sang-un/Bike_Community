@@ -21,7 +21,6 @@ public class UserService {
 
     @Transactional
     public Header<AfterJoinUserResponse> join(JoinUserRequest joinUser) {
-        // TODO 유효성 검사
         User user = User.makeUser(
                 joinUser.getEmail(),
                 passwordEncoder.encode(joinUser.getPassword()),

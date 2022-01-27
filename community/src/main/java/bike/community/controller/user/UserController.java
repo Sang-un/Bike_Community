@@ -21,9 +21,9 @@ public class UserController{
 
     private final UserService userService;
 
-    @GetMapping("/hello")
+    @GetMapping("/guest/hello")
     public String hello() {
-        return "hello";
+        return "hello guest";
     }
 
     @PostMapping("/join")

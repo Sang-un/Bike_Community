@@ -6,13 +6,14 @@ import bike.community.security.jwt.TokenUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.util.StringUtils;
-import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -25,12 +26,21 @@ import static bike.community.security.jwt.JwtProperties.AUTH_HEADER;
 import static bike.community.security.jwt.JwtProperties.TOKEN_TYPE;
 
 //TODO /join일 때 시큐리티 필터 타는 문제 해결하기 SecurityConfig수정하고, FilterConfig 추가해놈. 이거 확인하기
-@RequiredArgsConstructor
 @Slf4j
-public class AuthTokenFilter extends OncePerRequestFilter {
+public class AuthTokenFilter extends BasicAuthenticationFilter {
     private final ObjectMapper objectMapper;
     private final TokenUtils tokenUtils;
     private final UserDetailsService userDetailsService;
+
+    public AuthTokenFilter(AuthenticationManager authenticationManager,
+                           ObjectMapper objectMapper,
+                           TokenUtils tokenUtils,
+                           UserDetailsService userDetailsService) {
+        super(authenticationManager);
+        this.objectMapper = objectMapper;
+        this.tokenUtils = tokenUtils;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
