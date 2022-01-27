@@ -5,8 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Builder
-@Setter
-@Getter
+@Setter @Getter
 public class JoinUserRequest {
     private String email; //이메일
     private String password; //패스워드

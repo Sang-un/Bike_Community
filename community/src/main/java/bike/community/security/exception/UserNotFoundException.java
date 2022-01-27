@@ -1,4 +1,4 @@
-package bike.community.security;
+package bike.community.security.exception;
 
 import org.springframework.security.core.AuthenticationException;
 

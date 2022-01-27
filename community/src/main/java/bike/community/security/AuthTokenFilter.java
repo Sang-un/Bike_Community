@@ -1,7 +1,7 @@
 package bike.community.security;
 
 import bike.community.model.RespDto;
-import bike.community.security.jwt.AuthConstants;
+import bike.community.model.network.Header;
 import bike.community.security.jwt.TokenUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import static bike.community.security.jwt.JwtProperties.AUTH_HEADER;
+import static bike.community.security.jwt.JwtProperties.TOKEN_TYPE;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -44,24 +47,32 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             else tokenError(response);
 
         } catch (Exception e) {
-            log.error("Cannot set user authentication: {}", e);
+            tokenError(response, "오류가 발생했습니다. 다시 로그인 해주세요");
         }
         filterChain.doFilter(request, response);
     }
 
 
     private String parseJwt(HttpServletRequest request) {
-        String headerAuth = request.getHeader(AuthConstants.AUTH_HEADER);
-        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith(AuthConstants.TOKEN_TYPE + " "))
-            return headerAuth.substring(7, headerAuth.length());
+        String headerAuth = request.getHeader(AUTH_HEADER);
+        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith(TOKEN_TYPE + " "))
+            return headerAuth.substring(7);
         return null;
     }
 
     private void tokenError(HttpServletResponse response) throws IOException {
-        RespDto<String> cmRespDto = new RespDto<>(401, "login plz~", null);
-        String cmRespDtoJson = objectMapper.writeValueAsString(cmRespDto);
+        Header<Object> error = Header.ERROR("세션 시간이 경과 되었습니다. 다시 로그인 해주세요");
+        String errorStr = objectMapper.writeValueAsString(error);
         PrintWriter out = response.getWriter();
-        out.print(cmRespDtoJson);
+        out.print(errorStr);
+        out.flush();
+    }
+
+    private void tokenError(HttpServletResponse response, String message) throws IOException {
+        Header<Object> error = Header.ERROR(message);
+        String errorStr = objectMapper.writeValueAsString(error);
+        PrintWriter out = response.getWriter();
+        out.print(errorStr);
         out.flush();
     }
 }

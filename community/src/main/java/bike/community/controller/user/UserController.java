@@ -1,10 +1,7 @@
 package bike.community.controller.user;
 
-import bike.community.controller.CrudInterface;
-import bike.community.model.RespDto;
 import bike.community.model.network.Header;
 import bike.community.model.network.request.user.JoinUserRequest;
-import bike.community.model.network.response.post.board.BoardApiResponse;
 import bike.community.model.network.response.post.user.AfterJoinUserResponse;
 import bike.community.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +26,7 @@ public class UserController{
     @PostMapping("/join")
     public Header<AfterJoinUserResponse> join(@RequestBody JoinUserRequest user) {
         if(userService.hasUserEmailOf(user.getEmail())) return userService.join(user);
-        return Header.ERROR(); // 이미 존재하는 email 이므로 재요청
+        return Header.ERROR("이미 존재하는 email입니다."); // 이미 존재하는 email 이므로 재요청
     }
 
     @GetMapping("/user/user-only")
