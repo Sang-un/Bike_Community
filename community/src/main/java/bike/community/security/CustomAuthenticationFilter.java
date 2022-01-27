@@ -1,5 +1,6 @@
 package bike.community.security;
 
+import bike.community.model.network.request.user.JoinUserRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,18 +29,21 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        JoinUser userInfo = getUserInfo(request);
+        JoinUserRequest userInfo = getUserInfo(request);
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(userInfo.getEmail(), userInfo.getPassword());
         setDetails(request, authRequest);
         return this.getAuthenticationManager().authenticate(authRequest);
     }
 
-    private JoinUser getUserInfo(HttpServletRequest request){
-        JoinUser joinUser = new JoinUser("nonmatchemail", "nonmatchpassword", "nonmatchnickname");
+    private JoinUserRequest getUserInfo(HttpServletRequest request){
+        JoinUserRequest joinUser = JoinUserRequest.builder()
+                .email("DONOTMATCH")
+                .password("DONOTMATCH")
+                .nickname("DONOTMATCH").build();
         try {
             ServletInputStream ins = request.getInputStream();
             String json = StreamUtils.copyToString(ins, StandardCharsets.UTF_8);
-            joinUser = objectMapper.readValue(json, JoinUser.class);
+            joinUser = objectMapper.readValue(json, JoinUserRequest.class);
         } catch (IOException e) {
             log.error("[심각] ObjectMapper 작동 ERROR");
             e.printStackTrace();

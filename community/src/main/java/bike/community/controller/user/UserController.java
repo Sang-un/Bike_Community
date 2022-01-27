@@ -28,8 +28,8 @@ public class UserController{
 
     @PostMapping("/join")
     public Header<AfterJoinUserResponse> join(@RequestBody JoinUserRequest user) {
-        if(userService.findUserByEmail(user.getEmail())) return userService.join(user);
-        return Header.ERROR(); // 이미 존재하는 email이므로 재요청
+        if(userService.hasUserEmailOf(user.getEmail())) return userService.join(user);
+        return Header.ERROR(); // 이미 존재하는 email 이므로 재요청
     }
 
     @GetMapping("/user/user-only")

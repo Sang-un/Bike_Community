@@ -51,6 +51,11 @@ public class User extends DateBaseEntity implements Serializable {
         return user;
     }
 
+    public User(String email, String username) {
+        this.email = email;
+        this.username = username;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }

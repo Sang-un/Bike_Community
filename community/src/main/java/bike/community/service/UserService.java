@@ -40,7 +40,7 @@ public class UserService {
         return Header.OK(afterJoinUser);
     }
 
-    public boolean findUserByEmail(String email) {
-        return userRepository.findUserByEmail(email);
+    public boolean hasUserEmailOf(String email) {
+        return userRepository.findByEmail(email).isPresent();
     }
 }
