@@ -24,6 +24,7 @@ import java.io.PrintWriter;
 import static bike.community.security.jwt.JwtProperties.AUTH_HEADER;
 import static bike.community.security.jwt.JwtProperties.TOKEN_TYPE;
 
+//TODO /join일 때 시큐리티 필터 타는 문제 해결하기 SecurityConfig수정하고, FilterConfig 추가해놈. 이거 확인하기
 @RequiredArgsConstructor
 @Slf4j
 public class AuthTokenFilter extends OncePerRequestFilter {
@@ -43,13 +44,13 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                         userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                filterChain.doFilter(request, response);
             }
             else tokenError(response);
 
         } catch (Exception e) {
             tokenError(response, "오류가 발생했습니다. 다시 로그인 해주세요");
         }
-        filterChain.doFilter(request, response);
     }
 
 

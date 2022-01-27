@@ -6,10 +6,13 @@ import bike.community.model.network.response.post.user.AfterJoinUserResponse;
 import bike.community.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,9 +27,14 @@ public class UserController{
     }
 
     @PostMapping("/join")
-    public Header<AfterJoinUserResponse> join(@RequestBody JoinUserRequest user) {
-        if(userService.hasUserEmailOf(user.getEmail())) return userService.join(user);
+    public Header<AfterJoinUserResponse> join(@RequestBody @Valid JoinUserRequest user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) return responseError();
+        if(!userService.hasUserEmailOf(user.getEmail())) return userService.join(user);
         return Header.ERROR("이미 존재하는 email입니다."); // 이미 존재하는 email 이므로 재요청
+    }
+
+    private Header<AfterJoinUserResponse> responseError() {
+        return Header.ERROR("유효성 검사 탈락입니다~");
     }
 
     @GetMapping("/user/user-only")

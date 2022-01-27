@@ -34,17 +34,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
+        http.formLogin()
+                .disable()
+                .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+//                .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
         http.authorizeRequests()
                 .antMatchers("/user/**").hasRole("USER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest().permitAll()
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .formLogin()
-                .disable()
-                .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+                .anyRequest().permitAll();
     }
 
     @Bean
@@ -66,12 +66,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomAuthenticationProvider(userDetailsService, passwordEncoder);
     }
 
-    @Bean
-    public AuthTokenFilter authTokenFilter() {
-        return new AuthTokenFilter(objectMapper, tokenUtils, userDetailsService);
-    }
-
-
+//    @Bean
+//    public AuthTokenFilter authTokenFilter() {
+//        return new AuthTokenFilter(objectMapper, tokenUtils, userDetailsService);
+//    }
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) {
