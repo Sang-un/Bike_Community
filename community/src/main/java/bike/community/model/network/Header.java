@@ -43,5 +43,14 @@ public class Header<T> {
                 .build();
     }
 
+    // ERROR - description 직접 설정
+    public static <T> Header<T> ERROR(String description){
+        return (Header<T>) Header.builder()
+                .transaction_time(LocalDateTime.now())
+                .status("ERROR")
+                .description(description)
+                .build();
+    }
+
 
 }

@@ -22,8 +22,6 @@ import static bike.community.security.jwt.JwtProperties.*;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TokenUtils {
 
-    private static final String secretKey = SECRET;
-
     public static String generateJwtToken(User user) {
         JwtBuilder builder = Jwts.builder()
                 .setSubject(user.getEmail())
@@ -36,14 +34,6 @@ public final class TokenUtils {
     }
 
     public String createAccessToken(String email, String nickname, String role){
-//       return JWT.create()
-//                .withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_EXPIRED_TIME))
-//                .withIssuer("LEEE")
-//                .withClaim("email", email)
-//                .withClaim("nickname", nickname)
-//                .withClaim("role", role)
-//                .sign(Algorithm.HMAC512(ACCESS_SECRET));
-
         return Jwts.builder()
                 .setIssuer(ISSUER)
                 .setSubject(email+"/"+nickname+"/"+role )
@@ -117,12 +107,12 @@ public final class TokenUtils {
     }
 
     private static Key createSigningKey() {
-        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(secretKey);
+        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(SECRET);
         return new SecretKeySpec(apiKeySecretBytes, SignatureAlgorithm.HS256.getJcaName());
     }
 
     private static Claims getClaimsFormToken(String token) {
-        return Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretKey))
+        return Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(SECRET))
                 .parseClaimsJws(token).getBody();
     }
 

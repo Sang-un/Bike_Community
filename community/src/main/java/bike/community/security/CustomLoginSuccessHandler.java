@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static bike.community.security.jwt.AuthConstants.*;
+import static bike.community.security.jwt.JwtProperties.*;
 
 
 @RequiredArgsConstructor
@@ -30,8 +30,7 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
             redisService.setAccessToken( accessToken, user.getEmail()+REDIS_AT);
             redisService.setRefreshToken( refreshToken, user.getEmail()+REDIS_RT);
         }
-        else
-            redisService.setAccessToken(user.getEmail() + REDIS_AT, accessToken);
+        else redisService.setAccessToken(user.getEmail() + REDIS_AT, accessToken);
 
         response.addHeader(AUTH_HEADER, TOKEN_TYPE + SPACE + accessToken);
     }

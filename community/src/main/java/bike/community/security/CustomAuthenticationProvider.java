@@ -24,16 +24,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
         UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(token.getName());
 
-        if (userDetails == null){
-            log.error("invalid email");
-            throw new UsernameNotFoundException(userDetails.getUsername()+"Invalid password");
-        }
-        if (!passwordEncoder.matches((String) token.getCredentials(), userDetails.getPassword())){
-            log.error("invalid password = {}", userDetails.getUsername());
-            throw new BadCredentialsException(userDetails.getUsername()+"Invalid password");
-        }
+        // TODO 원하는 JSON ERROR 던지도록 수정하기
+        if (userDetails == null) throw new UsernameNotFoundException(userDetails.getUsername()+"Invalid password");
+        if (!passwordEncoder.matches((String) token.getCredentials(), userDetails.getPassword())) throw new BadCredentialsException(userDetails.getUsername()+"Invalid password");
 
-        return new UsernamePasswordAuthenticationToken(userDetails, (String) token.getCredentials(), userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, token.getCredentials(), userDetails.getAuthorities());
     }
 
     @Override public boolean supports(Class<?> authentication) {
