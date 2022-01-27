@@ -1,14 +1,15 @@
 package bike.community.model.network;
 
 import lombok.Builder;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
+@ToString
 @Builder
 public class Header<T> {
 
     private T data;
-
     private LocalDateTime transaction_time;
     private String status;
     private String description;
