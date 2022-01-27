@@ -1,8 +1,9 @@
 package bike.community.service;
 
 import bike.community.model.RespDto;
-import bike.community.model.user.AfterJoinUserDto;
-import bike.community.model.user.JoinUser;
+import bike.community.model.network.Header;
+import bike.community.model.network.request.user.JoinUserRequest;
+import bike.community.model.network.response.post.user.AfterJoinUserResponse;
 import bike.community.model.user.User;
 import bike.community.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +20,27 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
-    public RespDto<AfterJoinUserDto> join(JoinUser joinUser) {
+    public Header<AfterJoinUserResponse> join(JoinUserRequest joinUser) {
         // TODO 유효성 검사
-        String ecp = passwordEncoder.encode(joinUser.getPassword());
-        User user = User.makeUser(joinUser.getEmail(), ecp, joinUser.getNickname(), joinUser.getUsername(),joinUser.getSex(), joinUser.getPhone(), joinUser.getBirthday());
+        User user = User.makeUser(
+                joinUser.getEmail(),
+                passwordEncoder.encode(joinUser.getPassword()),
+                joinUser.getUsername(),
+                joinUser.getSex(),
+                joinUser.getPhone(),
+                joinUser.getBirthday(),
+                joinUser.getNickname());
+
         User saveUser = userRepository.save(user);
-        AfterJoinUserDto afterJoinUserDto = new AfterJoinUserDto(saveUser.getEmail(), saveUser.getUsername(), saveUser.getNickname());
-        return new RespDto<>(200, "join is successful", afterJoinUserDto);
+        AfterJoinUserResponse afterJoinUser = AfterJoinUserResponse
+                .builder()
+                .email(saveUser.getEmail())
+                .username(saveUser.getUsername())
+                .nickname(saveUser.getNickname()).build();
+        return Header.OK(afterJoinUser);
+    }
+
+    public boolean hasUserEmailOf(String email) {
+        return userRepository.findByEmail(email).isPresent();
     }
 }
