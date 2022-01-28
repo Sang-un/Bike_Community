@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 public class Header<T> {
 
     private T data;
-
     private LocalDateTime transaction_time;
     private String status;
     private String description;
