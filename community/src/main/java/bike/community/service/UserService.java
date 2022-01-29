@@ -1,15 +1,18 @@
 package bike.community.service;
 
-import bike.community.model.RespDto;
 import bike.community.model.network.Header;
 import bike.community.model.network.request.user.JoinUserRequest;
 import bike.community.model.network.response.post.user.AfterJoinUserResponse;
+import bike.community.model.network.response.post.user.UserResponse;
 import bike.community.model.user.User;
-import bike.community.repository.UserRepository;
+import bike.community.repository.user.UserQuerydslRepository;
+import bike.community.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -17,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserQuerydslRepository userDslRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
@@ -41,5 +45,17 @@ public class UserService {
 
     public boolean hasUserEmailOf(String email) {
         return userRepository.findByEmail(email).isPresent();
+    }
+
+    public boolean hasUserNicknameOf(String nickname) {
+        return userRepository.findByNickname(nickname).isPresent();
+    }
+
+    public List<UserResponse> findByUsername(String username) {
+        return userDslRepository.findByUsername(username);
+    }
+
+    public UserResponse findByNickname(String nickname) {
+        return userDslRepository.findByNickname(nickname);
     }
 }

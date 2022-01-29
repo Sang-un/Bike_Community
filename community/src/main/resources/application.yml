@@ -4,6 +4,8 @@ spring:
     username: king
     password:
     driver-class-name: org.h2.Driver
+  profiles:
+    active: local #local
   redis:
     host: 127.0.0.1
     port: 6379
