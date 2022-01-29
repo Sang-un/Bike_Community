@@ -1,10 +1,8 @@
 package bike.community.security;
 
-import bike.community.model.RespDto;
 import bike.community.model.network.Header;
 import bike.community.security.jwt.TokenUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,6 +42,7 @@ public class AuthTokenFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        if(request.getRequestURI().contains("/guest")) filterChain.doFilter(request, response);
         try {
             String jwt = parseJwt(request);
             if (jwt != null && tokenUtils.isValidToken(jwt)) {
@@ -53,13 +52,14 @@ public class AuthTokenFilter extends BasicAuthenticationFilter {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 filterChain.doFilter(request, response);
             }
-            else tokenError(response);
+//            else tokenError(response);
 
         } catch (Exception e) {
-            tokenError(response, "오류가 발생했습니다. 다시 로그인 해주세요");
+            e.printStackTrace();
         }
     }
 
