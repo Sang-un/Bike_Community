@@ -1,6 +1,6 @@
 package bike.community.security;
 
-import bike.community.repository.UserRepository;
+import bike.community.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -29,8 +29,9 @@ public class UserController{
     @PostMapping("/join")
     public Header<AfterJoinUserResponse> join(@RequestBody @Valid JoinUserRequest user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return responseError();
-        if(!userService.hasUserEmailOf(user.getEmail())) return userService.join(user);
-        return Header.ERROR("이미 존재하는 email입니다."); // 이미 존재하는 email 이므로 재요청
+        if(userService.hasUserEmailOf(user.getEmail()))return Header.ERROR("이미 존재하는 email입니다."); // 이미 존재하는 email 이므로 재요청
+        if(userService.hasUserNicknameOf(user.getNickname()))return Header.ERROR("이미 존재하는 닉네임입니다."); // 이미 존재하는 email 이므로 재요청
+        return userService.join(user);
     }
 
     private Header<AfterJoinUserResponse> responseError() {
