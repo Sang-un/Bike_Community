@@ -21,16 +21,19 @@ public class UserController{
 
     private final UserService userService;
 
-    @GetMapping("/guest/hello")
+    @GetMapping("/api/guest/hello")
     public String hello() {
         return "hello guest";
     }
 
-    @PostMapping("/join")
+    @PostMapping("/api/join")
     public Header<AfterJoinUserResponse> join(@RequestBody @Valid JoinUserRequest user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) return responseError();
-        if(userService.hasUserEmailOf(user.getEmail()))return Header.ERROR("이미 존재하는 email입니다."); // 이미 존재하는 email 이므로 재요청
-        if(userService.hasUserNicknameOf(user.getNickname()))return Header.ERROR("이미 존재하는 닉네임입니다."); // 이미 존재하는 email 이므로 재요청
+        if (bindingResult.hasErrors())
+            return responseError();
+        if(userService.hasUserEmailOf(user.getEmail()))
+            return Header.ERROR("이미 존재하는 email입니다."); // 이미 존재하는 email 이므로 재요청
+        if(userService.hasUserNicknameOf(user.getNickname()))
+            return Header.ERROR("이미 존재하는 닉네임입니다."); // 이미 존재하는 email 이므로 재요청
         return userService.join(user);
     }
 
@@ -38,7 +41,7 @@ public class UserController{
         return Header.ERROR("유효성 검사 탈락입니다~");
     }
 
-    @GetMapping("/user/user-only")
+    @GetMapping("/api/user/user-only")
     public String afterSuccessLoginUser() {
         return "helloUser your login is successful, you have authorization";
     }

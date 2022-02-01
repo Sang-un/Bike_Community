@@ -21,6 +21,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        System.out.println("CustomAuthenticationProvider.authenticate");
         UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
         UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(token.getName());
 
@@ -32,6 +33,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     }
 
     @Override public boolean supports(Class<?> authentication) {
+        System.out.println("CustomAuthenticationProvider.supports");
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 }

@@ -22,6 +22,7 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+        System.out.println("CustomLoginSuccessHandler.onAuthenticationSuccess");
         User user = ((UserDetailsImpl) authentication.getPrincipal()).getUser();
         String accessToken = tokenUtils.createAccessToken(user.getEmail(), user.getNickname(), user.getRole().toString());
         String refreshToken = tokenUtils.createAccessToken(user.getEmail(), user.getNickname(), user.getRole().toString());

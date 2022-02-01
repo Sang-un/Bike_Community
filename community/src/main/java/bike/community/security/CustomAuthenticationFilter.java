@@ -30,6 +30,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+        System.out.println("CustomAuthenticationFilter.attemptAuthentication");
         JoinUserRequest userInfo = getUserInfo(request, response);
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(userInfo.getEmail(), userInfo.getPassword());
         setDetails(request, authRequest);

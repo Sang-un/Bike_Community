@@ -42,7 +42,9 @@ public class AuthTokenFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getRequestURI().contains("/guest")) filterChain.doFilter(request, response);
+        System.out.println("AuthTokenFilter.doFilterInternal");
+        if(request.getRequestURI().contains("/api/guest")) filterChain.doFilter(request, response);
+        if(request.getRequestURI().contains("/api/join")) filterChain.doFilter(request, response);
         try {
             String jwt = parseJwt(request);
             if (jwt != null && tokenUtils.isValidToken(jwt)) {
@@ -56,8 +58,7 @@ public class AuthTokenFilter extends BasicAuthenticationFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 filterChain.doFilter(request, response);
             }
-//            else tokenError(response);
-
+            else tokenError(response);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -72,7 +73,7 @@ public class AuthTokenFilter extends BasicAuthenticationFilter {
     }
 
     private void tokenError(HttpServletResponse response) throws IOException {
-        Header<Object> error = Header.ERROR("세션 시간이 경과 되었습니다. 다시 로그인 해주세요");
+        Header<Object> error = Header.ERROR("This user have no token. login please.");
         String errorStr = objectMapper.writeValueAsString(error);
         PrintWriter out = response.getWriter();
         out.print(errorStr);
