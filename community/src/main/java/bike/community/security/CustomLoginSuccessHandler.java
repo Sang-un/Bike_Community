@@ -31,7 +31,7 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
             redisService.setAccessToken( accessToken, user.getEmail()+REDIS_AT);
             redisService.setRefreshToken( refreshToken, user.getEmail()+REDIS_RT);
         }
-        else redisService.setAccessToken(user.getEmail() + REDIS_AT, accessToken);
+        else redisService.setAccessToken(accessToken,user.getEmail() + REDIS_AT);
 
         response.addHeader(AUTH_HEADER, TOKEN_TYPE + SPACE + accessToken);
     }

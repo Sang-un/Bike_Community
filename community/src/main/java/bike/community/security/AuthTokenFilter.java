@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.util.PatternMatchUtils;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.FilterChain;
@@ -29,6 +30,7 @@ public class AuthTokenFilter extends BasicAuthenticationFilter {
     private final ObjectMapper objectMapper;
     private final TokenUtils tokenUtils;
     private final UserDetailsService userDetailsService;
+    private static final String[] NO_SECURITY_PATH = {"/api/guest", "/api/join", "/api/logout"};
 
     public AuthTokenFilter(AuthenticationManager authenticationManager,
                            ObjectMapper objectMapper,
@@ -41,24 +43,26 @@ public class AuthTokenFilter extends BasicAuthenticationFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         System.out.println("AuthTokenFilter.doFilterInternal");
-        if(request.getRequestURI().contains("/api/guest")) filterChain.doFilter(request, response);
-        if(request.getRequestURI().contains("/api/join")) filterChain.doFilter(request, response);
-        try {
-            String jwt = parseJwt(request);
-            if (jwt != null && tokenUtils.isValidToken(jwt)) {
-                String email = tokenUtils.get(jwt, "email");
-                System.out.println(email);
-                UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-                filterChain.doFilter(request, response);
+        try {
+            if(PatternMatchUtils.simpleMatch(NO_SECURITY_PATH, request.getRequestURI())) chain.doFilter(request, response);
+            else{
+                String jwt = parseJwt(request);
+                if (jwt != null && tokenUtils.isValidToken(jwt)) {
+                    String email = tokenUtils.get(jwt, "email");
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                    chain.doFilter(request, response);
+                }
+                tokenError(response);
+                return;
             }
-            else tokenError(response);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -67,8 +71,7 @@ public class AuthTokenFilter extends BasicAuthenticationFilter {
 
     private String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader(AUTH_HEADER);
-        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith(TOKEN_TYPE + " "))
-            return headerAuth.substring(7);
+        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith(TOKEN_TYPE + " ")) return headerAuth.substring(7);
         return null;
     }
 

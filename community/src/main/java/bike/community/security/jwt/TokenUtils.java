@@ -118,7 +118,8 @@ public final class TokenUtils {
 
     private static String getUserEmailFromToken(String token) {
         Claims claims = getClaimsFormToken(token);
-        String sub = (String) claims.get("sub");
+        System.out.println(claims);
+        String sub = (String) claims.get("email");
         return sub.split("/")[0];
 
     }
