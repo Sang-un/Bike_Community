@@ -18,39 +18,55 @@ public class RedisService {
     private final RedisTemplate redisTemplate;
     private final TokenUtils tokenUtils;
 
-    public void setAccessToken(String token, String email){
-        System.out.println("make access token of "+email);
+    public String setAccessJwtToken(String email, String nickname, String role){
+        String accessToken = tokenUtils.createAccessJwtToken(email, nickname, role);
         ValueOperations<String, String> values = redisTemplate.opsForValue();
-        values.set(email, token, Duration.ofMinutes(3));
+        values.set(email, accessToken, Duration.ofMinutes(60));
+        return accessToken;
     }
 
-    public void setRefreshToken(String token, String email){
-        System.out.println("make refresh token of "+email);
+    public String setRefreshJwtToken(String email, String nickname, String role){
+        String refreshToken = tokenUtils.createRefreshJwtToken(email, nickname, role);
         ValueOperations<String, String> values = redisTemplate.opsForValue();
-        values.set(email, token, Duration.ofDays(3));
+        values.set(email, refreshToken, Duration.ofDays(14));
+        return refreshToken;
     }
 
-    public String getValues(String email){
+    public boolean isValidAccessJwtToken(String email){
+        String jwtToken = getJwtToken(email + REDIS_AT);
+        return tokenUtils.isValidToken(jwtToken);
+    }
+
+    public boolean isValidRefreshJwtToken(String email){
+        String jwtToken = getJwtToken(email + REDIS_RT);
+        return tokenUtils.isValidToken(jwtToken);
+    }
+
+    private String getJwtToken(String email){
         ValueOperations<String, String> values = redisTemplate.opsForValue();
-        System.out.println("getValues : "+ values.get(email));
         return values.get(email);
     }
 
-    public void delValues(String email) {
-        redisTemplate.delete(email.substring(7));
-    }
+//    public String getValues(String email){
+//        ValueOperations<String, String> values = redisTemplate.opsForValue();
+//        return values.get(email);
+//    }
+//
+//    public void delValues(String email) {
+//        redisTemplate.delete(email.substring(7));
+//    }
+//
+//    private void deleteAccessToken(String email) {
+//        redisTemplate.delete(email + REDIS_AT);
+//    }
+//
+//    private void deleteRefreshToken(String email) {
+//        redisTemplate.delete(email + REDIS_RT);
+//    }
 
-    private void deleteAccessToken(String email) {
-        redisTemplate.delete(email + REDIS_AT);
-    }
-
-    private void deleteRefreshToken(String email) {
-        redisTemplate.delete(email + REDIS_RT);
-    }
-
-    public void logout(HttpServletRequest request) {
-        String token = request.getHeader(AUTH_HEADER);
-        String email = tokenUtils.get(token, "email");
-        deleteAccessToken(email);
-    }
+//    public void logout(HttpServletRequest request) {
+//        String token = request.getHeader(AUTH_HEADER);
+//        String email = tokenUtils.get(token, "email");
+//        deleteAccessToken(email);
+//    }
 }

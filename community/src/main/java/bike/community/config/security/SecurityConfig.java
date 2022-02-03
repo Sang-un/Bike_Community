@@ -89,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public CustomLoginSuccessHandler customLoginSuccessHandler() {
-        return new CustomLoginSuccessHandler(tokenUtils, redisService);
+        return new CustomLoginSuccessHandler(redisService);
     }
 
     @Bean

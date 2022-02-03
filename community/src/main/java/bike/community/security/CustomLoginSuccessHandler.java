@@ -17,21 +17,15 @@ import static bike.community.security.jwt.JwtProperties.*;
 @RequiredArgsConstructor
 public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
-    private final TokenUtils tokenUtils;
     private final RedisService redisService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         System.out.println("CustomLoginSuccessHandler.onAuthenticationSuccess");
         User user = ((UserDetailsImpl) authentication.getPrincipal()).getUser();
-        String accessToken = tokenUtils.createAccessToken(user.getEmail(), user.getNickname(), user.getRole().toString());
-        String refreshToken = tokenUtils.createAccessToken(user.getEmail(), user.getNickname(), user.getRole().toString());
+        String accessToken = redisService.setAccessJwtToken(user.getEmail(), user.getNickname(), user.getRole().toString());
 
-        if(redisService.getValues(user.getEmail()+REDIS_RT) == null){
-            redisService.setAccessToken( accessToken, user.getEmail()+REDIS_AT);
-            redisService.setRefreshToken( refreshToken, user.getEmail()+REDIS_RT);
-        }
-        else redisService.setAccessToken(accessToken,user.getEmail() + REDIS_AT);
+        if(!redisService.isValidRefreshJwtToken(user.getEmail())) redisService.setRefreshJwtToken(user.getEmail(), user.getNickname(), user.getRole().toString());
 
         response.addHeader(AUTH_HEADER, TOKEN_TYPE + SPACE + accessToken);
     }
