@@ -2,11 +2,13 @@ spring:
   datasource:
     url: jdbc:h2:tcp://localhost/~/datajpa
     username: king
-    password:
+    password: 1111
     driver-class-name: org.h2.Driver
   redis:
     host: 127.0.0.1
     port: 6379
+server:
+  port: 8080
 
   jpa:
     hibernate:

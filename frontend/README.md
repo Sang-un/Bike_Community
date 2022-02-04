@@ -1,25 +1,42 @@
-# About zip
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-**This package will include directories:**
+## 1.Install
 
-### 1.react-scripts folder
+### npm
 
-- Using react script & react router.
+```
+npm i
+or
+npm i --legacy-peer-deps
+```
 
-### 2.nextjs folder
+### yarn
 
-- Using for Next.Js
+```
+yarn install
+```
 
-### 3.simple folder
+## 2.Start
 
-- To remove unnecessary components. This is a simplified version ([https://simple-minimals.vercel.app](https://simple-minimals.vercel.app))
-- Good to start a new project. You can copy components from the full version.
-- Make sure to install the dependencies exactly as compared to the full version
+```sh
+npm start
+or
+yarn start
+```
 
-**NOTE:**
+## 3.Build
 
-- After downloading and extracting please do not delete any files.
-- For React Script
-  -Just run command npm install & npm start (or yarn install & yarn start).
-- For Next.Js
-  -Just run command npm install & npm run dev (or yarn install & yarn dev).
+```sh
+npm run build or yarn build
+```
+
+Builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br>
+
+Your app is ready to be deployed.
+
+## User Guide
+
+You can find detailed instructions on using Create React App and many tips in [its documentation](https://facebook.github.io/create-react-app/).
