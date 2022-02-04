@@ -45,11 +45,11 @@ public class UserController{
         return userService.join(user);
     }
 
-    @GetMapping("/api/logout")
-    public String logout(HttpServletRequest request) throws ServletException, IOException {
-        redisService.logout(request);
-        return "logout OK";
-    }
+//    @GetMapping("/api/logout")
+//    public String logout(HttpServletRequest request) throws ServletException, IOException {
+//        redisService.logout(request);
+//        return "logout OK";
+//    }
 
     private Header<AfterJoinUserResponse> responseError() {
         return Header.ERROR("유효성 검사 탈락입니다~");

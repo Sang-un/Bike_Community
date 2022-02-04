@@ -1,5 +1,6 @@
 package bike.community.config.security;
 
+import bike.community.config.cors.CorsConfig;
 import bike.community.security.AuthTokenFilter;
 import bike.community.security.CustomAuthenticationFilter;
 import bike.community.security.CustomAuthenticationProvider;
@@ -29,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final BCryptPasswordEncoder passwordEncoder;
     private final ObjectMapper objectMapper;
     private final TokenUtils tokenUtils;
+    private final CorsConfig corsConfig;
 
 //            http
 //                    .addFilter(corsConfig.corsFilter())
@@ -58,7 +60,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable()
+        http
+                .addFilter(corsConfig.corsFilter())
+                .csrf().disable()
                 .formLogin()
                 .disable()
                 .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
@@ -89,7 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public CustomLoginSuccessHandler customLoginSuccessHandler() {
-        return new CustomLoginSuccessHandler(redisService);
+        return new CustomLoginSuccessHandler(redisService, objectMapper);
     }
 
     @Bean

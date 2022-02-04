@@ -24,7 +24,6 @@ import java.io.PrintWriter;
 import static bike.community.security.jwt.JwtProperties.AUTH_HEADER;
 import static bike.community.security.jwt.JwtProperties.TOKEN_TYPE;
 
-//TODO /join일 때 시큐리티 필터 타는 문제 해결하기 SecurityConfig수정하고, FilterConfig 추가해놈. 이거 확인하기
 @Slf4j
 public class AuthTokenFilter extends BasicAuthenticationFilter {
     private final ObjectMapper objectMapper;

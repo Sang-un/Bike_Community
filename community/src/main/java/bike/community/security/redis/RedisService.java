@@ -21,14 +21,14 @@ public class RedisService {
     public String setAccessJwtToken(String email, String nickname, String role){
         String accessToken = tokenUtils.createAccessJwtToken(email, nickname, role);
         ValueOperations<String, String> values = redisTemplate.opsForValue();
-        values.set(email, accessToken, Duration.ofMinutes(60));
+        values.set(email+REDIS_AT, accessToken, Duration.ofMinutes(60));
         return accessToken;
     }
 
     public String setRefreshJwtToken(String email, String nickname, String role){
         String refreshToken = tokenUtils.createRefreshJwtToken(email, nickname, role);
         ValueOperations<String, String> values = redisTemplate.opsForValue();
-        values.set(email, refreshToken, Duration.ofDays(14));
+        values.set(email+REDIS_AT, refreshToken, Duration.ofDays(14));
         return refreshToken;
     }
 
@@ -39,6 +39,7 @@ public class RedisService {
 
     public boolean isValidRefreshJwtToken(String email){
         String jwtToken = getJwtToken(email + REDIS_RT);
+        if(jwtToken==null) return false;
         return tokenUtils.isValidToken(jwtToken);
     }
 

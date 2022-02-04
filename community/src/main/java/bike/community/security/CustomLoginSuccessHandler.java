@@ -1,8 +1,10 @@
 package bike.community.security;
 
+import bike.community.model.network.response.post.user.AfterJoinUserResponse;
 import bike.community.model.user.User;
 import bike.community.security.jwt.TokenUtils;
 import bike.community.security.redis.RedisService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -10,6 +12,7 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import static bike.community.security.jwt.JwtProperties.*;
 
@@ -18,6 +21,7 @@ import static bike.community.security.jwt.JwtProperties.*;
 public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     private final RedisService redisService;
+    private final ObjectMapper om;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
@@ -28,5 +32,21 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         if(!redisService.isValidRefreshJwtToken(user.getEmail())) redisService.setRefreshJwtToken(user.getEmail(), user.getNickname(), user.getRole().toString());
 
         response.addHeader(AUTH_HEADER, TOKEN_TYPE + SPACE + accessToken);
+        PrintWriter out = null;
+        String lu = "";
+        try {
+            AfterJoinUserResponse.AfterJoinUserResponseBuilder loginUser
+                    = AfterJoinUserResponse.builder()
+                    .email(user.getEmail())
+                    .nickname(user.getNickname())
+                    .username(user.getUsername());
+
+            lu = om.writeValueAsString(loginUser);
+            out = response.getWriter();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        out.print(lu);
+        out.flush();
     }
 }
