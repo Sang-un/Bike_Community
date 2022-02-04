@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 // @mui
-import { Card, Container } from '@mui/material';
+import { Card, CardHeader, Container } from '@mui/material';
 // redux
 import { useDispatch } from '../../redux/store';
 import { getConversations, getContacts } from '../../redux/slices/chat';
@@ -26,11 +26,7 @@ export default function Chat() {
 
   return (
     <Page title="Chat">
-      <Container maxWidth={themeStretch ? false : 'xl'}>
-        <HeaderBreadcrumbs
-          heading="Chat"
-          links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'Chat' }]}
-        />
+      <Container maxWidth={themeStretch ? true : 'xl'}>
         <Card sx={{ height: '72vh', display: 'flex' }}>
           <ChatSidebar />
           <ChatWindow />

@@ -5,12 +5,14 @@ import { useForm } from 'react-hook-form';
 // @mui
 import { styled } from '@mui/material/styles';
 import {  Stack, Button,  Divider,  Typography } from '@mui/material';
+import { paramCase } from 'change-case';
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // utils
 import { fCurrency } from '../../../../utils/formatNumber';
 // components
 import { FormProvider } from '../../../../components/hook-form';
+
 
 // ----------------------------------------------------------------------
 
@@ -77,7 +79,7 @@ export default function ProductDetailsSummary({ product, ...other }) {
   const onSubmit = async () => {
     try {
       if (isopen) {
-      navigate(PATH_DASHBOARD.club.checkout);
+      navigate(`${PATH_DASHBOARD.club.root}/clubroom/${paramCase(name)}`);
       }else
       navigate(PATH_DASHBOARD.club.root);
     } catch (error) {

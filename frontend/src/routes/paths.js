@@ -104,7 +104,8 @@ export const PATH_DASHBOARD = {
   },
   club: {
     root: path(ROOTS_DASHBOARD, '/club'),
-    club: path(ROOTS_DASHBOARD, '/club/club'),    
+    club: path(ROOTS_DASHBOARD, '/club/club'),  
+    clubroom: path(ROOTS_DASHBOARD, '/club/clubroom/:name'),    
     product: path(ROOTS_DASHBOARD, '/club/product/:name'),
     productById: path(ROOTS_DASHBOARD, '/club/product/nike-air-force-1-ndestrukt'),
     list: path(ROOTS_DASHBOARD, '/club/list'),

@@ -60,7 +60,7 @@ export default function ShopProductSort() {
         onClick={(event) => handleOpen(event.currentTarget)}
         endIcon={<Iconify icon={open ? 'eva:chevron-up-fill' : 'eva:chevron-down-fill'} />}
       >
-        Sort By:&nbsp;
+        상세검색:&nbsp;
         <Typography component="span" variant="subtitle2" sx={{ color: 'text.secondary' }}>
           {renderLabel(sortBy)}
         </Typography>

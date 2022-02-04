@@ -148,7 +148,8 @@ export default function Router() {
           path: 'club',
           children: [
             { element: <Navigate to="/dashboard/club/club" replace />, index: true },
-            { path: 'club', element: <Club /> },            
+            { path: 'club', element: <Club /> },  
+            { path: 'clubroom/:name', element: <Clubroom /> },            
             { path: 'product/:name', element: <ClubDetails /> },
             { path: 'list', element: <ClubList /> },
             { path: 'product/new', element: <ClubCreate /> },
@@ -235,6 +236,7 @@ const EcommerceCheckout = Loadable(lazy(() => import('../pages/dashboard/Ecommer
 const EcommerceInvoice = Loadable(lazy(() => import('../pages/dashboard/EcommerceInvoice')));
 // 동호회
 const Club = Loadable(lazy(() => import('../pages/dashboard/Club')));
+const Clubroom = Loadable(lazy(() => import('../pages/dashboard/Clubroom')));
 const ClubDetails = Loadable(lazy(() => import('../pages/dashboard/ClubDetails')));
 const ClubList = Loadable(lazy(() => import('../pages/dashboard/ClubList')));
 const ClubCreate = Loadable(lazy(() => import('../pages/dashboard/ClubCreate')));

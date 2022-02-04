@@ -33,7 +33,7 @@ const navConfig = [
       { title: '나의 라이딩', path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard },
       { title: '나의 프로필', path: PATH_DASHBOARD.user.profile ,icon: ICONS.user },
       { title: '나의 동호회 - 새로 제작 예정', path: PATH_DASHBOARD.club.root ,icon: ICONS.chat },
-      { title: '나의 주문', path: PATH_DASHBOARD.eCommerce.checkout ,icon: ICONS.ecommerce },
+      { title: '나의 장바구니', path: PATH_DASHBOARD.eCommerce.checkout ,icon: ICONS.ecommerce },
     ],
   },
   /* 아래는 삭제
