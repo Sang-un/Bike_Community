@@ -7,6 +7,7 @@ import bike.community.security.redis.RedisService;
 import bike.community.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,15 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Enumeration;
+import java.nio.charset.StandardCharsets;
 
-import static bike.community.security.jwt.JwtProperties.AUTH_HEADER;
-
-//merge into login-service branch test
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -45,11 +41,14 @@ public class UserController{
         return userService.join(user);
     }
 
-//    @GetMapping("/api/logout")
-//    public String logout(HttpServletRequest request) throws ServletException, IOException {
-//        redisService.logout(request);
-//        return "logout OK";
-//    }
+    @GetMapping("/api/logout")
+    public String logout(HttpServletRequest request) throws ServletException, IOException {
+        String jwtToken = request.getHeader("Authorization");
+        byte[] bytes = jwtToken.getBytes(StandardCharsets.UTF_8);
+        String s = StringUtils.newStringUtf8(bytes);
+        redisService.logout(s);
+        return "logout OK";
+    }
 
     private Header<AfterJoinUserResponse> responseError() {
         return Header.ERROR("유효성 검사 탈락입니다~");

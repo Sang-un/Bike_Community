@@ -30,11 +30,11 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 
         if(!redisService.isValidRefreshJwtToken(user.getEmail())) redisService.setRefreshJwtToken(user.getEmail(), user.getNickname(), user.getRole().toString());
 
-        responseUserDate(response, accessToken, user);
+        responseUserData(response, accessToken, user);
     }
 
-    public void responseUserDate(HttpServletResponse response, String accessToken,User user){
-        response.addHeader(AUTH_HEADER, TOKEN_TYPE + SPACE + accessToken);
+    public void responseUserData(HttpServletResponse response, String accessToken,User user){
+        response.addHeader(AUTH_HEADER, TOKEN_TYPE + accessToken);
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=utf-8");
         PrintWriter out = null;
