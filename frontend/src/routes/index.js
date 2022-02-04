@@ -71,7 +71,14 @@ export default function Router() {
         { path: 'analytics', element: <GeneralAnalytics /> },
         { path: 'banking', element: <GeneralBanking /> },
         { path: 'booking', element: <GeneralBooking /> },
-
+        { path: 'clubmy', element: <ClubMy /> }, 
+        {
+          path: 'all-e-commerce',
+          children: [
+            { element: <Navigate to="/dashboard/all-e-commerce/shop" replace />, index: true },
+            { path: 'checkout', element: <AEcommerceCheckout /> },
+          ],
+        },
         {
           path: 'e-commerce',
           children: [
@@ -224,6 +231,9 @@ const GeneralEcommerce = Loadable(lazy(() => import('../pages/dashboard/GeneralE
 const GeneralAnalytics = Loadable(lazy(() => import('../pages/dashboard/GeneralAnalytics')));
 const GeneralBanking = Loadable(lazy(() => import('../pages/dashboard/GeneralBanking')));
 const GeneralBooking = Loadable(lazy(() => import('../pages/dashboard/GeneralBooking')));
+
+
+const AEcommerceCheckout = Loadable(lazy(() => import('../pages/dashboard/AEcommerceCheckout')));
 // 신품거래
 const EcommerceShop = Loadable(lazy(() => import('../pages/dashboard/EcommerceShop')));
 const Emotocycle = Loadable(lazy(() => import('../pages/dashboard/Emotocycle')));
@@ -236,6 +246,7 @@ const EcommerceCheckout = Loadable(lazy(() => import('../pages/dashboard/Ecommer
 const EcommerceInvoice = Loadable(lazy(() => import('../pages/dashboard/EcommerceInvoice')));
 // 동호회
 const Club = Loadable(lazy(() => import('../pages/dashboard/Club')));
+const ClubMy = Loadable(lazy(() => import('../pages/dashboard/ClubMy')));
 const Clubroom = Loadable(lazy(() => import('../pages/dashboard/Clubroom')));
 const ClubDetails = Loadable(lazy(() => import('../pages/dashboard/ClubDetails')));
 const ClubList = Loadable(lazy(() => import('../pages/dashboard/ClubList')));

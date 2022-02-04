@@ -32,10 +32,12 @@ const navConfig = [
     items: [ 
       { title: '나의 라이딩', path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard },
       { title: '나의 프로필', path: PATH_DASHBOARD.user.profile ,icon: ICONS.user },
-      { title: '나의 동호회 - 새로 제작 예정', path: PATH_DASHBOARD.club.root ,icon: ICONS.chat },
-      { title: '나의 장바구니', path: PATH_DASHBOARD.eCommerce.checkout ,icon: ICONS.ecommerce },
+      { title: '나의 동호회 - 새로 제작 예정', path: PATH_DASHBOARD.general.clubmy ,icon: ICONS.chat },
+      { title: '나의 장바구니', path: PATH_DASHBOARD.alleCommerce.checkout ,icon: ICONS.ecommerce },
     ],
   },
+
+
   /* 아래는 삭제
   { title: '이커머스', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
   { title: '분석', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
@@ -54,7 +56,7 @@ const navConfig = [
         path: PATH_DASHBOARD.club.root,
         icon: ICONS.cart,
         children: [
-          { title: '동호회', path: PATH_DASHBOARD.club.club },
+          { title: '동호회방 찾기', path: PATH_DASHBOARD.club.club },
           { title: '동호회 상세정보', path: PATH_DASHBOARD.club.productById },
           { title: '동호회 리스트', path: PATH_DASHBOARD.club.list },
           { title: '동호회 만들기', path: PATH_DASHBOARD.club.newProduct },

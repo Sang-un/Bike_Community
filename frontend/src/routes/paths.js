@@ -40,7 +40,8 @@ export const PATH_DASHBOARD = {
     ecommerce: path(ROOTS_DASHBOARD, '/ecommerce'),
     analytics: path(ROOTS_DASHBOARD, '/analytics'),
     banking: path(ROOTS_DASHBOARD, '/banking'),
-    booking: path(ROOTS_DASHBOARD, '/booking')
+    booking: path(ROOTS_DASHBOARD, '/booking'),
+    clubmy: path(ROOTS_DASHBOARD, '/clubmy'),
   },
   mail: {
     root: path(ROOTS_DASHBOARD, '/mail'),
@@ -76,6 +77,9 @@ export const PATH_DASHBOARD = {
     checkout: path(ROOTS_DASHBOARD, '/e-commerce/checkout'),
     invoice: path(ROOTS_DASHBOARD, '/e-commerce/invoice')
   },
+  alleCommerce: {
+    checkout: path(ROOTS_DASHBOARD, '/all-e-commerce/checkout'),
+  },
   usedeCommerce: {
     root: path(ROOTS_DASHBOARD, '/used-e-commerce'),
     shop: path(ROOTS_DASHBOARD, '/used-e-commerce/shop'),   
@@ -104,7 +108,7 @@ export const PATH_DASHBOARD = {
   },
   club: {
     root: path(ROOTS_DASHBOARD, '/club'),
-    club: path(ROOTS_DASHBOARD, '/club/club'),  
+    club: path(ROOTS_DASHBOARD, '/club/club'),    
     clubroom: path(ROOTS_DASHBOARD, '/club/clubroom/:name'),    
     product: path(ROOTS_DASHBOARD, '/club/product/:name'),
     productById: path(ROOTS_DASHBOARD, '/club/product/nike-air-force-1-ndestrukt'),
