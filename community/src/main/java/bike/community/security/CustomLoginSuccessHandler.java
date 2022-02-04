@@ -8,11 +8,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.util.StreamUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 import static bike.community.security.jwt.JwtProperties.*;
 
@@ -32,16 +34,18 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         if(!redisService.isValidRefreshJwtToken(user.getEmail())) redisService.setRefreshJwtToken(user.getEmail(), user.getNickname(), user.getRole().toString());
 
         response.addHeader(AUTH_HEADER, TOKEN_TYPE + SPACE + accessToken);
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json;charset=utf-8");
         PrintWriter out = null;
         String lu = "";
         try {
-            AfterJoinUserResponse.AfterJoinUserResponseBuilder loginUser
-                    = AfterJoinUserResponse.builder()
+            AfterJoinUserResponse loginUser = AfterJoinUserResponse.builder()
                     .email(user.getEmail())
                     .nickname(user.getNickname())
-                    .username(user.getUsername());
+                    .username(user.getUsername()).build();
 
             lu = om.writeValueAsString(loginUser);
+
             out = response.getWriter();
         } catch (IOException ex) {
             ex.printStackTrace();
