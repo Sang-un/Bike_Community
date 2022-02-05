@@ -12,13 +12,12 @@ import java.util.*;
 import static bike.community.security.jwt.JwtProperties.*;
 
 @Slf4j
-@Component/**/
+@Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TokenUtils {
     public static final String EMAIL = "email";
     public static final String NICKNAME = "nickname";
     public static final String ROLE = "role";
-
 
     private String secretKey = SECRET;
 

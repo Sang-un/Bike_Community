@@ -43,8 +43,6 @@ public class AuthTokenFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-        System.out.println("AuthTokenFilter.doFilterInternal");
-
         try {
             if(PatternMatchUtils.simpleMatch(NO_SECURITY_PATH, request.getRequestURI())) chain.doFilter(request, response);
             else{
@@ -52,10 +50,8 @@ public class AuthTokenFilter extends BasicAuthenticationFilter {
                 if (jwt != null && tokenUtils.isValidToken(jwt)) {
                     String email = tokenUtils.getEmailFromJwt(jwt);
                     UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities());
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                     chain.doFilter(request, response);
                 }

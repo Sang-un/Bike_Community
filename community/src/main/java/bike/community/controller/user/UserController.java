@@ -20,6 +20,8 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import static bike.community.security.jwt.JwtProperties.AUTH_HEADER;
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -34,7 +36,7 @@ public class UserController{
     }
 
     @PostMapping("/api/join")
-    public Header<AfterJoinUserResponse> join(@RequestBody @Valid JoinUserRequest user, BindingResult bindingResult) {
+    public Header<AfterJoinUserResponse> join(@RequestBody @Valid JoinUserRequest user, BindingResult bindingResult){
         if (bindingResult.hasErrors()) return responseError();
         if(userService.hasUserEmailOf(user.getEmail())) return Header.ERROR("이미 존재하는 email입니다."); // 이미 존재하는 email 이므로 재요청
         if(userService.hasUserNicknameOf(user.getNickname())) return Header.ERROR("이미 존재하는 닉네임입니다."); // 이미 존재하는 email 이므로 재요청
@@ -42,15 +44,15 @@ public class UserController{
     }
 
     @GetMapping("/api/logout")
-    public String logout(HttpServletRequest request) throws ServletException, IOException {
-        String jwtToken = request.getHeader("Authorization");
+    public String logout(HttpServletRequest request) throws ServletException, IOException{
+        String jwtToken = request.getHeader(AUTH_HEADER);
         byte[] bytes = jwtToken.getBytes(StandardCharsets.UTF_8);
         String s = StringUtils.newStringUtf8(bytes);
         redisService.logout(s);
         return "logout OK";
     }
 
-    private Header<AfterJoinUserResponse> responseError() {
+    private Header<AfterJoinUserResponse> responseError(){
         return Header.ERROR("유효성 검사 탈락입니다~");
     }
 

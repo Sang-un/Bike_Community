@@ -6,6 +6,7 @@ import bike.community.model.network.response.post.user.AfterJoinUserResponse;
 import bike.community.model.network.response.post.user.UserResponse;
 import bike.community.model.user.User;
 import bike.community.repository.user.UserQuerydslRepository;
+import bike.community.repository.user.UserQuerydslRepositoryImpl;
 import bike.community.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,7 +21,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final UserQuerydslRepository userDslRepository;
+    private final UserQuerydslRepositoryImpl userDslRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
@@ -58,4 +59,8 @@ public class UserService {
     public UserResponse findByNickname(String nickname) {
         return userDslRepository.findByNickname(nickname);
     }
+
+//    public boolean hasEmailAndNicknameOf(String email, String nickname) {
+//        List<UserResponse> reuslt = userDslRepository.hasEmailAndNicknameOf(email, nickname);
+//    }
 }
