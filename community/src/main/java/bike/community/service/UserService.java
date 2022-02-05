@@ -21,7 +21,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final UserQuerydslRepositoryImpl userDslRepository;
+//    private final UserQuerydslRepositoryImpl userDslRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
@@ -45,22 +45,23 @@ public class UserService {
     }
 
     public boolean hasUserEmailOf(String email) {
-        return userRepository.findByEmail(email).isPresent();
+        return userRepository.findOptionalByEmail(email).isPresent();
     }
 
     public boolean hasUserNicknameOf(String nickname) {
-        return userRepository.findByNickname(nickname).isPresent();
+        return userRepository.findOptionalByNickname(nickname).isPresent();
     }
 
     public List<UserResponse> findByUsername(String username) {
-        return userDslRepository.findByUsername(username);
+        return userRepository.findByUsername(username);
     }
 
     public UserResponse findByNickname(String nickname) {
-        return userDslRepository.findByNickname(nickname);
+        return userRepository.findByNickname(nickname);
     }
 
-//    public boolean hasEmailAndNicknameOf(String email, String nickname) {
-//        List<UserResponse> reuslt = userDslRepository.hasEmailAndNicknameOf(email, nickname);
-//    }
+    public boolean hasEmailAndNicknameOf(String email, String nickname) {
+        List<User> result = userRepository.hasEmailAndNicknameOf(email, nickname);
+        return !result.isEmpty();
+    }
 }

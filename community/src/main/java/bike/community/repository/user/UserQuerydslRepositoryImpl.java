@@ -2,6 +2,7 @@ package bike.community.repository.user;
 
 import bike.community.model.network.response.post.user.QUserResponse;
 import bike.community.model.network.response.post.user.UserResponse;
+import bike.community.model.user.User;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +22,7 @@ public class UserQuerydslRepositoryImpl implements UserQuerydslRepository {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
+    @Override
     public List<UserResponse> findByUsername(String username) {
         return queryFactory.select(new QUserResponse(
                         user.email,
@@ -35,6 +37,7 @@ public class UserQuerydslRepositoryImpl implements UserQuerydslRepository {
                 .fetch();
     }
 
+    @Override
     public UserResponse findByNickname(String nickname) {
         return queryFactory.select(new QUserResponse(
                         user.email,
@@ -49,8 +52,10 @@ public class UserQuerydslRepositoryImpl implements UserQuerydslRepository {
                 .fetchOne();
     }
 
-    public List<UserResponse> hasEmailAndNicknameOf(String email, String nickname) {
-
-        return null;
+    @Override
+    public List<User> hasEmailAndNicknameOf(String email, String nickname) {
+        return queryFactory.selectFrom(user)
+                .where(user.email.eq(email).or(user.nickname.eq(nickname)))
+                .fetch();
     }
 }
