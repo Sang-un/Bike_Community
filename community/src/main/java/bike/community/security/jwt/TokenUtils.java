@@ -1,5 +1,9 @@
 package bike.community.security.jwt;
 
+<<<<<<< Updated upstream
+=======
+import bike.community.model.entity.user.User;
+>>>>>>> Stashed changes
 import io.jsonwebtoken.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

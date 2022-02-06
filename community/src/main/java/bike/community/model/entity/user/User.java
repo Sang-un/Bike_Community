@@ -1,7 +1,8 @@
-package bike.community.model.user;
+package bike.community.model.entity.user;
 
 
 import bike.community.model.DateBaseEntity;
+import bike.community.model.enumclass.UserRole;
 import lombok.*;
 
 import javax.persistence.*;

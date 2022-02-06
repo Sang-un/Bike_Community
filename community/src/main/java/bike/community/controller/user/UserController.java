@@ -2,9 +2,9 @@ package bike.community.controller.user;
 
 import bike.community.model.network.Header;
 import bike.community.model.network.request.user.JoinUserRequest;
-import bike.community.model.network.response.post.user.AfterJoinUserResponse;
+import bike.community.model.network.response.user.AfterJoinUserResponse;
 import bike.community.security.redis.RedisService;
-import bike.community.service.UserService;
+import bike.community.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.StringUtils;
@@ -18,9 +18,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
+<<<<<<< Updated upstream
 import java.nio.charset.StandardCharsets;
 
 import static bike.community.security.jwt.JwtProperties.AUTH_HEADER;
+=======
+>>>>>>> Stashed changes
 
 @Slf4j
 @RequiredArgsConstructor

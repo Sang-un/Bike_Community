@@ -1,6 +1,6 @@
 package bike.community.security;
 
-import bike.community.model.user.User;
+import bike.community.model.entity.user.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

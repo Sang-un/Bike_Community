@@ -1,4 +1,4 @@
-package bike.community.model.network.response.post.user;
+package bike.community.model.network.response.user;
 
 import lombok.Builder;
 import lombok.Getter;

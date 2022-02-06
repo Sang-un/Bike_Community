@@ -1,6 +1,6 @@
 package bike.community.repository.user;
 
-import bike.community.model.user.User;
+import bike.community.model.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

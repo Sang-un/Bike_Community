@@ -1,4 +1,4 @@
-package bike.community.model.user;
+package bike.community.model.enumclass;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
