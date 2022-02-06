@@ -1,14 +1,10 @@
 package bike.community.controller.user;
 
-import bike.community.model.network.Header;
-import bike.community.model.network.request.user.JoinUserRequest;
-import bike.community.model.network.response.post.user.AfterJoinUserResponse;
+import bike.community.model.network.response.user.AfterJoinUserResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest

@@ -1,10 +1,10 @@
-package bike.community.service;
+package bike.community.service.user;
 
 import bike.community.model.network.Header;
 import bike.community.model.network.request.user.JoinUserRequest;
-import bike.community.model.network.response.post.user.AfterJoinUserResponse;
-import bike.community.model.network.response.post.user.UserResponse;
-import bike.community.model.user.User;
+import bike.community.model.network.response.user.AfterJoinUserResponse;
+import bike.community.model.network.response.user.UserResponse;
+import bike.community.model.entity.user.User;
 import bike.community.repository.user.UserQuerydslRepository;
 import bike.community.repository.user.UserQuerydslRepositoryImpl;
 import bike.community.repository.user.UserRepository;

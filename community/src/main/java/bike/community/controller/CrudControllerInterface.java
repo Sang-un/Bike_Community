@@ -2,7 +2,7 @@ package bike.community.controller;
 
 import bike.community.model.network.Header;
 
-public interface CrudInterface<Request, Response> {
+public interface CrudControllerInterface<Request, Response> {
 
     Header<Response> create(Request request);
 

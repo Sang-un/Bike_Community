@@ -1,5 +1,7 @@
 package bike.community.model.network.request.post.board;
 
+import bike.community.model.enumclass.BoardType;
+
 public class BoardApiRequest {
     private Long id;
 
@@ -9,8 +11,9 @@ public class BoardApiRequest {
     // 내용
     private String content;
 
-    // 작성자
-    private String createdBy;
+    // 게시판 종류
+    private BoardType boardType;
+
 
     // 익명 유무
     // 익명 = true
