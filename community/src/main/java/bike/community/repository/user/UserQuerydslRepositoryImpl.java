@@ -51,7 +51,7 @@ public class UserQuerydslRepositoryImpl implements UserQuerydslRepository {
                 .where(user.nickname.eq(nickname))
                 .fetchOne();
     }
-
+    // select from User where email = email or nuckname = nickname;
     @Override
     public List<User> hasEmailAndNicknameOf(String email, String nickname) {
         return queryFactory.selectFrom(user)

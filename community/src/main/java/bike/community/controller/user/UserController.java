@@ -35,16 +35,17 @@ public class UserController{
         return "hello guest";
     }
 
+    // TODO 한 줄 넣기
     @PostMapping("/api/join")
     public Header<AfterJoinUserResponse> join(@RequestBody @Valid JoinUserRequest user, BindingResult bindingResult){
         if (bindingResult.hasErrors()) return responseError();
-        if(userService.hasUserEmailOf(user.getEmail())) return Header.ERROR("이미 존재하는 email입니다."); // 이미 존재하는 email 이므로 재요청
-        if(userService.hasUserNicknameOf(user.getNickname())) return Header.ERROR("이미 존재하는 닉네임입니다."); // 이미 존재하는 email 이므로 재요청
+        if(userService.hasEmailAndNicknameOf(user.getEmail(), user.getNickname())) return Header.ERROR("이미 존재하는 email 혹은 닉네임입니다."); // 이미 존재하는 email 이므로 재요청
         return userService.join(user);
     }
 
+    // TODO 반환 HEADER
     @GetMapping("/api/logout")
-    public String logout(HttpServletRequest request) throws ServletException, IOException{
+    public String logout(HttpServletRequest request){
         String jwtToken = request.getHeader(AUTH_HEADER);
         byte[] bytes = jwtToken.getBytes(StandardCharsets.UTF_8);
         String s = StringUtils.newStringUtf8(bytes);
@@ -64,10 +65,5 @@ public class UserController{
     @GetMapping("/admin/admin-only")
     public String afterSuccessLoginAdmin() {
         return "helloAdmin your login is successful, you have authorization";
-    }
-
-    @GetMapping("/error/unauthorized")
-    public String noToken() {
-        return "No Token~";
     }
 }

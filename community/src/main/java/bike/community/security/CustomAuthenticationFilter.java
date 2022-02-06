@@ -30,7 +30,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        System.out.println("CustomAuthenticationFilter.attemptAuthentication");
         JoinUserRequest userInfo = getUserInfo(request, response);
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(userInfo.getEmail(), userInfo.getPassword());
         setDetails(request, authRequest);
@@ -38,10 +37,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     }
 
     private JoinUserRequest getUserInfo(HttpServletRequest request, HttpServletResponse response){
-        JoinUserRequest joinUser = JoinUserRequest.builder()
-                .email("DONOTMATCH")
-                .password("DONOTMATCH")
-                .nickname("DONOTMATCH").build();
+        JoinUserRequest joinUser = JoinUserRequest.builder().build();
         try {
             ServletInputStream ins = request.getInputStream();
             String json = StreamUtils.copyToString(ins, StandardCharsets.UTF_8);

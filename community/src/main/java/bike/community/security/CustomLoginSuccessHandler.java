@@ -24,12 +24,9 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-        System.out.println("CustomLoginSuccessHandler.onAuthenticationSuccess");
         User user = ((UserDetailsImpl) authentication.getPrincipal()).getUser();
         String accessToken = redisService.setAccessJwtToken(user.getEmail(), user.getNickname(), user.getRole().toString());
-
         if(!redisService.isValidRefreshJwtToken(user.getEmail())) redisService.setRefreshJwtToken(user.getEmail(), user.getNickname(), user.getRole().toString());
-
         responseUserData(response, accessToken, user);
     }
 
@@ -44,7 +41,6 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
                     .email(user.getEmail())
                     .nickname(user.getNickname())
                     .username(user.getUsername()).build();
-
             loginUserJson = om.writeValueAsString(afterJoinUserResponse);
             out = response.getWriter();
         } catch (IOException ex) {

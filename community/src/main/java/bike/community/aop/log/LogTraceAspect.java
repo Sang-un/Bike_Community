@@ -23,7 +23,7 @@ public class LogTraceAspect {
         TraceStatus status = null;
 
         try{
-            String message = joinPoint.getSignature().toShortString();
+            String message = joinPoint.getSignature().toShortString() + argsMessage(joinPoint.getArgs());
             status = logTrace.begin(message);
             // ----로직 호출 ----
             Object result = joinPoint.proceed();
@@ -34,5 +34,12 @@ public class LogTraceAspect {
             logTrace.exception(status, e);
             throw e;
         }
+    }
+
+    private String argsMessage(Object[] args) {
+        if(args.length == 0) return "";
+        String retVal = "";
+        for (Object arg : args) retVal = arg + " ";
+        return retVal;
     }
 }
