@@ -1,4 +1,4 @@
-package bike.community.security.redis;
+package bike.community.component.redis;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

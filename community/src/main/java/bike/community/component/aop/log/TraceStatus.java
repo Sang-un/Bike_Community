@@ -1,4 +1,4 @@
-package bike.community.aop.log;
+package bike.community.component.aop.log;
 
 public class TraceStatus {
 

@@ -6,7 +6,7 @@ import bike.community.security.CustomAuthenticationFilter;
 import bike.community.security.CustomAuthenticationProvider;
 import bike.community.security.CustomLoginSuccessHandler;
 import bike.community.security.jwt.TokenUtils;
-import bike.community.security.redis.RedisService;
+import bike.community.component.redis.RedisService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

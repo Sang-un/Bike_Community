@@ -1,4 +1,4 @@
-package bike.community.aop.log;
+package bike.community.component.aop.log;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

@@ -5,9 +5,8 @@ import bike.community.model.network.response.post.user.AfterJoinUserResponse;
 import bike.community.model.user.User;
 =======
 import bike.community.model.entity.user.User;
-import bike.community.security.jwt.TokenUtils;
 >>>>>>> Stashed changes
-import bike.community.security.redis.RedisService;
+import bike.community.component.redis.RedisService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
