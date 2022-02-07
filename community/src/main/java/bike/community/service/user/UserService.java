@@ -1,5 +1,6 @@
 package bike.community.service.user;
 
+import bike.community.component.redis.RedisService;
 import bike.community.model.network.Header;
 import bike.community.model.network.request.user.JoinUserRequest;
 import bike.community.model.network.response.user.AfterJoinUserResponse;
@@ -7,11 +8,16 @@ import bike.community.model.network.response.user.UserResponse;
 import bike.community.model.entity.user.User;
 import bike.community.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+
+import static bike.community.security.jwt.JwtProperties.AUTH_HEADER;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -20,13 +26,13 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final RedisService redisService;
 
     @Transactional
     public Header<AfterJoinUserResponse> join(JoinUserRequest joinUser) {
-        // -- 수정된 부분 --
+
         List<User> sameUsers = hasEmailAndNicknameOf(joinUser.getEmail(), joinUser.getNickname());
         if(!sameUsers.isEmpty()) return responseAlreadyExistIdError(sameUsers, joinUser);
-        // ---------------
 
         User user = User.makeUser(
                 joinUser.getEmail(),
@@ -59,6 +65,14 @@ public class UserService {
         return userRepository.hasEmailAndNicknameOf(email, nickname);
     }
 
+    public Header<String> logout(HttpServletRequest request) {
+        String jwtToken = request.getHeader(AUTH_HEADER);
+        byte[] bytes = jwtToken.getBytes(StandardCharsets.UTF_8);
+        String s = StringUtils.newStringUtf8(bytes);
+        redisService.logout(s);
+        return Header.OK("로그아웃되었습니다.");
+    }
+
     public boolean hasUserEmailOf(String email) {
         return userRepository.findOptionalByEmail(email).isPresent();
     }
@@ -79,5 +93,7 @@ public class UserService {
 //        List<User> result = userRepository.hasEmailAndNicknameOf(email, nickname);
 //        return !result.isEmpty();
 //    }
+
+
 
 }

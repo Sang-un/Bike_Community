@@ -56,6 +56,4 @@ public class Header<T> {
                 .description(description)
                 .build();
     }
-
-
 }
