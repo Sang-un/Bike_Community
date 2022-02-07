@@ -33,11 +33,9 @@ public class UserController{
         return "hello guest";
     }
 
-    // TODO 한 줄 넣기
     @PostMapping("/api/join")
     public Header<AfterJoinUserResponse> join(@RequestBody @Valid JoinUserRequest user, BindingResult bindingResult){
         if (bindingResult.hasErrors()) return responseError();
-        if(userService.hasEmailAndNicknameOf(user.getEmail(), user.getNickname())) return Header.ERROR("이미 존재하는 email 혹은 닉네임입니다."); // 이미 존재하는 email 이므로 재요청
         return userService.join(user);
     }
 
