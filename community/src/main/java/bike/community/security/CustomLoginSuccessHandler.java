@@ -1,11 +1,7 @@
 package bike.community.security;
 
-<<<<<<< Updated upstream
-import bike.community.model.network.response.post.user.AfterJoinUserResponse;
-import bike.community.model.user.User;
-=======
+import bike.community.model.network.response.user.AfterJoinUserResponse;
 import bike.community.model.entity.user.User;
->>>>>>> Stashed changes
 import bike.community.component.redis.RedisService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

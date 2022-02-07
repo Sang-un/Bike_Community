@@ -24,5 +24,4 @@ public class HeaderFilter implements Filter {
 
         chain.doFilter(request, response);
     }
-
 }

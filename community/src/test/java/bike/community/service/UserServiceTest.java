@@ -1,7 +1,8 @@
 package bike.community.service;
 
-import bike.community.model.user.User;
+import bike.community.model.entity.user.User;
 import bike.community.repository.user.UserRepository;
+import bike.community.service.user.UserService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ class UserServiceTest {
 
         System.out.println("---------------------------------");
 
-        boolean result2 = userService.hasEmailAndNicknameOf("k@naver.com", "바부바");
-        Assertions.assertThat(result2).isEqualTo(true);
+//        boolean result2 = userService.hasEmailAndNicknameOf("k@naver.com", "바부바");
+//        Assertions.assertThat(result2).isEqualTo(true);
     }
 }
