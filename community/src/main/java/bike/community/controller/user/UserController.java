@@ -16,12 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-<<<<<<< Updated upstream
 import java.nio.charset.StandardCharsets;
 
 import static bike.community.security.jwt.JwtProperties.AUTH_HEADER;
-=======
->>>>>>> Stashed changes
 
 @Slf4j
 @RequiredArgsConstructor

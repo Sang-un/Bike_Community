@@ -14,19 +14,4 @@ public class CommunityApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CommunityApplication.class, args);
 	}
-
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
-	@Bean
-	public LogTrace logTrace(){
-		return new ThreadLocalLogTrace();
-	}
-
-	@Bean
-	public LogTraceAspect logTraceAspect(LogTrace logTrace){
-		return new LogTraceAspect(logTrace);
-	}
 }
