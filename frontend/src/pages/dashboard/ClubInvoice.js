@@ -52,7 +52,7 @@ export default function ClubInvoice() {
 
   return (
     <Page title="Ecommerce: Invoice">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lx'}>
         <HeaderBreadcrumbs
           heading="Invoice Details"
           links={[

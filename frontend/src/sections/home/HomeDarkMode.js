@@ -56,19 +56,19 @@ export default function HomeDarkMode() {
             <ContentStyle>
               <MotionInView variants={varFade().inUp}>
                 <Typography component="div" variant="overline" sx={{ mb: 2, color: 'text.disabled' }}>
-                  Easy switch between styles.
+                  RIDERTOWN
                 </Typography>
               </MotionInView>
 
               <MotionInView variants={varFade().inUp}>
                 <Typography variant="h2" sx={{ mb: 3, color: 'common.white' }}>
-                  Dark mode
+                  DARKMODE
                 </Typography>
               </MotionInView>
 
               <MotionInView variants={varFade().inUp}>
                 <Typography sx={{ color: 'common.white', mb: 5 }}>
-                  A dark theme that feels easier on the eyes.
+                  다크모드를 이용해보세요!
                 </Typography>
               </MotionInView>
             </ContentStyle>

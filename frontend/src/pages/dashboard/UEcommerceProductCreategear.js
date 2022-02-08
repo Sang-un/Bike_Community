@@ -32,7 +32,7 @@ export default function EcommerceProductCreate() {
 
   return (
     <Page title="중고거래 / 새 상품 올리기">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lx'}>
         <HeaderBreadcrumbs
           heading={!isEdit ? '상품 올리기' : '상품 수정하기'}
           links={[

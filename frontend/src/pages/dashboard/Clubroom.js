@@ -1,129 +1,124 @@
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-// @mui
-import { useTheme } from '@mui/material/styles';
-import { Box, Card, Container, Grid, Stack , Typography } from '@mui/material';
-import { sentenceCase } from 'change-case';
-import { ChatSidebar , ChatWindow } from '../../sections/@dashboard/chat';
-import  {PATH_DASHBOARD}  from '../../routes/paths';
-import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
+import { capitalCase, sentenceCase } from 'change-case';
+import { PropTypes } from 'prop-types';
 
-import { useDispatch, useSelector } from '../../redux/store';
+import { useState, useEffect } from 'react';
+// @mui
+import { Container, Tab, Box, Tabs, Grid, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { getProduct } from '../../redux/slices/product';
+// routes
+import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks
-import useAuth from '../../hooks/useAuth';
 import useSettings from '../../hooks/useSettings';
+// _mock_
+import { _userPayment, _userAddressBook, _userInvoices, _userAbout } from '../../_mock';
 // components
 import Page from '../../components/Page';
+import Iconify from '../../components/Iconify';
+import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 // sections
 import {
-  AppWidget,
-  AppWelcome,
-  AppFeatured,
-  AppNewInvoice,
-  AppTopAuthors,
-  AppTopRelated,
-  AppAreaInstalled,
-  AppWidgetSummary,
-  AppCurrentDownload,
-  AppTopInstalledCountries,
-} from '../../sections/@dashboard/club/app';
-import Chat from './Chat';
-import Calendar from './Calendar';
-import ClubCalendar from './ClubCalendar';
-
+  AccountGeneral,
+  AccountBilling,
+  AccountSocialLinks,
+  AccountNotifications,
+  AccountChangePassword,
+} from '../../sections/@dashboard/club/account';
+import Clubroomhome from './Clubroomhome';
+import useAuth from '../../hooks/useAuth';
+import Image from '../../components/Image';
+import Clubboard from './Clubboard';
+import Clubchat from './Clubchat';
+import Clubcalender from './Clubcalender';
 // ----------------------------------------------------------------------
 
 export default function Clubroom() {
   const { user } = useAuth();
   const theme = useTheme();
   const { themeStretch } = useSettings();
+  const { product } = useSelector(state => state.product);
   const dispatch = useDispatch();
-  
   const { name = '' } = useParams();
-  
+
   
   useEffect(() => {
     dispatch(getProduct(name));
-    console.log(name)
   }, [dispatch, name]);
 
 
+  console.log(product);
+
+  const [currentTab, setCurrentTab] = useState('Home');
+
+  const ACCOUNT_TABS = [
+    {
+      value: 'Home',
+      icon: <Iconify icon={'ic:round-account-box'} width={20} height={20} />,
+      component: <Clubroomhome/>,
+    },    {
+      value: 'Board',
+      icon: <Iconify icon={'ic:round-account-box'} width={20} height={20} />,
+      component: <Clubboard />,
+    },
+    {
+      value: 'Calender',
+      icon: <Iconify icon={'eva:share-fill'} width={20} height={20} />,
+      component: <Clubcalender />,
+    },
+    {
+      value: 'Chat',
+      icon: <Iconify icon={'eva:bell-fill'} width={20} height={20} />,
+      component: <Clubchat />,
+    },
+    {
+      value: 'what',
+      icon: <Iconify icon={'ic:round-receipt'} width={20} height={20} />,
+      component: <AccountBilling cards={_userPayment} addressBook={_userAddressBook} invoices={_userInvoices} />,
+    },
+    {
+      value: 'do i do',
+      icon: <Iconify icon={'ic:round-vpn-key'} width={20} height={20} />,
+      component: <AccountChangePassword />,
+    },
+  ];
+
   return (
-    <Page title="동호회">
-      <Container maxWidth={themeStretch ? false : 'xl'}>    
+    <Page title="프로필">
+      <Container maxWidth={themeStretch ? false : 'lx'}>
       <Grid container>    
         <Grid item xs={12} md={9} >
             <Typography variant="h4">{name}</Typography>
-            <Typography>{name}에 오신것을 환영합니다! 다들 안라무복하세요!</Typography><br/>
+            <Typography>{user.displayName}님! {name}에 오신것을 환영합니다! 안라무복하세요!</Typography><br/>
           </Grid>     
           <Grid item xs={12} md={3} >
           <HeaderBreadcrumbs
           heading="CLUB"
           links={[
             { name: '동호회', href: PATH_DASHBOARD.club.root },
-            { name: sentenceCase(name)},
           ]}
         />         
         </Grid> 
         </Grid> 
+        <Tabs
+          value={currentTab}
+          scrollButtons="auto"
+          variant="scrollable"
+          allowScrollButtonsMobile
+          onChange={(e, value) => setCurrentTab(value)}
+        >
+          {ACCOUNT_TABS.map((tab) => (
+            <Tab disableRipple key={tab.value} label={capitalCase(tab.value)} icon={tab.icon} value={tab.value} />
+          ))}
+        </Tabs>
 
-          <Grid container spacing={3}>
-          <Grid item xs={12} md={4}>
-            <Chat />
-          </Grid>  
-          <Grid item xs={12} md={8}>
-          <AppNewInvoice />
-          </Grid>           
-          </Grid>
-          <br/>
+        <Box sx={{ mb: 2 }} />
 
-          <Grid container spacing={3}>
-          <Grid item xs={12} md={8}>
-            <ClubCalendar/>
-          </Grid>    
-          <Grid item xs={12} md={4} >
-          <AppTopAuthors /><br/>
-          <AppWidget title="참석 예정인 멤버" total={10} icon={'eva:person-fill'} chartData={95} /><br/>
-          <AppFeatured /><br/>
-          </Grid>  
-           </Grid>
-          <br/>
-
-
-
-          <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentDownload />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={8}>
-            <AppAreaInstalled />
-          </Grid>
-
-          <Grid item xs={12} lg={8}>
-            <AppNewInvoice />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppTopRelated />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppTopInstalledCountries />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppTopAuthors />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <Stack spacing={3}>
-              <AppWidget title="Conversion" total={38566} icon={'eva:person-fill'} chartData={48} />
-              <AppWidget title="Applications" total={55566} icon={'eva:email-fill'} color="warning" chartData={75} />
-            </Stack>
-          </Grid>
-        </Grid>
+        {ACCOUNT_TABS.map((tab) => {
+          const isMatched = tab.value === currentTab;
+          return isMatched && <Box key={tab.value}>{tab.component}</Box>;
+        })}
       </Container>
     </Page>
   );

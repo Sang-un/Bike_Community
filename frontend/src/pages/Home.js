@@ -9,7 +9,6 @@ import {
   HomeDarkMode,
   HomeLookingFor,
   HomeColorPresets,
-  HomePricingPlans,
   HomeAdvertisement,
   HomeCleanInterfaces,
   HomeHugePackElements,
@@ -17,8 +16,11 @@ import {
 
 // ----------------------------------------------------------------------
 
+
+
 const RootStyle = styled('div')(() => ({
   height: '100%',
+  
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({
@@ -31,7 +33,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function HomePage() {
   return (
-    <Page title="welcome">
+    <Page title="반갑습니다">
       <RootStyle>
         <HomeHero />
         <ContentStyle>
@@ -44,8 +46,6 @@ export default function HomePage() {
           <HomeColorPresets />
 
           <HomeCleanInterfaces />
-
-          <HomePricingPlans />
 
           <HomeLookingFor />
 

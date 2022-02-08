@@ -34,7 +34,7 @@ const selectedEventSelector = (state) => {
   return null;
 };
 
-export default function ClubCalendar() {
+export default function ClubCalender() {
   const { themeStretch } = useSettings();
 
   const dispatch = useDispatch();

@@ -32,7 +32,7 @@ export default function ClubCreate() {
 
   return (
     <Page title="동호회 만들기">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lx'}>
         <HeaderBreadcrumbs
           heading={!isEdit ? '새로만들기' : '수정하기'}
           links={[

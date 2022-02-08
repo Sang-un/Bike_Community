@@ -31,7 +31,7 @@ export default function HomePricingPlans() {
         <Box sx={{ mb: 10, textAlign: 'center' }}>
           <MotionInView variants={varFade().inUp}>
             <Typography component="div" variant="overline" sx={{ mb: 2, color: 'text.disabled' }}>
-              pricing plans
+            RIDERTOWN
             </Typography>
           </MotionInView>
           <MotionInView variants={varFade().inDown}>

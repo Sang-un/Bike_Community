@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 // @mui
 import { styled, useTheme } from '@mui/material/styles';
-import { Box, Button, AppBar, Toolbar, Container } from '@mui/material';
+import { Box, AppBar, Toolbar, Container } from '@mui/material';
 // hooks
 import useOffSetTop from '../../hooks/useOffSetTop';
 import useResponsive from '../../hooks/useResponsive';
@@ -76,22 +76,11 @@ export default function MainHeader() {
         >
           <Logo />
 
-          <Label color="info" sx={{ ml: 1 }}>
-            라이더 타운에 오신것을 환영합니다.
+          <Label color="primary" sx={{ ml: 1 }} variant = 'filled'>
+            RIDERTOWN
           </Label>
           <Box sx={{ flexGrow: 1 }} />
-
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
-
-          <Button
-            variant="contained"
-            target="_blank"
-            rel="noopener"
-            href="https://material-ui.com/store/items/minimal-dashboard/"
-          >
-            Purchase Now
-          </Button>
-
           {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
         </Container>
       </ToolbarStyle>

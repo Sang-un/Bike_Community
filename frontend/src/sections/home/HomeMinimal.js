@@ -5,28 +5,28 @@ import { Box, Card, Container, Typography } from '@mui/material';
 import Image from '../../components/Image';
 import { MotionInView, varFade } from '../../components/animate';
 
+
 // ----------------------------------------------------------------------
 
 const CARDS = [
   {
-    icon: 'https://minimal-assets-api.vercel.app/assets/icons/ic_design.svg',
+    icon: "motoicon2.png",
     title: '커뮤니티',
     description:
-      'The set is built on the principles of the atomic design system. It helps you to create projects fastest and easily customized packages for your projects.',
+      '커뮤니티 활동을 즐겨보세요!',
   },
   {
-    icon: 'https://minimal-assets-api.vercel.app/assets/icons/ic_code.svg',
+    icon: "motoicon1.png",
     title: '거래',
-    description: 'Easy to customize and extend each component, saving you time and money.',
+    description: '신품, 중고품 모두 거래하세요!',
   },
   {
-    icon: '/logo/logo_single.svg',
-    title: '서비스',
-    description: 'Consistent design in colors, fonts ... makes brand recognition easy.',
+    icon: "motoicon3.png",
+    title: '클럽',
+    description: '동호회 활동을 시작하세요!',
   },
 ];
 
-const shadowIcon = (color) => `drop-shadow(2px 2px 2px ${alpha(color, 0.48)})`;
 
 const RootStyle = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(15),
@@ -54,11 +54,30 @@ const CardStyle = styled(Card)(({ theme }) => {
       backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
     },
     '&.cardLeft': {
-      [theme.breakpoints.up('md')]: { marginTop: -40 },
+      [theme.breakpoints.up('md')]: {
+        marginTop: 0,
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: `-40px 40px 80px 0 ${shadowCard(0.4)}`,
+        '&:before': {
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: -1,
+          content: "''",
+          margin: 'auto',
+          position: 'absolute',
+          width: 'calc(100% - 40px)',
+          height: 'calc(100% - 40px)',
+          borderRadius: Number(theme.shape.borderRadius) * 2,
+          backgroundColor: theme.palette.background.paper,
+          boxShadow: `-20px 20px 40px 0 ${shadowCard(0.12)}`,
+        },
+      },
     },
     '&.cardCenter': {
       [theme.breakpoints.up('md')]: {
-        marginTop: -80,
+        marginTop: 0,
         backgroundColor: theme.palette.background.paper,
         boxShadow: `-40px 40px 80px 0 ${shadowCard(0.4)}`,
         '&:before': {
@@ -98,11 +117,11 @@ export default function HomeMinimal() {
         >
           <MotionInView variants={varFade().inUp}>
             <Typography component="div" variant="overline" sx={{ mb: 2, color: 'text.disabled' }}>
-              라이더 타운
+              RIDERTOWN
             </Typography>
           </MotionInView>
           <MotionInView variants={varFade().inDown}>
-            <Typography variant="h2">라이더 타운은 무엇을 제공하나요?</Typography>
+            <Typography variant="h2">ABOUT RIDERTOWN</Typography>
           </MotionInView>
         </Box>
 
@@ -115,22 +134,15 @@ export default function HomeMinimal() {
         >
           {CARDS.map((card, index) => (
             <MotionInView variants={varFade().inUp} key={card.title}>
-              <CardStyle className={(index === 0 && 'cardLeft') || (index === 1 && 'cardCenter') || ''}>
+              <CardStyle className={(index === 0 && 'cardLeft') || (index === 1 && 'cardCenter') || (index === 2 && 'cardCenter')}>
                 <Image
                   src={card.icon}
                   alt={card.title}
                   sx={{
                     mb: 10,
                     mx: 'auto',
-                    width: 40,
-                    height: 40,
-                    filter: (theme) => shadowIcon(theme.palette.primary.main),
-                    ...(index === 0 && {
-                      filter: (theme) => shadowIcon(theme.palette.info.main),
-                    }),
-                    ...(index === 1 && {
-                      filter: (theme) => shadowIcon(theme.palette.error.main),
-                    }),
+                    width: 80,
+                    height: 80,
                   }}
                 />
                 <Typography variant="h5" paragraph>

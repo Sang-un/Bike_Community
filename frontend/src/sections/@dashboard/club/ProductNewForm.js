@@ -86,6 +86,7 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
       city: currentProduct?.city || '',
       model: currentProduct?.model || MODEL_OPTION[0],
       password: currentProduct?.password || '',
+      clubking: currentProduct?.clubking || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentProduct]

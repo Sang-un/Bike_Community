@@ -1,172 +1,263 @@
-import { useEffect, useState } from 'react';
-import orderBy from 'lodash/orderBy';
-// form
-import { useForm } from 'react-hook-form';
+import { sentenceCase, paramCase } from 'change-case';
+import { useState, useEffect } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 // @mui
-import { Container, Typography, Stack } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import {
+  Link,
+  Box,
+  Card,
+  Table,
+  TableRow,
+  Checkbox,
+  TableBody,
+  TableCell,
+  Container,
+  Typography,
+  TableContainer,
+  TablePagination,
+} from '@mui/material';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
-import { getProducts, filterProducts } from '../../redux/slices/product';
+import { getProducts } from '../../redux/slices/product';
+// utils
+import { fDate } from '../../utils/formatTime';
+import { fCurrency } from '../../utils/formatNumber';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks
 import useSettings from '../../hooks/useSettings';
 // components
 import Page from '../../components/Page';
+import Label from '../../components/Label';
+import Image from '../../components/Image';
+import Scrollbar from '../../components/Scrollbar';
+import SearchNotFound from '../../components/SearchNotFound';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
-import { FormProvider } from '../../components/hook-form';
 // sections
 import {
-  ShopTagFiltered,
-  ShopProductSort,
-  ShopProductList,
-  ShopFilterSidebar,
-  ShopProductSearch,
-} from '../../sections/@dashboard/club/shop';
-import CartWidget from '../../sections/@dashboard/club/CartWidget';
+  ProductMoreMenu,
+  ProductListHead,
+  ProductListToolbar,
+} from '../../sections/@dashboard/e-commerce/product-list';
 
 // ----------------------------------------------------------------------
 
-export default function ClubMy() {
-  const { themeStretch } = useSettings();
+const TABLE_HEAD = [
+  { id: 'name', label: 'Product', alignRight: false },
+  { id: 'createdAt', label: 'Create at', alignRight: false },
+  { id: 'inventoryType', label: 'Status', alignRight: false },
+  { id: 'price', label: 'Price', alignRight: true },
+  { id: '' },
+];
 
+// ----------------------------------------------------------------------
+
+export default function Clubmy() {
+  const { themeStretch } = useSettings();
+  const theme = useTheme();
   const dispatch = useDispatch();
 
-  const [openFilter, setOpenFilter] = useState(false);
+  const { products } = useSelector((state) => state.product);
 
-  const { products, sortBy, filters } = useSelector((state) => state.product);
 
-  const filteredProducts = applyFilter(products, sortBy, filters);
-
-  const defaultValues = {
-    gender: filters.gender,
-    category: filters.category,
-    colors: filters.colors,
-    priceRange: filters.priceRange,
-    rating: filters.rating,
-  };
-
-  const methods = useForm({
-    defaultValues,
-  });
-
-  const { reset, watch, setValue } = methods;
-
-  const values = watch();
-
-  const isDefault =
-    !values.priceRange &&
-    !values.rating &&
-    values.gender.length === 0 &&
-    values.colors.length === 0 &&
-    values.category === 'All';
+  const [productList, setProductList] = useState([]);
+  const [page, setPage] = useState(0);
+  const [order, setOrder] = useState('asc');
+  const [selected, setSelected] = useState([]);
+  const [filterName, setFilterName] = useState('');
+  const [rowsPerPage, setRowsPerPage] = useState(25);
+  const [orderBy, setOrderBy] = useState('createdAt');
 
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(filterProducts(values));
-  }, [dispatch, values]);
+    if (products.length) {
+      setProductList(products);
+    }
+  }, [products]);
 
-  const handleOpenFilter = () => {
-    setOpenFilter(true);
+  const handleRequestSort = (property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
   };
 
-  const handleCloseFilter = () => {
-    setOpenFilter(false);
+  const handleSelectAllClick = (checked) => {
+    if (checked) {
+      const selected = productList.map((n) => n.name);
+      setSelected(selected);
+      return;
+  } 
+    setSelected([]);
   };
 
-  const handleResetFilter = () => {
-    reset();
-    handleCloseFilter();
+  const handleClick = (name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+    }
+    setSelected(newSelected);
   };
 
-  const handleRemoveGender = (value) => {
-    const newValue = filters.gender.filter((item) => item !== value);
-    setValue('gender', newValue);
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
-  const handleRemoveCategory = () => {
-    setValue('category', 'All');
+  const handleFilterByName = (filterName) => {
+    setFilterName(filterName);
   };
 
-  const handleRemoveColor = (value) => {
-    const newValue = filters.colors.filter((item) => item !== value);
-    setValue('colors', newValue);
+  const handleDeleteProduct = (productId) => {
+    const deleteProduct = productList.filter((product) => product.id !== productId);
+    setSelected([]);
+    setProductList(deleteProduct);
   };
 
-  const handleRemovePrice = () => {
-    setValue('priceRange', '');
+  const handleDeleteProducts = (selected) => {
+    const deleteProducts = productList.filter((product) => !selected.includes(product.name));
+    setSelected([]);
+    setProductList(deleteProducts);
   };
 
-  const handleRemoveRating = () => {
-    setValue('rating', '');
-  };
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - productList.length) : 0;
+
+  const filteredProducts = applySortFilter(productList, getComparator(order, orderBy), filterName);
+
+  const isNotFound = !filteredProducts.length && Boolean(filterName);
 
   return (
-    <Page title="동호회: 목록">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+    <Page title="Ecommerce: Product List">
+      <Container maxWidth={themeStretch ? false : 'lx'}>
         <HeaderBreadcrumbs
-          heading="동호회"
+          heading="나의 클럽"
           links={[
-            { name: '동호회', href: PATH_DASHBOARD.club.root },
+            { name: 'Dashboard', href: PATH_DASHBOARD.root },
             {
-              name: '목록',
-              href: PATH_DASHBOARD.club.root,
+              name: 'E-Commerce',
+              href: PATH_DASHBOARD.eCommerce.root,
             },
-            { name: '동호회목록' },
+            { name: 'Product List' },
           ]}
-        />
+        />          
 
-        <Stack
-          spacing={2}
-          direction={{ xs: 'column', sm: 'row' }}
-          alignItems={{ sm: 'center' }}
-          justifyContent="space-between"
-          sx={{ mb: 2 }}
-        >
-          <ShopProductSearch />
-          
+        <Card>
+          <ProductListToolbar
+            numSelected={selected.length}
+            filterName={filterName}
+            onFilterName={handleFilterByName}
+            onDeleteProducts={() => handleDeleteProducts(selected)}
+          />
 
-          <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-            <FormProvider methods={methods}>
-              <ShopFilterSidebar
-                onResetAll={handleResetFilter}
-                isOpen={openFilter}
-                onOpen={handleOpenFilter}
-                onClose={handleCloseFilter}
-              />
-            </FormProvider>
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <Table>
+                <ProductListHead
+                  order={order}
+                  orderBy={orderBy}
+                  headLabel={TABLE_HEAD}
+                  rowCount={productList.length}
+                  numSelected={selected.length}
+                  onRequestSort={handleRequestSort}
+                  onSelectAllClick={handleSelectAllClick}
+                />
 
-            <ShopProductSort />
-          </Stack>
-        </Stack>
+                <TableBody>
+                  {filteredProducts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                    const { id, name, cover, price, createdAt, inventoryType } = row;
 
-        <Stack sx={{ mb: 3 }}>
-          {!isDefault && (
-            <>
-              <Typography variant="body2" gutterBottom>
-                <strong>{filteredProducts.length}</strong>
-                &nbsp;개의 동호회가 있어요
-              </Typography>
+                    
+                    const linkTo = `${PATH_DASHBOARD.usedeCommerce.root}/product/${paramCase(name)}`;
+  
+                    const isItemSelected = selected.indexOf(name) !== -1;
 
-              <ShopTagFiltered
-                filters={filters}
-                isShowReset={!isDefault && !openFilter}
-                onRemoveGender={handleRemoveGender}
-                onRemoveCategory={handleRemoveCategory}
-                onRemoveColor={handleRemoveColor}
-                onRemovePrice={handleRemovePrice}
-                onRemoveRating={handleRemoveRating}
-                onResetAll={handleResetFilter}
-              />
-            </>
-          )}
-        </Stack>
+                    return (
+                      <TableRow
+                        hover
+                        key={id}
+                        tabIndex={-1}
+                        role="checkbox"
+                        selected={isItemSelected}
+                        aria-checked={isItemSelected}
+                      >
+                        <TableCell padding="checkbox">
+                          <Checkbox checked={isItemSelected} onClick={() => handleClick(name)} />
+                        </TableCell>
+                        <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
+                          <Image
+                            disabledEffect
+                            alt={name}
+                            src={cover}
+                            sx={{ borderRadius: 1.5, width: 64, height: 64, mr: 2 }}
+                          />
+                           <Link to={linkTo} color="inherit" component={RouterLink}>
+                          <Typography variant="subtitle2" noWrap>
+                            {name}
+                          </Typography>
+                          </Link>
+                        </TableCell>
+                        <TableCell style={{ minWidth: 160 }}>{fDate(createdAt)}</TableCell>
+                        <TableCell style={{ minWidth: 160 }}>
+                          <Label
+                            variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
+                            color={
+                              (inventoryType === 'out_of_stock' && 'error') ||
+                              (inventoryType === 'low_stock' && 'warning') ||
+                              'success'
+                            }
+                          >
+                            {inventoryType ? sentenceCase(inventoryType) : ''}
+                          </Label>
+                        </TableCell>
+                        <TableCell align="right">{fCurrency(price)}</TableCell>
+                        <TableCell align="right">
+                          <ProductMoreMenu productName={name} onDelete={() => handleDeleteProduct(id)} />
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: 53 * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                </TableBody>
 
-        <ShopProductList products={filteredProducts} loading={!products.length && isDefault} />
-        <CartWidget />
+                {isNotFound && (
+                  <TableBody>
+                    <TableRow>
+                      <TableCell align="center" colSpan={6}>
+                        <Box sx={{ py: 3 }}>
+                          <SearchNotFound searchQuery={filterName} />
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                )}
+              </Table>
+            </TableContainer>
+          </Scrollbar>
+
+          <TablePagination
+            rowsPerPageOptions={[25, 50, 100]}
+            component="div"
+            count={productList.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={(event, value) => setPage(value)}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Card>
       </Container>
     </Page>
   );
@@ -174,51 +265,33 @@ export default function ClubMy() {
 
 // ----------------------------------------------------------------------
 
-function applyFilter(products, sortBy, filters) {
-  // SORT BY
-  if (sortBy === 'featured') {
-    products = orderBy(products, ['sold'], ['desc']);
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
   }
-  if (sortBy === 'newest') {
-    products = orderBy(products, ['createdAt'], ['desc']);
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
   }
-  if (sortBy === 'priceDesc') {
-    products = orderBy(products, ['price'], ['desc']);
+  return 0;
+}
+
+function getComparator(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function applySortFilter(array, comparator, query) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+
+  if (query) {
+    return array.filter((_product) => _product.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
   }
-  if (sortBy === 'priceAsc') {
-    products = orderBy(products, ['price'], ['asc']);
-  }
-  // FILTER PRODUCTS
-  if (filters.gender.length > 0) {
-    products = products.filter((product) => filters.gender.includes(product.gender));
-  }
-  if (filters.category !== 'All') {
-    products = products.filter((product) => product.category === filters.category);
-  }
-  if (filters.colors.length > 0) {
-    products = products.filter((product) => product.colors.some((color) => filters.colors.includes(color)));
-  }
-  if (filters.priceRange) {
-    products = products.filter((product) => {
-      if (filters.priceRange === 'below') {
-        return product.price < 25;
-      }
-      if (filters.priceRange === 'between') {
-        return product.price >= 25 && product.price <= 75;
-      }
-      return product.price > 75;
-    });
-  }
-  if (filters.rating) {
-    products = products.filter((product) => {
-      const convertRating = (value) => {
-        if (value === 'up4Star') return 4;
-        if (value === 'up3Star') return 3;
-        if (value === 'up2Star') return 2;
-        return 1;
-      };
-      return product.totalRating > convertRating(filters.rating);
-    });
-  }
-  return products;
+
+  return stabilizedThis.map((el) => el[0]);
 }

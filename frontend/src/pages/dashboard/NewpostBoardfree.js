@@ -17,7 +17,7 @@ export default function BlogNewPost() {
 
   return (
     <Page title="글쓰기">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lx'}>
         <HeaderBreadcrumbs
           heading="바이크 게시판"
           links={[

@@ -2,8 +2,9 @@ import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Box, Grid, Button, Container, Typography } from '@mui/material';
+import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 // routes
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_PAGE } from '../../routes/paths';
 // components
 import Image from '../../components/Image';
 import { MotionInView, varFade } from '../../components/animate';
@@ -85,14 +86,13 @@ export default function HomeHugePackElements() {
             <ContentStyle>
               <MotionInView variants={varFade().inUp}>
                 <Typography component="div" variant="overline" sx={{ mb: 2, color: 'text.disabled' }}>
-                  라이딩을 도와주는 기능들
+                  RIDERTOWN
                 </Typography>
               </MotionInView>
 
               <MotionInView variants={varFade().inUp}>
                 <Typography variant="h2" sx={{ mb: 3 }}>
-                  ABOUT <br />
-                  RIDER TOWN
+                APPLICATION
                 </Typography>
               </MotionInView>
 
@@ -103,19 +103,21 @@ export default function HomeHugePackElements() {
                     color: isLight ? 'text.secondary' : 'common.white',
                   }}
                 >
-                  라이딩, 정비, 거래, 커뮤니티 모든 것을 제공합니다.
+                  조금만 기다려주세요!<br/>
+                  금방 스마트폰으로 달려갈게요!
                 </Typography>
               </MotionInView>
 
               <MotionInView variants={varFade().inUp}>
                 <Button
                   size="large"
-                  color="inherit"
-                  variant="outlined"
+                  color="primary"
+                  variant="contained"
                   component={RouterLink}
-                  to={PATH_DASHBOARD.general.app}
+                  to={PATH_PAGE.comingSoon}
+                  startIcon={<TwoWheelerIcon/>}
                 >
-                  시작하기
+                  예상도착시간
                 </Button>
               </MotionInView>
             </ContentStyle>

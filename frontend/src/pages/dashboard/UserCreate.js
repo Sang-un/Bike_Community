@@ -26,7 +26,7 @@ export default function UserCreate() {
 
   return (
     <Page title="User: Create a new user">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lx'}>
         <HeaderBreadcrumbs
           heading={!isEdit ? 'Create a new user' : 'Edit user'}
           links={[

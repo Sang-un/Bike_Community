@@ -106,7 +106,7 @@ export default function Club() {
 
   return (
     <Page title="동호회: 목록">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lx'}>
         <HeaderBreadcrumbs
           heading="동호회"
           links={[

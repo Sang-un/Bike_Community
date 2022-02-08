@@ -19,7 +19,7 @@ export default function UserCards() {
 
   return (
     <Page title="User: Cards">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lx'}>
         <HeaderBreadcrumbs
           heading="User Cards"
           links={[

@@ -39,7 +39,7 @@ export default function HomeCleanInterfaces() {
         <ContentStyle>
           <MotionInView variants={varFade().inUp}>
             <Typography component="div" variant="overline" sx={{ mb: 2, color: 'text.disabled' }}>
-              clean & clear
+             RIDERTOWN
             </Typography>
           </MotionInView>
 
@@ -53,7 +53,7 @@ export default function HomeCleanInterfaces() {
                 }),
               }}
             >
-              Beautiful, modern and clean user interfaces
+              GOODJOB
             </Typography>
           </MotionInView>
         </ContentStyle>

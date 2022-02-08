@@ -25,13 +25,13 @@ export default function HomeLookingFor() {
           <Grid item xs={12} md={4} sx={{ textAlign: { xs: 'center', md: 'left' } }}>
             <MotionInView variants={varFade().inDown}>
               <Typography variant="overline" component="div" sx={{ color: 'text.disabled' }}>
-                Looking For a
+                RIDERTOWN
               </Typography>
             </MotionInView>
 
             <MotionInView variants={varFade().inDown}>
               <Typography variant="h2" sx={{ mt: 2, mb: 5 }}>
-                Landing Page Template?
+                ANOTHER
               </Typography>
             </MotionInView>
 
@@ -45,7 +45,7 @@ export default function HomeLookingFor() {
                 href="https://material-ui.com/store/items/zone-landing-page/"
                 endIcon={<Iconify icon={'ic:round-arrow-right-alt'} />}
               >
-                Visit Zone Landing
+                방문하기
               </Button>
             </MotionInView>
           </Grid>

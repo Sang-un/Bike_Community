@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 // @mui
 import { alpha, useTheme, styled } from '@mui/material/styles';
-import { Box, Grid, Button, Container, Typography, LinearProgress } from '@mui/material';
+import { Box, Grid, Container, Typography, LinearProgress } from '@mui/material';
 // hooks
 import useResponsive from '../../hooks/useResponsive';
 // utils
@@ -10,7 +10,6 @@ import { fPercent } from '../../utils/formatNumber';
 import { _skills } from '../../_mock';
 // components
 import Image from '../../components/Image';
-import Iconify from '../../components/Iconify';
 import { MotionInView, varFade } from '../../components/animate';
 
 // ----------------------------------------------------------------------
@@ -69,7 +68,7 @@ export default function AboutWhat() {
           <Grid item xs={12} md={6} lg={5}>
             <MotionInView variants={varFade().inRight}>
               <Typography variant="h2" sx={{ mb: 3 }}>
-                What is minimal?
+                What is RIDERTOWN?
               </Typography>
             </MotionInView>
 
@@ -79,10 +78,7 @@ export default function AboutWhat() {
                   color: (theme) => (theme.palette.mode === 'light' ? 'text.secondary' : 'common.white'),
                 }}
               >
-                Our theme is the most advanced and user-friendly theme you will find on the market, we have
-                documentation and video to help set your site really easily, pre-installed demos you can import in one
-                click and everything from the theme options to page content can be edited from the front-end. This is
-                the theme you are looking for.
+                저희는 성숙한 라이딩문화를 지향해요. <br/>항상 행복하고 편안한 라이딩이 되었으면 좋겠어요.
               </Typography>
             </MotionInView>
 
@@ -93,17 +89,6 @@ export default function AboutWhat() {
                 </MotionInView>
               ))}
             </Box>
-
-            <MotionInView variants={varFade().inRight}>
-              <Button
-                variant="outlined"
-                color="inherit"
-                size="large"
-                endIcon={<Iconify icon={'ic:round-arrow-right-alt'} width={24} height={24} />}
-              >
-                Check out our work
-              </Button>
-            </MotionInView>
           </Grid>
         </Grid>
       </Container>

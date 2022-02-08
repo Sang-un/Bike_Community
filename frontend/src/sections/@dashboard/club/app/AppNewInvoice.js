@@ -34,7 +34,7 @@ export default function AppNewInvoice() {
 
   return (
     <Card>
-      <CardHeader title="게시판" sx={{ mb: 3 }} />
+      <CardHeader title="공지사항" sx={{ mb: 3 }} />
       <Scrollbar>
         <TableContainer sx={{ minWidth: 720 }}>
           <Table>

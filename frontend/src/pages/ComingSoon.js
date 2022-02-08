@@ -1,14 +1,15 @@
 // @mui
+import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Box, Button, Stack, Container, Typography, InputAdornment } from '@mui/material';
+import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
 // hooks
 import useCountdown from '../hooks/useCountdown';
 // components
 import Page from '../components/Page';
 import InputStyle from '../components/InputStyle';
-import SocialsButton from '../components/SocialsButton';
 // assets
-import { ComingSoonIllustration } from '../assets';
+import { PATH_PAGE } from '../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -35,7 +36,7 @@ const SeparatorStyle = styled(Typography)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function ComingSoon() {
-  const countdown = useCountdown(new Date('07/07/2022 21:30'));
+  const countdown = useCountdown(new Date('08/08/2022 21:30'));
 
   return (
     <Page title="Coming Soon" sx={{ height: 1 }}>
@@ -43,58 +44,67 @@ export default function ComingSoon() {
         <Container>
           <Box sx={{ maxWidth: 480, margin: 'auto', textAlign: 'center' }}>
             <Typography variant="h3" paragraph>
-              만간에 찾아옵니다!
+              조금만 기다려주세요!
             </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>We are currently working hard on this page!</Typography>
+            <Typography sx={{ color: 'text.secondary' }}>배기음과 함께 열심히 달려가고 있어요! </Typography>
+            
+            <Stack alignItems="center">
+            <TwoWheelerIcon fontSize = 'large' color='primary' sx={{ my: 10, height: 50 }} />
+            <Button 
+                size="large"
+                variant="contained"
+                component={RouterLink}
+                to={PATH_PAGE.home}
+                startIcon={<TwoWheelerIcon/>}
+              >
+                돌아가기
+              </Button>
 
-            <ComingSoonIllustration sx={{ my: 10, height: 240 }} />
+            </Stack>
+            <br/><br/><br/>
 
             <CountdownStyle>
               <div>
                 <Typography variant="h2">{countdown.days}</Typography>
-                <Typography sx={{ color: 'text.secondary' }}>Days</Typography>
+                <Typography sx={{ color: 'text.secondary' }}>일</Typography>
               </div>
 
               <SeparatorStyle variant="h2">:</SeparatorStyle>
 
               <div>
                 <Typography variant="h2">{countdown.hours}</Typography>
-                <Typography sx={{ color: 'text.secondary' }}>Hours</Typography>
+                <Typography sx={{ color: 'text.secondary' }}>시</Typography>
               </div>
 
               <SeparatorStyle variant="h2">:</SeparatorStyle>
 
               <div>
                 <Typography variant="h2">{countdown.minutes}</Typography>
-                <Typography sx={{ color: 'text.secondary' }}>Minutes</Typography>
+                <Typography sx={{ color: 'text.secondary' }}>분</Typography>
               </div>
 
               <SeparatorStyle variant="h2">:</SeparatorStyle>
 
               <div>
                 <Typography variant="h2">{countdown.seconds}</Typography>
-                <Typography sx={{ color: 'text.secondary' }}>Seconds</Typography>
+                <Typography sx={{ color: 'text.secondary' }}>초</Typography>
               </div>
             </CountdownStyle>
 
             <InputStyle
               fullWidth
-              placeholder="Enter your email"
+              placeholder="알림을 받고 싶으면 메일주소를 적어주세요!"
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <Button variant="contained" size="large">
-                      Notify Me
+                      메일받기
                     </Button>
                   </InputAdornment>
                 ),
               }}
               sx={{ my: 5, '& .MuiOutlinedInput-root': { pr: 0.5 } }}
             />
-
-            <Stack alignItems="center">
-              <SocialsButton size="large" initialColor />
-            </Stack>
           </Box>
         </Container>
       </RootStyle>

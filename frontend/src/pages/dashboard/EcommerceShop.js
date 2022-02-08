@@ -106,7 +106,7 @@ export default function EcommerceShop() {
 
   return (
     <Page title="Ecommerce: Shop">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lx'}>
         <HeaderBreadcrumbs
           heading="Shop"
           links={[

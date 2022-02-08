@@ -18,7 +18,7 @@ export default function AboutVision() {
         }}
       >
         <Image
-          src="https://minimal-assets-api.vercel.app/assets/images/about/vision.jpg"
+          src="https://cdn.wadiz.kr/ft/images/green001/2020/0630/20200630163145474_70.jpg/wadiz/format/jpg/quality/80/optimize"
           alt="about-vision"
           effect="black-and-white"
         />
@@ -34,26 +34,15 @@ export default function AboutVision() {
             justifyContent: 'center',
           }}
         >
-          {['logo_amazon', 'logo_hbo', 'logo_ibm', 'logo_lya', 'logo_spotify', 'logo_netflix'].map((logo) => (
-            <MotionInView key={logo} variants={varFade().in}>
-              <Image
-                alt={logo}
-                src={`https://minimal-assets-api.vercel.app/assets/images/logos/${logo}.svg`}
-                sx={{
-                  m: { xs: 1.5, md: 3 },
-                  height: { xs: 24, md: 32 },
-                }}
-              />
-            </MotionInView>
-          ))}
+          <Typography variant="h4" color='common.white'sx={{ textAlign: 'center' }}>RIDERTOWN</Typography>
         </Box>
       </Box>
 
       <Grid container justifyContent="center">
         <Grid item xs={12} sm={8}>
           <MotionInView variants={varFade().inUp}>
-            <Typography variant="h3" sx={{ textAlign: 'center' }}>
-              Our vision offering the best product nulla vehicula tortor scelerisque ultrices malesuada.
+            <Typography variant="h4" sx={{ textAlign: 'center' }}>
+              라이더타운은 성숙한 라이딩 문화를 응원합니다!
             </Typography>
           </MotionInView>
         </Grid>

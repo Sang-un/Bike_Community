@@ -58,7 +58,7 @@ export default function UserAccount() {
 
   return (
     <Page title="프로필">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lx'}>
         <HeaderBreadcrumbs
           heading="프로필"
           links={[

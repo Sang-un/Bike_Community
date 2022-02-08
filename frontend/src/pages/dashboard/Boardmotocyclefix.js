@@ -77,7 +77,7 @@ export default function BlogPosts() {
 
   return (
     <Page title="Blog: Posts">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lx'}>
         <HeaderBreadcrumbs
           heading="정비"
           links={[

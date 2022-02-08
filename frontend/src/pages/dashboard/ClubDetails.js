@@ -39,7 +39,7 @@ export default function ClubDetails() {
 
   return (
     <Page title="동호회 상세정보">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lx'}>
         <HeaderBreadcrumbs
           heading="동호회 상세정보"
           links={[

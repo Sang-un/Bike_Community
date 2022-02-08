@@ -98,7 +98,7 @@ export default function AEcommerceCheckout() {
 
   return (
     <Page title="Ecommerce: Checkout">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lx'}>
         <HeaderBreadcrumbs
           heading="Checkout"
           links={[

@@ -135,7 +135,7 @@ export default function ClubList() {
 
   return (
     <Page title="Ecommerce: Product List">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lx'}>
         <HeaderBreadcrumbs
           heading="Product List"
           links={[
@@ -188,7 +188,7 @@ export default function ClubList() {
                           <Checkbox checked={isItemSelected} onClick={() => handleClick(name)} />
                         </TableCell>
                         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-                          <Image
+                        <Image
                             disabledEffect
                             alt={name}
                             src={cover}

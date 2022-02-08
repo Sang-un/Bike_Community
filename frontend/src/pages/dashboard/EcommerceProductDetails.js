@@ -82,7 +82,7 @@ export default function EcommerceProductDetails() {
 
   return (
     <Page title="Ecommerce: Product Details">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lx'}>
         <HeaderBreadcrumbs
           heading="Product Details"
           links={[

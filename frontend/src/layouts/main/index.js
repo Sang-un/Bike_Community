@@ -38,8 +38,10 @@ export default function MainLayout() {
 
             <Typography variant="caption" component="p">
               © All rights reserved
-              <br /> made by &nbsp;
-              <Link href="https://minimals.cc/">minimals.cc</Link>
+              <br /> from &nbsp;
+              <Link 
+              href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=%EB%9D%BC%EC%9D%B4%EB%8D%94%ED%83%80%EC%9A%B4"
+              >RIDERTOWN</Link>
             </Typography>
           </Container>
         </Box>

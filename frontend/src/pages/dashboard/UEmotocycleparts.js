@@ -108,7 +108,7 @@ export default function EcommerceShop() {
 
   return (
     <Page title="중고거래: 부품/용품">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lx'}>
       <HeaderBreadcrumbs
           heading="중고거래"
           links={[
