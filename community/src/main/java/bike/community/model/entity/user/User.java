@@ -2,18 +2,22 @@ package bike.community.model.entity.user;
 
 
 import bike.community.model.DateBaseEntity;
+import bike.community.model.entity.club.Club;
+import bike.community.model.entity.club.ClubUser;
 import bike.community.model.enumclass.UserRole;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-@ToString
 @NoArgsConstructor(access= AccessLevel.PROTECTED)/*프록시 객체를 위해 protect로 기본 생성자*/
 @Getter
 @Entity
 public class User extends DateBaseEntity implements Serializable {
     @Id @GeneratedValue
+    @Column(name="user_id")
     private Long id;
 
     private String email; //이메일
@@ -31,6 +35,12 @@ public class User extends DateBaseEntity implements Serializable {
     //for oauth
     private String provider;
     private String providerId;
+
+    @OneToMany
+    private List<Club> clubAsCaptain = new ArrayList<>();
+
+    @OneToMany(mappedBy="user")
+    private List<ClubUser> clubs = new ArrayList<>();
 
     public static User makeUser(String email, String password, String username, String sex, String phone, String birthday, String nickname) {
         User user = new User();
