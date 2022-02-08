@@ -22,7 +22,6 @@ public class Club extends DateBaseEntity implements Serializable {
 
     private String name;
 
-
     private String description;
 
     private boolean isPublic;
