@@ -89,6 +89,10 @@ public class UserService {
         return userRepository.findByNickname(nickname);
     }
 
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
 //    public boolean hasEmailAndNicknameOf(String email, String nickname) {
 //        List<User> result = userRepository.hasEmailAndNicknameOf(email, nickname);
 //        return !result.isEmpty();
