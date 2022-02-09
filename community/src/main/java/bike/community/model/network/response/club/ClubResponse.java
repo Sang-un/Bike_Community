@@ -1,14 +1,14 @@
 package bike.community.model.network.response.club;
 
 
-import bike.community.model.entity.club.ClubUser;
 import bike.community.model.entity.club.Gender;
 import bike.community.model.entity.user.User;
 import bike.community.model.network.response.user.UserResponse;
+import lombok.Builder;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 public class ClubResponse {
 
     private String name;
@@ -21,4 +21,6 @@ public class ClubResponse {
     private int numOfUser;
     private User captain;
     private List<UserResponse> users;
+
+
 }

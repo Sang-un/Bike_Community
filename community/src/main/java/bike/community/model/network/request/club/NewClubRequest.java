@@ -21,4 +21,8 @@ public class NewClubRequest {
     private Gender gender;
     private int numOfUser;
     private String captainEmail;
+
+    public boolean getIsPublic() {
+        return this.isPublic;
+    }
 }
