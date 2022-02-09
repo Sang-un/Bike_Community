@@ -1,6 +1,7 @@
 package bike.community.service.user;
 
 import bike.community.component.redis.RedisService;
+import bike.community.model.common.Address;
 import bike.community.model.network.Header;
 import bike.community.model.network.request.user.JoinUserRequest;
 import bike.community.model.network.response.user.AfterJoinUserResponse;
@@ -34,14 +35,18 @@ public class UserService {
         List<User> sameUsers = hasEmailAndNicknameOf(joinUser.getEmail(), joinUser.getNickname());
         if(!sameUsers.isEmpty()) return responseAlreadyExistIdError(sameUsers, joinUser);
 
-        User user = User.makeUser(
+        Address address = joinUser.getAddress();
+        System.out.println("address = " + address);
+
+        User user = User.create(
                 joinUser.getEmail(),
                 passwordEncoder.encode(joinUser.getPassword()),
                 joinUser.getUsername(),
                 joinUser.getSex(),
                 joinUser.getPhone(),
                 joinUser.getBirthday(),
-                joinUser.getNickname());
+                joinUser.getNickname(),
+                joinUser.getAddress());
 
         User saveUser = userRepository.save(user);
         AfterJoinUserResponse afterJoinUser = AfterJoinUserResponse

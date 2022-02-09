@@ -1,6 +1,6 @@
 package bike.community.model.entity.board;
 
-import bike.community.model.DateBaseEntity;
+import bike.community.model.common.DateBaseEntity;
 import bike.community.model.enumclass.BoardType;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;

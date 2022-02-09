@@ -1,7 +1,8 @@
 package bike.community.model.entity.user;
 
 
-import bike.community.model.DateBaseEntity;
+import bike.community.model.common.Address;
+import bike.community.model.common.DateBaseEntity;
 import bike.community.model.entity.club.Club;
 import bike.community.model.entity.club.ClubUser;
 import bike.community.model.enumclass.UserRole;
@@ -32,6 +33,9 @@ public class User extends DateBaseEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     private UserRole role;//가입 회원은 USER, 가입 안한 회원은 GUEST
 
+    @Embedded
+    private Address address;
+
     //for oauth
     private String provider;
     private String providerId;
@@ -42,7 +46,7 @@ public class User extends DateBaseEntity implements Serializable {
     @OneToMany(mappedBy="user")
     private List<ClubUser> clubs = new ArrayList<>();
 
-    public static User makeUser(String email, String password, String username, String sex, String phone, String birthday, String nickname) {
+    public static User create(String email, String password, String username, String sex, String phone, String birthday, String nickname, Address address) {
         User user = new User();
         user.email = email;
         user.password = password;
@@ -52,6 +56,7 @@ public class User extends DateBaseEntity implements Serializable {
         user.birthday = birthday;
         user.nickname = nickname;
         user.role = UserRole.ROLE_USER;
+        user.address = address;
         return user;
     }
 

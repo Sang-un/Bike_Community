@@ -1,4 +1,4 @@
-package bike.community.model;
+package bike.community.model.common;
 
 import lombok.Getter;
 import lombok.Setter;

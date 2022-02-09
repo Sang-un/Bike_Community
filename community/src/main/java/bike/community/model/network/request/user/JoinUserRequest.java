@@ -1,5 +1,6 @@
 package bike.community.model.network.request.user;
 
+import bike.community.model.common.Address;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,4 +38,6 @@ public class JoinUserRequest {
     @Size(min=1,max=7, message="3자이상 7자미만으로 작성해야 합니다.")
     @NotBlank @NotNull
     private String nickname; //사용할 닉네임
+
+    private Address address;
 }

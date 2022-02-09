@@ -1,5 +1,6 @@
 package bike.community.service.club;
 
+import bike.community.model.common.Address;
 import bike.community.model.entity.club.Club;
 import bike.community.model.entity.club.Gender;
 import bike.community.model.entity.user.User;
@@ -29,9 +30,6 @@ class ClubServiceTest {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private EntityManager em;
-
     @Test
     void create() {
 
@@ -43,6 +41,7 @@ class ClubServiceTest {
                 .sex("남")
                 .username("이찬영")
                 .email("kokiyo97@naver.com")
+                .address(new Address("경기도 군포시 산본2동", "개나리아파트1329동 401호", "15802"))
                 .build());
 
         NewClubRequest newClub = NewClubRequest.builder()

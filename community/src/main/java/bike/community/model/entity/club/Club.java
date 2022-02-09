@@ -1,6 +1,6 @@
 package bike.community.model.entity.club;
 
-import bike.community.model.DateBaseEntity;
+import bike.community.model.common.DateBaseEntity;
 import bike.community.model.entity.user.User;
 import bike.community.model.network.request.club.NewClubRequest;
 import lombok.*;
