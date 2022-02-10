@@ -11,6 +11,8 @@ import bike.community.model.entity.user.User;
 import javax.persistence.*;
 import java.io.Serializable;
 
+import static javax.persistence.CascadeType.ALL;
+
 @Entity @Getter
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 @DiscriminatorColumn
@@ -22,9 +24,6 @@ public class Board extends DateBaseEntity implements Serializable {
 
     // 제목
     protected String title;
-
-    // 작성자
-    protected String writer;
 
     // 내용
     protected String content;
@@ -38,8 +37,7 @@ public class Board extends DateBaseEntity implements Serializable {
     @ColumnDefault("0")
     protected Long views;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade=ALL)
     protected User user;
 
     @Override
@@ -47,19 +45,11 @@ public class Board extends DateBaseEntity implements Serializable {
         views = views == null ? 0L : views;
     }
 
-    public Board(String title, String writer, String content, User user) {
-        this.title = title;
-        this.writer = writer;
-        this.content = content;
-        this.user = user;
-    }
-
     public static Board create(String title,  String content, User user) {
         Board board = new Board();
         board.title = title;
         board.content = content;
         board.user = user;
-        board.writer = user.getNickname();
         return board;
     }
 }

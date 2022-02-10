@@ -48,4 +48,3 @@ class FreeCommunityTest {
         BoardRepository.save(bike);
     }
 }
-

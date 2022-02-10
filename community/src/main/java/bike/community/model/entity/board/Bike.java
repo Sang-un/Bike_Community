@@ -19,7 +19,6 @@ public class Bike extends Board{
         bike.title = title;
         bike.content = content;
         bike.user = user;
-        bike.writer = user.getNickname();
         return bike;
     }
 

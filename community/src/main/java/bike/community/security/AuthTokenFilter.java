@@ -55,7 +55,7 @@ public class AuthTokenFilter extends BasicAuthenticationFilter {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                     chain.doFilter(request, response);
                 }
-                tokenError(response);
+                else tokenError(response);
                 return;
             }
         } catch (Exception e) {
@@ -66,7 +66,8 @@ public class AuthTokenFilter extends BasicAuthenticationFilter {
 
     private String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader(AUTH_HEADER);
-        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith(TOKEN_TYPE + " ")) return headerAuth.substring(7);
+        String substring = headerAuth.substring(7);
+        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith(TOKEN_TYPE)) return headerAuth.substring(7);
         return null;
     }
 

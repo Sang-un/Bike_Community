@@ -79,7 +79,7 @@ public final class TokenUtils {
     private Claims getJwtBody(String jwt) {
         return Jwts.parser()
                 .setSigningKey(secretKey)
-                .parseClaimsJws(jwt.split(SPACE)[1]).getBody();
+                .parseClaimsJws(jwt).getBody();
     }
 
     public String getEmailFromJwt(String jwt){
