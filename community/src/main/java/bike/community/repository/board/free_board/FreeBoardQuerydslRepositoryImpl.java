@@ -40,6 +40,7 @@ public class FreeBoardQuerydslRepositoryImpl implements FreeBoardQuerydslReposit
                         free.title,
                         new QUserWriterResponse(free.user.nickname, free.user.email)
                 )).from(free)
+                .leftJoin(free.user, user)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetchResults();
