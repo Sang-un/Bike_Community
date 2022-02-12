@@ -69,7 +69,6 @@ public class User extends DateBaseEntity implements Serializable {
         this.clubAsCaptain.add(club);
     }
 
-
     //for test
     public User(String email, String nickname) {
         this.email = email;

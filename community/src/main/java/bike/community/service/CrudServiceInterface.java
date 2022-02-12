@@ -14,6 +14,4 @@ public interface CrudServiceInterface<Request, Response> {
     Header<Response> update(User user, Request request, MultipartFile[] files, List<Long> delFileIdList);
 
     Header delete(User user, Long id);
-
-
 }
