@@ -1,12 +1,9 @@
 package bike.community.repository.board.free_board;
 
-import bike.community.model.entity.board.QFree;
-import bike.community.model.entity.user.QUser;
 import bike.community.model.network.response.post.board.free.FreeBoardPageResponse;
 import bike.community.model.network.response.post.board.free.QFreeBoardPageResponse;
 import bike.community.model.network.response.post.board.free.search_condition.FreeBoardSearchCond;
 import bike.community.model.network.response.user.QUserWriterResponse;
-import bike.community.model.network.response.user.UserWriterResponse;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -17,7 +14,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
-import java.util.List;
 
 import static bike.community.model.entity.board.QFree.free;
 import static bike.community.model.entity.user.QUser.user;
