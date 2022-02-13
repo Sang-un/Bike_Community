@@ -29,7 +29,7 @@ public class AuthTokenFilter extends BasicAuthenticationFilter {
     private final ObjectMapper objectMapper;
     private final TokenUtils tokenUtils;
     private final UserDetailsService userDetailsService;
-    private static final String[] NO_SECURITY_PATH = {"/api/guest", "/api/join", "/api/logout"};
+    private static final String[] NO_SECURITY_PATH = {"/api/guest*", "/api/join*", "/api/logout*"};
 
     public AuthTokenFilter(AuthenticationManager authenticationManager,
                            ObjectMapper objectMapper,
