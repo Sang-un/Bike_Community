@@ -1,5 +1,7 @@
 export { default as AppWidget } from './AppWidget';
 export { default as AppWelcome } from './AppWelcome';
+export { default as AppWelcomefirst } from './AppWelcomefirst';
+export { default as AppWelcomesecond } from './AppWelcomesecond';
 export { default as AppFeatured } from './AppFeatured';
 export { default as AppNewInvoice } from './AppNewInvoice';
 export { default as AppTopAuthors } from './AppTopAuthors';
@@ -8,3 +10,6 @@ export { default as AppAreaInstalled } from './AppAreaInstalled';
 export { default as AppWidgetSummary } from './AppWidgetSummary';
 export { default as AppCurrentDownload } from './AppCurrentDownload';
 export { default as AppTopInstalledCountries } from './AppTopInstalledCountries';
+export { default as Apppic } from './Apppic';
+export { default as Appcompany } from './Appcompany';
+export { default as Mainback } from './Mainback.jpeg';

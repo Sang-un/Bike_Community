@@ -13,10 +13,11 @@ import { PATH_DASHBOARD } from '../../routes/paths';
 // components
 import Page from '../../components/Page';
 import Iconify from '../../components/Iconify';
-import { SkeletonPostItem } from '../../components/skeleton';
+import { SkeletonboardItem } from '../../components/skeleton';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 // sections
-import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../../sections/@dashboard/blog';
+import { BlogPostCard, BlogPostlist, BlogPostsSort, BlogPostsSearch } from '../../sections/@dashboard/board';
+import BoardList from './Boardlist';
 
 // ----------------------------------------------------------------------
 
@@ -64,10 +65,13 @@ export default function BlogPosts() {
     }
   }, [isMountedRef]);
 
+
   useEffect(() => {
     getAllPosts();
   }, [getAllPosts]);
 
+
+  console.log(posts)
   const handleChangeSort = (value) => {
     if (value) {
       setFilters(value);
@@ -95,13 +99,31 @@ export default function BlogPosts() {
           }
         />
 
-        <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
+        <Stack mb={2} direction="row" alignItems="center" justifyContent="space-between">
           <BlogPostsSearch />
           <BlogPostsSort query={filters} options={SORT_OPTIONS} onSort={handleChangeSort} />
         </Stack>
+        <Grid container spacing={1}>
+        {(!posts.length ? [...Array(12)] 
+            : sortedPosts).map((post, index) =>
+            post ? (
+              <Grid key={post.id} item xs={12} sm={12} md={12}>
+                <BlogPostlist post={post}/>
+              </Grid>
+            ) : (
+              <SkeletonboardItem key={index} />
+            )
+          )}
+        </Grid>
+      </Container>
+    </Page>
+  );
+}
 
-        <Grid container spacing={3}>
-          {(!posts.length ? [...Array(12)] : sortedPosts).map((post, index) =>
+
+/*         <Grid container spacing={3}>
+          {(!posts.length ? [...Array(12)] 
+            : sortedPosts).map((post, index) =>
             post ? (
               <Grid key={post.id} item xs={12} sm={6} md={(index === 0 && 6) || 3}>
                 <BlogPostCard post={post} index={index} />
@@ -110,8 +132,4 @@ export default function BlogPosts() {
               <SkeletonPostItem key={index} />
             )
           )}
-        </Grid>
-      </Container>
-    </Page>
-  );
-}
+        </Grid> */

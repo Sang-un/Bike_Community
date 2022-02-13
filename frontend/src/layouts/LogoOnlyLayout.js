@@ -1,8 +1,10 @@
 import { Outlet } from 'react-router-dom';
 // @mui
+import { Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 // components
 import Logo from '../components/Logo';
+import Label from '../components/Label';
 
 // ----------------------------------------------------------------------
 
@@ -24,7 +26,19 @@ export default function LogoOnlyLayout() {
   return (
     <>
       <HeaderStyle>
-        <Logo />
+      <Stack 
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="center" 
+        spacing={1}>
+        <Logo sx={{ mb: 0.5 }}/>
+          <Label 
+          sx={{ mt: 0.5 }}
+          color="primary" 
+          variant = 'filled'>
+            RIDERTOWN
+          </Label>
+        </Stack>
       </HeaderStyle>
       <Outlet />
     </>

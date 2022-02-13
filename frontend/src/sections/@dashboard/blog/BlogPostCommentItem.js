@@ -13,7 +13,7 @@ import {
   ListItemAvatar,
 } from '@mui/material';
 // utils
-import { fDate } from '../../../utils/formatTime';
+import { fyeardateTime } from '../../../utils/formatTime';
 
 // ----------------------------------------------------------------------
 
@@ -63,7 +63,7 @@ export default function BlogPostCommentItem({ name, avatarUrl, message, tagUser,
                   color: 'text.disabled',
                 }}
               >
-                {fDate(postedAt)}
+                {fyeardateTime(postedAt)}
               </Typography>
               <Typography component="span" variant="body2">
                 <strong>{tagUser}</strong> {message}
@@ -74,7 +74,7 @@ export default function BlogPostCommentItem({ name, avatarUrl, message, tagUser,
 
         {!hasReply && (
           <Button size="small" onClick={handleOpenReply} sx={{ position: 'absolute', right: 0 }}>
-            Reply
+            답글달기
           </Button>
         )}
       </ListItem>

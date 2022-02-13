@@ -2,7 +2,8 @@ import { capitalCase } from 'change-case';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Stack, Link, Alert, Tooltip, Container, Typography } from '@mui/material';
+import { Box, Stack, Link, Tooltip, Container, Typography } from '@mui/material';
+import SportsMotorsportsTwoToneIcon from '@mui/icons-material/SportsMotorsportsTwoTone';
 // routes
 import { PATH_AUTH } from '../../routes/paths';
 // hooks
@@ -11,10 +12,9 @@ import useResponsive from '../../hooks/useResponsive';
 // components
 import Page from '../../components/Page';
 import Logo from '../../components/Logo';
-import Image from '../../components/Image';
 // sections
 import { LoginForm } from '../../sections/auth/login';
-import bikehelmet  from './bikehelmet.png';
+import Label from '../../components/Label';
 
 
 // ----------------------------------------------------------------------
@@ -64,7 +64,19 @@ export default function Login() {
     <Page title="Login">
       <RootStyle>
         <HeaderStyle>
-          <Logo />
+        <Stack 
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="center" 
+        spacing={1}>
+        <Logo sx={{ mb: 0.5 }}/>
+          <Label 
+          sx={{ mt: 0.5 }}
+          color="primary" 
+          variant = 'filled'>
+            RIDERTOWN
+          </Label>
+        </Stack>
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
               계정이 없으신가요? {''}
@@ -89,18 +101,13 @@ export default function Login() {
 
               <Tooltip title={capitalCase(method)} placement="right">
                 <>
-                  <Image
-                    disabledEffect
-                    src={bikehelmet}
+                  <SportsMotorsportsTwoToneIcon
+                    color = "primary"
                     sx={{ width: 40, height: 40 }}
                   />
                 </>
               </Tooltip>
             </Stack>
-
-            <Alert severity="info" sx={{ mb: 3 }}>
-              Use email : <strong>demo@minimals.cc</strong> / password :<strong> demo1234</strong>
-            </Alert>
             <LoginForm />
             {!smUp && (
               <Typography variant="body2" align="center" sx={{ mt: 3 }}>

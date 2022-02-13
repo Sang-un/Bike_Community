@@ -64,6 +64,15 @@ export const PATH_DASHBOARD = {
     editById: path(ROOTS_DASHBOARD, `/user/reece-chung/edit`),
     account: path(ROOTS_DASHBOARD, '/user/account')
   },
+  garage: {
+      root: path(ROOTS_DASHBOARD, '/garage'),
+      profile: path(ROOTS_DASHBOARD, '/garage/profile'),
+      cards: path(ROOTS_DASHBOARD, '/garage/cards'),
+      list: path(ROOTS_DASHBOARD, '/garage/list'),
+      newUser: path(ROOTS_DASHBOARD, '/garage/new'),
+      editById: path(ROOTS_DASHBOARD, `/garage/reece-chung/edit`),
+      account: path(ROOTS_DASHBOARD, '/garage/account')
+    },
   eCommerce: {
     root: path(ROOTS_DASHBOARD, '/e-commerce'),
     shop: path(ROOTS_DASHBOARD, '/e-commerce/shop'),    
@@ -84,7 +93,8 @@ export const PATH_DASHBOARD = {
   usedeCommerce: {
     root: path(ROOTS_DASHBOARD, '/used-e-commerce'),
     shop: path(ROOTS_DASHBOARD, '/used-e-commerce/shop'),   
-    motocycle: path(ROOTS_DASHBOARD, '/used-e-commerce/motocycle'),    
+    motocycle: path(ROOTS_DASHBOARD, '/used-e-commerce/motocycle'), 
+    motocyclegarage: path(ROOTS_DASHBOARD, '/used-e-commerce/motocyclegarage'),    
     motocyclegear: path(ROOTS_DASHBOARD, '/used-e-commerce/motocyclegear'),  
     motocycleparts: path(ROOTS_DASHBOARD, '/used-e-commerce/motocycleparts'),
     product: path(ROOTS_DASHBOARD, '/used-e-commerce/product/:name'),
@@ -107,6 +117,21 @@ export const PATH_DASHBOARD = {
     postById: path(ROOTS_DASHBOARD, '/blog/post/apply-these-7-secret-techniques-to-improve-event'),
     newPost: path(ROOTS_DASHBOARD, '/blog/new-post')
   },
+  board: {
+    root: path(ROOTS_DASHBOARD, '/board'),
+    posts: path(ROOTS_DASHBOARD, '/board/posts'),
+    list: path(ROOTS_DASHBOARD, '/board/list'),
+    motocycle: path(ROOTS_DASHBOARD, '/board/Motocycle'),    
+    motocyclefix: path(ROOTS_DASHBOARD, '/board/Motocyclefix'),
+    motocyclepicture: path(ROOTS_DASHBOARD, '/board/Motocyclepicture'),
+    free: path(ROOTS_DASHBOARD, '/board/free'),
+    post: path(ROOTS_DASHBOARD, '/board/post/:title'),
+    postById: path(ROOTS_DASHBOARD, '/board/post/apply-these-7-secret-techniques-to-improve-event'),
+    newPost: path(ROOTS_DASHBOARD, '/board/new-post'),
+    newPostmotocycle: path(ROOTS_DASHBOARD, '/board/newPostmotocycle'),
+    newPostmotocyclefix: path(ROOTS_DASHBOARD, '/board/newPostmotocyclefix'),
+    newPostmotocyclepicture: path(ROOTS_DASHBOARD, '/board/newPostmotocyclefix'),
+  },
   club: {
     root: path(ROOTS_DASHBOARD, '/club'),
     club: path(ROOTS_DASHBOARD, '/club/club'),    
@@ -120,20 +145,6 @@ export const PATH_DASHBOARD = {
     invoice: path(ROOTS_DASHBOARD, '/club/invoice')
   },
   
-  board: {
-    root: path(ROOTS_DASHBOARD, '/board'),
-    posts: path(ROOTS_DASHBOARD, '/board/posts'),
-    motocycle: path(ROOTS_DASHBOARD, '/board/Motocycle'),    
-    motocyclefix: path(ROOTS_DASHBOARD, '/board/Motocyclefix'),
-    motocyclepicture: path(ROOTS_DASHBOARD, '/board/Motocyclepicture'),
-    free: path(ROOTS_DASHBOARD, '/board/free'),
-    post: path(ROOTS_DASHBOARD, '/board/post/:title'),
-    postById: path(ROOTS_DASHBOARD, '/board/post/apply-these-7-secret-techniques-to-improve-event'),
-    newPost: path(ROOTS_DASHBOARD, '/board/new-post'),
-    newPostmotocycle: path(ROOTS_DASHBOARD, '/board/newPostmotocycle'),
-    newPostmotocyclefix: path(ROOTS_DASHBOARD, '/board/newPostmotocyclefix'),
-    newPostmotocyclepicture: path(ROOTS_DASHBOARD, '/board/newPostmotocyclefix'),
-  }
 };
 
-export const PATH_DOCS = 'https://naver.com';
+export const PATH_DOCS = 'http://localhost:3000';

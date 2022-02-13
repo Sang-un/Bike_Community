@@ -1,6 +1,10 @@
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Container, Grid, Stack } from '@mui/material';
+import { Box, CardContent, Container, Grid, Link, Stack, Typography, Alert ,Button} from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import { common } from '@mui/material/colors';
+// icons
+import StorefrontIcon from '@mui/icons-material/Storefront';
 // hooks
 import useAuth from '../../hooks/useAuth';
 import useSettings from '../../hooks/useSettings';
@@ -10,13 +14,16 @@ import Page from '../../components/Page';
 import {
   AppWidget,
   AppWelcome,
+  AppWelcomefirst,
   AppFeatured,
-  AppNewInvoice,
+  AppWelcomesecond,
   AppTopAuthors,
   AppTopRelated,
   AppAreaInstalled,
   AppWidgetSummary,
   AppCurrentDownload,
+  Appcompany,
+  Apppic,
   AppTopInstalledCountries,
 } from '../../sections/@dashboard/general/app';
 
@@ -30,28 +37,21 @@ export default function GeneralApp() {
   return (
     <Page title="General: App">
       <Container maxWidth={themeStretch ? false : 'xl'}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={8}>
-            <AppWelcome displayName={user?.displayName} />
-          </Grid>
+        <Grid container spacing={1}>
+        <Grid item xs={12} md={12}>
+            <AppWelcomefirst displayName={user?.displayName} />
+            </Grid>
+            <Grid item xs={12} md={12}>
+            <AppWelcomesecond displayName={user?.displayName} />
+            </Grid>
 
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={12}>
             <AppFeatured />
           </Grid>
 
           <Grid item xs={12} md={4}>
             <AppWidgetSummary
-              title="Total Active Users"
-              percent={2.6}
-              total={18765}
-              chartColor={theme.palette.primary.main}
-              chartData={[5, 18, 12, 51, 68, 11, 39, 37, 27, 20]}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <AppWidgetSummary
-              title="Total Installed"
+              title="방문한 라이더들"
               percent={0.2}
               total={4876}
               chartColor={theme.palette.chart.blue[0]}
@@ -61,46 +61,46 @@ export default function GeneralApp() {
 
           <Grid item xs={12} md={4}>
             <AppWidgetSummary
-              title="Total Downloads"
+              title="어플 다운로드 수"
               percent={-0.1}
               total={678}
               chartColor={theme.palette.chart.red[0]}
               chartData={[8, 9, 31, 8, 16, 37, 8, 33, 46, 31]}
             />
           </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentDownload />
+          <Grid item xs={12} md={4}>
+            <AppWidgetSummary
+              title="어플 다운로드 수"
+              percent={-0.1}
+              total={678}
+              chartColor={theme.palette.chart.red[0]}
+              chartData={[8, 9, 31, 8, 16, 37, 8, 33, 46, 31]}
+            />
+          </Grid>
+          <Grid item xs={12} md={12}>
+            <AppWelcome displayName={user?.displayName} />
+            </Grid> 
+          <Grid item xs={12} md={12} lg={12}>
+            <Apppic />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
-            <AppAreaInstalled />
+          <Grid item xs={12} md={12} lg={12}>
+            <Apppic />
           </Grid>
 
-          <Grid item xs={12} lg={8}>
-            <AppNewInvoice />
+          <Grid item xs={12} md={12} lg={12}>
+            <Apppic />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={4}>
-            <AppTopRelated />
+          <Grid item xs={12} md={12} lg={12}>
+            <Appcompany/>
           </Grid>
 
-          <Grid item xs={12} md={6} lg={4}>
-            <AppTopInstalledCountries />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppTopAuthors />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <Stack spacing={3}>
-              <AppWidget title="Conversion" total={38566} icon={'eva:person-fill'} chartData={48} />
-              <AppWidget title="Applications" total={55566} icon={'eva:email-fill'} color="warning" chartData={75} />
-            </Stack>
-          </Grid>
         </Grid>
       </Container>
     </Page>
   );
 }
+
+
+

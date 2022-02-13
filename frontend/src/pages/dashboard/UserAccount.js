@@ -26,11 +26,11 @@ import {
 export default function UserAccount() {
   const { themeStretch } = useSettings();
 
-  const [currentTab, setCurrentTab] = useState('profile');
+  const [currentTab, setCurrentTab] = useState('프로필');
 
   const ACCOUNT_TABS = [
     {
-      value: 'profile',
+      value: '프로필',
       icon: <Iconify icon={'ic:round-account-box'} width={20} height={20} />,
       component: <AccountGeneral />,
     },
@@ -76,7 +76,7 @@ export default function UserAccount() {
           onChange={(e, value) => setCurrentTab(value)}
         >
           {ACCOUNT_TABS.map((tab) => (
-            <Tab disableRipple key={tab.value} label={capitalCase(tab.value)} icon={tab.icon} value={tab.value} />
+            <Tab disableRipple key={tab.value} label={tab.value} icon={tab.icon} value={tab.value} />
           ))}
         </Tabs>
 

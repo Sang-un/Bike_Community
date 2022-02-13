@@ -45,6 +45,7 @@ export default function Clubroom() {
   
   useEffect(() => {
     dispatch(getProduct(name));
+    console.log(name)
   }, [dispatch, name]);
 
 

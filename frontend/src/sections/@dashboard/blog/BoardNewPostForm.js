@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
-import { useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 // form
@@ -12,7 +13,7 @@ import { Grid, Card, Chip, Stack, Button, Typography, Autocomplete } from '@mui/
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
-import { RHFSwitch, RHFEditor, FormProvider, RHFTextField, RHFUploadSingleFile } from '../../../components/hook-form';
+import { RHFSwitch, RHFEditor, FormProvider, RHFTextField } from '../../../components/hook-form';
 //
 import BlogNewPostPreview from './BlogNewPostPreview';
 
@@ -29,9 +30,11 @@ const POST_OPTION = [
 
 const TAGS_OPTION = [
   '아무거나 자유롭게 입력해주세요.', 
-  '안녕',
 ];
 
+BoardNewPostForm.propTypes = {
+  ismoto: PropTypes.bool,
+};
 
 const LabelStyle = styled(Typography)(({ theme }) => ({
   ...theme.typography.subtitle2,
@@ -57,10 +60,10 @@ export default function BoardNewPostForm() {
     setOpen(false);
   };
 
+
   const NewBlogSchema = Yup.object().shape({
     title: Yup.string().min(5, "제목을 최소 5자 이상 입력해주세요.").required('제목을 입력해주세요.'),
-    content: Yup.string().min(5, "내용을 최소 5자 이상 입력해주세요.").required('내용을 입력해주세요.'),
-    cover: Yup.mixed().required('대표사진을 올려주세요.'),
+    description: Yup.string().min(5, "내용을 최소 5자 이상 입력해주세요.").required('내용을 입력해주세요.'),
     boardtype: Yup.string().min(1,"게시판 타입을 정해주세요").required('게시판 타입을 정해주세요.').nullable(),
     tags: Yup.array().min(1,"태그를 최소 한가지 이상 입력해주세요.").required('태그를 최소 한가지 이상 입력해주세요.').nullable(),
   });
@@ -68,12 +71,8 @@ export default function BoardNewPostForm() {
   const defaultValues = {
     title: '',
     description: '',
-    content: '',
-    cover: null,
     tags: '[]',
-    publish: true,
-    comments: true,
-    boardtype: '' ,
+    boardtype: '',
   };
 
   const methods = useForm({
@@ -85,10 +84,10 @@ export default function BoardNewPostForm() {
     reset,
     watch,
     control,
-    setValue,
     handleSubmit,
     formState: { isSubmitting, isValid },
   } = methods;
+
 
   const values = watch();
 
@@ -104,23 +103,6 @@ export default function BoardNewPostForm() {
     }
   };
 
-  const handleDrop = useCallback(
-    (acceptedFiles) => {
-      const file = acceptedFiles[0];
-
-      if (file) {
-        setValue(
-          'cover',
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        );
-      }
-    },
-    [setValue]
-  );
-
-
   return (
     <>
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -131,11 +113,7 @@ export default function BoardNewPostForm() {
                 <RHFTextField name="title" label="제목" />
                 <div>
                   <LabelStyle>내용</LabelStyle>
-                  <RHFEditor name="content"/>
-                </div>
-                <div>
-                  <LabelStyle>대표사진</LabelStyle>
-                  <RHFUploadSingleFile name="cover" accept="image/*" maxSize={3145728} onDrop={handleDrop} />
+                  <RHFEditor name="description"/>
                 </div>
               </Stack>
             </Card>

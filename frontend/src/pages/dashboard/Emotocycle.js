@@ -68,6 +68,8 @@ export default function EcommerceShop() {
   useEffect(() => {
     dispatch(filterProducts(values));
   }, [dispatch, values]);
+  
+  console.log(products)
 
   const handleOpenFilter = () => {
     setOpenFilter(true);

@@ -102,6 +102,7 @@ export default function Router() {
             { element: <Navigate to="/dashboard/used-e-commerce/shop" replace />, index: true },
             { path: 'shop', element: <EcommerceShop /> },
             { path: 'motocycle', element: <UEmotocycle /> },
+            { path: 'motocyclegarage', element: <UEmotocyclegarage /> },
             { path: 'motocyclegear', element: <UEmotocyclegear /> },          
             { path: 'motocycleparts', element: <UEmotocycleparts /> },
             { path: 'product/:name', element: <EcommerceProductDetails /> },
@@ -127,6 +128,19 @@ export default function Router() {
           ],
         },
         {
+          path: 'garage',
+          children: [
+            { element: <Navigate to="/dashboard/garage/profile" replace />, index: true },
+            { path: 'profile', element: <GarageProfile /> },
+            { path: 'profile/:name', element: <GarageProfile /> },
+            { path: 'cards', element: <GarageCards /> },
+            { path: 'list', element: <GarageList /> },
+            { path: 'new', element: <GarageCreate /> },
+            { path: ':name/edit', element: <GarageCreate /> },
+            { path: 'account', element: <GarageAccount /> },
+          ],
+        },
+        {
           path: 'blog',
           children: [
             { element: <Navigate to="/dashboard/blog/posts" replace />, index: true },
@@ -142,11 +156,13 @@ export default function Router() {
           path: 'board',
           children: [
             { element: <Navigate to="/dashboard/board/posts" replace />, index: true },
+            { path: 'list', element: <Boardlist /> },
             { path: 'motocycle', element: <BoardMotocycle /> },
             { path: 'motocyclefix', element: <BoardMotocyclefix /> },            
             { path: 'motocyclepicture', element: <BoardMotocyclepicture /> },            
             { path: 'free', element: <Boardfree /> },
             { path: 'new-post', element: <BlogNewPost /> },
+            { path: 'post/:title', element: <Boardpost /> },
             { path: 'Newpostmotocycle', element: <NewpostBoardmotocycle /> },
             { path: 'NewpostMotocyclefix', element: <NewpostBoardMotocyclefix /> },
             { path: 'NewpostMotocyclepicture', element: <NewpostBoardMotocyclepicture /> },
@@ -256,6 +272,7 @@ const ClubInvoice = Loadable(lazy(() => import('../pages/dashboard/ClubInvoice')
 
 // 중고거래
 const UEmotocycle = Loadable(lazy(() => import('../pages/dashboard/UEmotocycle')));
+const UEmotocyclegarage = Loadable(lazy(() => import('../pages/dashboard/UEmotocyclegarage')));
 const UEmotocyclegear = Loadable(lazy(() => import('../pages/dashboard/UEmotocyclegear')));
 const UEmotocycleparts = Loadable(lazy(() => import('../pages/dashboard/UEmotocycleparts')));
 const UEcommerceProductCreate = Loadable(lazy(() => import('../pages/dashboard/UEcommerceProductCreate')));
@@ -264,10 +281,12 @@ const UEcommerceProductCreateparts = Loadable(lazy(() => import('../pages/dashbo
 
 
 // 모토사이클 게시글
+const Boardlist = Loadable(lazy(() => import('../pages/dashboard/Boardlist')));
 const BoardMotocycle = Loadable(lazy(() => import('../pages/dashboard/Boardmotocycle')));
 const BoardMotocyclefix = Loadable(lazy(() => import('../pages/dashboard/Boardmotocyclefix')));
 const BoardMotocyclepicture = Loadable(lazy(() => import('../pages/dashboard/Boardmotocyclepicture')));
 const Boardfree = Loadable(lazy(() => import('../pages/dashboard/Boardfree')));
+const Boardpost = Loadable(lazy(() => import('../pages/dashboard/Boardpost')));
 const NewpostBoardmotocycle = Loadable(lazy(() => import('../pages/dashboard/NewpostBoardmotocycle')));
 const NewpostBoardMotocyclefix = Loadable(lazy(() => import('../pages/dashboard/NewpostBoardmotocyclefix')));
 const NewpostBoardMotocyclepicture = Loadable(lazy(() => import('../pages/dashboard/NewpostBoardmotocyclepicture')));
@@ -281,11 +300,20 @@ const BlogMotocycleparts = Loadable(lazy(() => import('../pages/dashboard/Blogmo
 const BlogMotocyclearticle = Loadable(lazy(() => import('../pages/dashboard/Blogmotocyclearticle')));
 const BlogPost = Loadable(lazy(() => import('../pages/dashboard/BlogPost')));
 const BlogNewPost = Loadable(lazy(() => import('../pages/dashboard/BlogNewPost')));
+// 유저
 const UserProfile = Loadable(lazy(() => import('../pages/dashboard/UserProfile')));
 const UserCards = Loadable(lazy(() => import('../pages/dashboard/UserCards')));
 const UserList = Loadable(lazy(() => import('../pages/dashboard/UserList')));
 const UserAccount = Loadable(lazy(() => import('../pages/dashboard/UserAccount')));
 const UserCreate = Loadable(lazy(() => import('../pages/dashboard/UserCreate')));
+// 개러지
+const GarageProfile = Loadable(lazy(() => import('../pages/dashboard/GarageProfile')));
+const GarageCards = Loadable(lazy(() => import('../pages/dashboard/GarageCards')));
+const GarageList = Loadable(lazy(() => import('../pages/dashboard/GarageList')));
+const GarageAccount = Loadable(lazy(() => import('../pages/dashboard/GarageAccount')));
+const GarageCreate = Loadable(lazy(() => import('../pages/dashboard/GarageCreate')));
+
+
 const Chat = Loadable(lazy(() => import('../pages/dashboard/Chat')));
 const Mail = Loadable(lazy(() => import('../pages/dashboard/Mail')));
 const Calendar = Loadable(lazy(() => import('../pages/dashboard/Calendar')));

@@ -38,15 +38,14 @@ export default function VerifyCode() {
               startIcon={<Iconify icon={'eva:arrow-ios-back-fill'} width={20} height={20} />}
               sx={{ mb: 3 }}
             >
-              Back
+              로그인하기
             </Button>
 
             <Typography variant="h3" paragraph>
-              Please check your email!
+              코드 확인
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
-              We have emailed a 6-digit confirmation code to acb@domain, please enter the code in below box to verify
-              your email.
+              발송된 메일에 담긴 6자리 코드를 입력해주세요!
             </Typography>
 
             <Box sx={{ mt: 5, mb: 3 }}>
@@ -54,9 +53,9 @@ export default function VerifyCode() {
             </Box>
 
             <Typography variant="body2" align="center">
-              Don’t have a code? &nbsp;
-              <Link variant="subtitle2" underline="none" onClick={() => {}}>
-                Resend code
+              메일이 도착하지 않으셨나요? &nbsp;
+              <Link variant="subtitle2" underline="none" component={RouterLink} to={PATH_AUTH.resetPassword}>
+                다시보내기
               </Link>
             </Typography>
           </Box>

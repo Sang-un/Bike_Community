@@ -2,7 +2,8 @@ import { capitalCase } from 'change-case';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Link, Container, Typography, Tooltip } from '@mui/material';
+import { Box, Link, Container, Typography, Tooltip, Stack } from '@mui/material';
+import SportsMotorsportsTwoToneIcon from '@mui/icons-material/SportsMotorsportsTwoTone';
 // hooks
 import useAuth from '../../hooks/useAuth';
 import useResponsive from '../../hooks/useResponsive';
@@ -11,10 +12,9 @@ import { PATH_AUTH } from '../../routes/paths';
 // components
 import Page from '../../components/Page';
 import Logo from '../../components/Logo';
-import Image from '../../components/Image';
 // sections
 import { RegisterForm } from '../../sections/auth/register';
-import bikehelmet  from './bikehelmet.png';
+import Label from '../../components/Label';
 
 // ----------------------------------------------------------------------
 
@@ -59,10 +59,22 @@ export default function Register() {
   const smUp = useResponsive('up', 'sm');
 
   return (
-    <Page title="Register">
+    <Page title="회원가입">
       <RootStyle>
         <HeaderStyle>
-          <Logo />
+        <Stack 
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="center" 
+        spacing={1}>
+        <Logo sx={{ mb: 0.5 }}/>
+          <Label 
+          sx={{ mt: 0.5 }}
+          color="primary" 
+          variant = 'filled'>
+            RIDERTOWN
+          </Label>
+        </Stack>
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
               이미 계정이 있으신가요?{' '}
@@ -85,9 +97,8 @@ export default function Register() {
               </Box>
               <Tooltip title={capitalCase(method)}>
                 <>
-                  <Image
-                    disabledEffect
-                    src={bikehelmet}
+                <SportsMotorsportsTwoToneIcon
+                    color = "primary"
                     sx={{ width: 40, height: 40 }}
                   />
                 </>

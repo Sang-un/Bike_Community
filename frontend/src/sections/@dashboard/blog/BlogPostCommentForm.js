@@ -21,14 +21,11 @@ const RootStyles = styled('div')(({ theme }) => ({
 
 export default function BlogPostCommentForm() {
   const CommentSchema = Yup.object().shape({
-    comment: Yup.string().required('Comment is required'),
-    name: Yup.string().required('Name is required'),
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
+    comment: Yup.string().required('덧글을 입력해주세요!'),
   });
 
   const defaultValues = {
     comment: '',
-    name: '',
     email: '',
   };
 
@@ -55,19 +52,14 @@ export default function BlogPostCommentForm() {
   return (
     <RootStyles>
       <Typography variant="subtitle1" sx={{ mb: 3 }}>
-        Add Comment
+        덧글 쓰기
       </Typography>
 
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={3} alignItems="flex-end">
-          <RHFTextField name="comment" label="Comment *" multiline rows={3} />
-
-          <RHFTextField name="name" label="Name *" />
-
-          <RHFTextField name="email" label="Email *" />
-
+          <RHFTextField name="comment" label="덧글" multiline rows={3} />
           <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-            Post comment
+            덧글 달기
           </LoadingButton>
         </Stack>
       </FormProvider>

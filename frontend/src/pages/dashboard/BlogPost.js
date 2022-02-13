@@ -87,9 +87,9 @@ export default function BlogPost() {
 
         {post && (
           <Card>
-            <BlogPostHero post={post} />
-
-            <Box sx={{ p: { xs: 3, md: 5 } }}>
+              <BlogPostHero post={post} />
+                <Divider/>
+              <Box sx={{ p: { xs: 3, md: 5 }}}>
               <Typography variant="h6" sx={{ mb: 5 }}>
                 {post.description}
               </Typography>

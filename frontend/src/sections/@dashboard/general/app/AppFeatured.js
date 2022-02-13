@@ -135,7 +135,7 @@ function CarouselItem({ item, isActive }) {
         </m.div>
       </CardContent>
       <OverlayStyle />
-      <Image alt={title} src={image} sx={{ height: { xs: 280, xl: 320 } }} />
+      <Image alt={title} src={image} sx={{ height: { xs: 350, xl: 400 } }} />
     </Box>
   );
 }

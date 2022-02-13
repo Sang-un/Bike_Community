@@ -92,14 +92,14 @@ export default function ProductDetailsCarousel({ product }) {
   return (
     <RootStyle>
       <Box sx={{ p: 1 }}>
-        <Box sx={{ zIndex: 0, borderRadius: 2, overflow: 'hidden', position: 'relative' }}>
+        <Box sx={{ height: 400, zIndex: 0, borderRadius: 2, overflow: 'hidden', position: 'relative' }}>
           <Slider {...settings1} asNavFor={nav2} ref={slider1}>
             {product.images.map((img) => (
               <Image
                 key={img}
                 alt="large image"
                 src={img}
-                ratio="1/1"
+                ratio="16/9"
                 onClick={() => handleOpenLightbox(img)}
                 sx={{ cursor: 'zoom-in' }}
               />

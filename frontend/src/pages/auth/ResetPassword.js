@@ -43,7 +43,7 @@ export default function ResetPassword() {
                   비밀번호가 기억이 안나시나요?
                 </Typography>
                 <Typography sx={{ color: 'text.secondary', mb: 5 }}>
-                  가입시 입력했던 이메일을 적어주세요.<br/> 이메일로 비밀번호를 보내드릴게요.
+                  가입시 입력했던 이메일을 적어주세요.<br/> 이메일로 코드를 보내드릴게요.
                 </Typography>
 
                 <ResetPasswordForm onSent={() => setSent(true)} onGetEmail={(value) => setEmail(value)} />
@@ -65,8 +65,8 @@ export default function ResetPassword() {
                   로 <br />보냈으니 이메일을 확인해주세요.
                 </Typography>
 
-                <Button size="large" variant="contained" component={RouterLink} to={PATH_AUTH.login} sx={{ mt: 5 }}>
-                  돌아가기
+                <Button size="large" variant="contained" component={RouterLink} to={PATH_AUTH.verify} sx={{ mt: 5 }}>
+                  코드 입력하기
                 </Button>
               </Box>
             )}

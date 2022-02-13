@@ -19,12 +19,12 @@ export default function VerifyCodeForm() {
   const { enqueueSnackbar } = useSnackbar();
 
   const VerifyCodeSchema = Yup.object().shape({
-    code1: Yup.string().required('Code is required'),
-    code2: Yup.string().required('Code is required'),
-    code3: Yup.string().required('Code is required'),
-    code4: Yup.string().required('Code is required'),
-    code5: Yup.string().required('Code is required'),
-    code6: Yup.string().required('Code is required'),
+    code1: Yup.string().required('코드가 필요해요!'),
+    code2: Yup.string().required('코드가 필요해요!'),
+    code3: Yup.string().required('코드가 필요해요!'),
+    code4: Yup.string().required('코드가 필요해요!'),
+    code5: Yup.string().required('코드가 필요해요!'),
+    code6: Yup.string().required('코드가 필요해요!'),
   });
 
   const defaultValues = {
@@ -138,7 +138,7 @@ export default function VerifyCodeForm() {
         disabled={!isValid}
         sx={{ mt: 3 }}
       >
-        Verify
+        코드 입력하기
       </LoadingButton>
     </form>
   );

@@ -107,6 +107,14 @@ export default function ProductDetailsSummary({ product, ...other }) {
         </Stack>  
         <Stack direction="row"  justifyContent="space-between" sx={{ mb: 3 }} color='text.secondary'>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }} >
+            성별
+          </Typography>
+          <Typography variant="h5" sx={{ mb: 3 }} color='text.secondary'>
+          {fCurrency(price)}
+        </Typography>
+        </Stack>  
+        <Stack direction="row"  justifyContent="space-between" sx={{ mb: 3 }} color='text.secondary'>
+          <Typography variant="subtitle1" sx={{ mt: 0.5 }} >
             지역
           </Typography>
           <Typography variant="h5" sx={{ mb: 3 }} color='text.secondary'>
@@ -122,13 +130,21 @@ export default function ProductDetailsSummary({ product, ...other }) {
         </Typography>
         </Stack>
         <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}color='text.secondary'>    
-        <Typography variant="subtitle1" sx={{ mt: 0.5 }}color='text.secondary'>
-            입장 가능 기종
+          <Typography variant="subtitle1" sx={{ mt: 0.5 }}color='text.secondary'>
+            입장 가능한 브랜드
           </Typography>
           <Typography variant="h5" sx={{ mb: 3 }}color='text.secondary'>
           {fCurrency(price)}명
           </Typography>
         </Stack>
+        <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}color='text.secondary'>    
+        <Typography variant="subtitle1" sx={{ mt: 0.5 }}color='text.secondary'>
+            입장 가능한 모델
+          </Typography>
+          <Typography variant="h5" sx={{ mb: 3 }}color='text.secondary'>
+          {fCurrency(price)}명
+          </Typography>
+          </Stack>
         <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}color='text.secondary'>    
         <Typography variant="subtitle1" sx={{ mt: 0.5 }}color='text.secondary'>
             인원수

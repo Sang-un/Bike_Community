@@ -60,16 +60,7 @@ export default function ClubDetails() {
               <Grid container>
                 <Grid item xs={12} md={6} lg={7}>
                   <ProductDetailsCarousel product={product} />
-                </Grid>
-                <Grid item xs={12} md={6} lg={5}>
-                  <ProductDetailsSummary
-                    product={product}
-                  />
-                </Grid>
-              </Grid>
-            </Card>
-            <br/>
-            <Card>
+                  <Card sx={{ml: 1 , mb:1}} >
               <TabContext value={value}>
                 <Box sx={{ px: 3, bgcolor: 'background.neutral' }}>
                   <TabList onChange={(e, value) => setValue(value)}>
@@ -83,6 +74,14 @@ export default function ClubDetails() {
                   </Box>
                 </TabPanel>
               </TabContext>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} md={6} lg={5}>
+                  <ProductDetailsSummary
+                    product={product}
+                  />
+                </Grid>
+              </Grid>
             </Card>
           </>
         )}

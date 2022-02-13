@@ -75,7 +75,6 @@ export default function MainHeader() {
           }}
         >
           <Logo />
-
           <Label color="primary" sx={{ ml: 1 }} variant = 'filled'>
             RIDERTOWN
           </Label>

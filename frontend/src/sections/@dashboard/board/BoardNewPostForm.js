@@ -59,8 +59,7 @@ export default function BlogNewPostForm() {
 
   const NewBlogSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
-    content: Yup.string().min(10).required('Content is required'),
-    cover: Yup.mixed().required('Cover is required'),
+    description: Yup.string().min(10).required('Content is required'),
     boardtype: Yup.string().min(1,"게시판 타입을 정해주세요").required('Content is required'),
     tags: Yup.array().min(1,"주제를 한가지 정해주세요.").required('Content is required'),
   });
@@ -131,7 +130,7 @@ export default function BlogNewPostForm() {
                 <RHFTextField name="title" label="제목" />
                 <div>
                   <LabelStyle>내용</LabelStyle>
-                  <RHFEditor name="content"/>
+                  <RHFEditor name="description"/>
                 </div>
                 <div>
                   <LabelStyle>대표사진</LabelStyle>

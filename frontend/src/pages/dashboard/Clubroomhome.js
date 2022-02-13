@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 // @mui
@@ -18,7 +19,7 @@ import Page from '../../components/Page';
 // sections
 import {
   AppWidget,
-  AppWelcome,
+  Appkakaochat,
   AppFeatured,
   AppNewInvoice,
   AppTopAuthors,
@@ -32,11 +33,11 @@ import Chat from './Chat';
 import Clubcalender from './Clubcalender';
 
 // ----------------------------------------------------------------------
-
-export default function Clubroom() {
+export default function Clubroomhome() {
   const { user } = useAuth();
   const theme = useTheme();
   const { themeStretch } = useSettings();
+  const { product } = useSelector(state => state.product);
   const dispatch = useDispatch();
   
   const { name = '' } = useParams();
@@ -45,6 +46,9 @@ export default function Clubroom() {
   useEffect(() => {
     dispatch(getProduct(name));
   }, [dispatch, name]);
+  
+  console.log(product);
+
 
 
   return (
@@ -55,7 +59,8 @@ export default function Clubroom() {
           <AppNewInvoice />
           </Grid>          
           <Grid item xs={12} md={4}>
-            <Chat />
+            {product && (
+          <Appkakaochat name={name} product={product}/>)}
           </Grid>  
           </Grid>
           <br/>

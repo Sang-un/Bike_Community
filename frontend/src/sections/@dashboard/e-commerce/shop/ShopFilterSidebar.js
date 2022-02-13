@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 // form
-import { Controller, useFormContext } from 'react-hook-form';
+import { useState } from 'react';
+import { Controller, useFormContext} from 'react-hook-form';
 // @mui
 import {
   Box,
@@ -14,6 +15,7 @@ import {
   Typography,
   RadioGroup,
   FormControlLabel,
+  Popover,
 } from '@mui/material';
 // @types
 import { NAVBAR } from '../../../../config';
@@ -57,6 +59,7 @@ export const FILTER_COLOR_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
+
 const onSelected = (selected, item) =>
   selected.includes(item) ? selected.filter((value) => value !== item) : [...selected, item];
 
@@ -67,28 +70,50 @@ ShopFilterSidebar.propTypes = {
   onClose: PropTypes.func,
 };
 
-export default function ShopFilterSidebar({ isOpen, onResetAll, onOpen, onClose }) {
+export default function ShopFilterSidebar({ onResetAll }) {
   const { control } = useFormContext();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const popopen = Boolean(anchorEl);
+  const id = popopen ? 'simple-popover' : undefined;
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <>
-      <Button disableRipple color="inherit" endIcon={<Iconify icon={'ic:round-filter-list'} />} onClick={onOpen}>
-        Filters
+      <Button aria-describedby={id} color="inherit" endIcon={<Iconify icon={'ic:round-filter-list'} />} onClick={handleClick}>
+        상세검색
       </Button>
 
-      <Drawer
-        anchor="right"
-        open={isOpen}
-        onClose={onClose}
+      <Popover
+        id={id}
+        open={popopen}
+        onClose={handleClose}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
         PaperProps={{
-          sx: { width: NAVBAR.BASE_WIDTH },
+          sx: { height:500, width:700 },
         }}
       >
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 1, py: 2 }}>
           <Typography variant="subtitle1" sx={{ ml: 1 }}>
             Filters
           </Typography>
-          <IconButton onClick={onClose}>
+          <IconButton onClick={handleClose}>
             <Iconify icon={'eva:close-fill'} width={20} height={20} />
           </IconButton>
         </Stack>
@@ -96,13 +121,15 @@ export default function ShopFilterSidebar({ isOpen, onResetAll, onOpen, onClose 
         <Divider />
 
         <Scrollbar>
-          <Stack spacing={3} sx={{ p: 3 }}>
+          <Stack direction="row"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+            spacing={2}
+            sx={{ p: 3 }}>
             <Stack spacing={1}>
               <Typography variant="subtitle1">Gender</Typography>
               <RHFMultiCheckbox name="gender" options={FILTER_GENDER_OPTIONS} sx={{ width: 1 }} />
-            </Stack>
 
-            <Stack spacing={1}>
               <Typography variant="subtitle1">Category</Typography>
               <RHFRadioGroup name="category" options={FILTER_CATEGORY_OPTIONS} row={false} />
             </Stack>
@@ -186,7 +213,7 @@ export default function ShopFilterSidebar({ isOpen, onResetAll, onOpen, onClose 
             Clear All
           </Button>
         </Box>
-      </Drawer>
+      </Popover>
     </>
   );
 }

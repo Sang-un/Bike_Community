@@ -104,13 +104,14 @@ export default function LoginForm() {
       <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
         로그인
       </LoadingButton>
-      <br/><br/>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <a href={KAKAO_AUTH_URL} target='_blank' rel='noopener noreferrer'><img style={{height:'45px',width:'250px'}} src={Kakaologinimg} alt='Naverloginimg'/></a>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-      <a href='https://naver.com' target='_blank' rel='noopener noreferrer'><img style={{height:'45px',width:'250px'}} src={Naverloginimg} alt='Naverloginimg'/></a>
-      </div >
       <Kakaologincallback />
     </FormProvider>
   );
 }
+
+/*       <br/><br/>
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <a href={KAKAO_AUTH_URL} target='_blank' rel='noopener noreferrer'><img style={{height:'45px',width:'250px'}} src={Kakaologinimg} alt='Naverloginimg'/></a>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+      <a href='https://naver.com' target='_blank' rel='noopener noreferrer'><img style={{height:'45px',width:'250px'}} src={Naverloginimg} alt='Naverloginimg'/></a>
+      </div > */

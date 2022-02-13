@@ -66,7 +66,20 @@ const navConfig = [
         ],
       },
       {
-        title: '바이크 - 읽기전용',
+        title: '정비소',
+        path: PATH_DASHBOARD.garage.root,
+        icon: ICONS.cart,
+        children: [
+          { title: '정비소 프로필', path: PATH_DASHBOARD.garage.profile },
+          { title: '정비소 카드', path: PATH_DASHBOARD.garage.cards },
+          { title: '정비소 리스트', path: PATH_DASHBOARD.garage.list },
+          { title: '정비소 만들기', path: PATH_DASHBOARD.garage.newUser },
+          { title: '정비소 수정하기', path: PATH_DASHBOARD.garage.editById },
+          { title: '정비소 계정', path: PATH_DASHBOARD.garage.account },
+        ],
+      },
+      {
+        title: '읽기전용',
         path: PATH_DASHBOARD.blog.root,
         icon: ICONS.blog,
         children: [
@@ -116,7 +129,8 @@ const navConfig = [
         path: PATH_DASHBOARD.usedeCommerce.root,
         icon: ICONS.cart,
         children: [
-          { title: '중고차거래', path: PATH_DASHBOARD.usedeCommerce.motocycle },
+          { title: '중고바이크', path: PATH_DASHBOARD.usedeCommerce.motocycle },
+          { title: '센터중고바이크', path: PATH_DASHBOARD.usedeCommerce.motocyclegarage },
           { title: '안전장비', path: PATH_DASHBOARD.usedeCommerce.motocyclegear },
           { title: '튜닝/정비용품', path: PATH_DASHBOARD.usedeCommerce.motocycleparts },
           { title: '제품', path: PATH_DASHBOARD.usedeCommerce.productById },

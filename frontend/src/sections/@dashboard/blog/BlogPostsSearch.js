@@ -21,7 +21,7 @@ import SearchNotFound from '../../../components/SearchNotFound';
 // ----------------------------------------------------------------------
 
 const PopperStyle = styled((props) => <Popper placement="bottom-start" {...props} />)({
-  width: '560px !important',
+  width: '300px !important',
 });
 
 // ----------------------------------------------------------------------
@@ -76,7 +76,7 @@ export default function BlogPostsSearch() {
       renderInput={(params) => (
         <InputStyle
           {...params}
-          stretchStart={500}
+          stretchStart={250}
           placeholder="검색하기"
           onKeyUp={handleKeyUp}
           InputProps={{

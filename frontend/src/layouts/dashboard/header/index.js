@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
+import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar } from '@mui/material';
+import { Box, Stack, AppBar, Toolbar, Link } from '@mui/material';
+import Label from '../../../components/Label';
 // hooks
 import useOffSetTop from '../../../hooks/useOffSetTop';
 import useResponsive from '../../../hooks/useResponsive';
@@ -19,6 +21,7 @@ import AccountPopover from './AccountPopover';
 import LanguagePopover from './LanguagePopover';
 import ContactsPopover from './ContactsPopover';
 import NotificationsPopover from './NotificationsPopover';
+
 
 // ----------------------------------------------------------------------
 
@@ -70,21 +73,26 @@ export default function DashboardHeader({ onOpenSidebar, isCollapse = false, ver
           px: { lg: 5 },
         }}
       >
-        {isDesktop && verticalLayout && <Logo sx={{ mr: 2.5 }} />}
+        {isDesktop && verticalLayout && <Logo sx={{mb: 0.5}} />}
 
         {!isDesktop && (
           <IconButtonAnimate onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }}>
             <Iconify icon="eva:menu-2-fill" />
           </IconButtonAnimate>
         )}
+        <Logo/>
+          <RouterLink to="/dashboard/app">         
+          <Label color="primary" sx={{ ml: 1 , mr: 2}} variant = 'filled'>
+            RIDERTOWN
+            </Label>
+            </RouterLink>
 
-        <Searchbar />
+
+          <Searchbar />
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          <LanguagePopover />
           <NotificationsPopover />
-          <ContactsPopover />
           <AccountPopover />
         </Stack>
       </Toolbar>
