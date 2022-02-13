@@ -1,6 +1,6 @@
 package bike.community.security;
 
-import bike.community.repository.UserRepository;
+import bike.community.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,8 +20,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
-        UserDetailsImpl userDetails = userRepository.findByEmail(email)
+        System.out.println("UserDetailsServiceImpl.loadUserByUsername");
+        UserDetailsImpl userDetails = userRepository.findOptionalByEmail(email)
                 .map(u -> new UserDetailsImpl(u, Collections.singleton(new SimpleGrantedAuthority(u.getRole().toString()))))
                 .orElseThrow(() -> new UsernameNotFoundException(""));
         System.out.println(userDetails.getAuthorities());

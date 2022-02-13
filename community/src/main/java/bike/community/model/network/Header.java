@@ -1,14 +1,19 @@
 package bike.community.model.network;
 
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@ToString
 @Builder
 public class Header<T> {
 
     private T data;
-
     private LocalDateTime transaction_time;
     private String status;
     private String description;
@@ -43,5 +48,12 @@ public class Header<T> {
                 .build();
     }
 
-
+    // ERROR - description 직접 설정
+    public static <T> Header<T> ERROR(String description){
+        return (Header<T>) Header.builder()
+                .transaction_time(LocalDateTime.now())
+                .status("ERROR")
+                .description(description)
+                .build();
+    }
 }

@@ -1,9 +1,12 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/datajpa
-    username: king
-    password: 1111
-    driver-class-name: org.h2.Driver
+    url: jdbc:mysql://localhost:3306/bikec?serverTimezone=UTC&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
+
+  profiles:
+    active: local #local
   redis:
     host: 127.0.0.1
     port: 6379
@@ -23,6 +26,6 @@ server:
         default-page-size: 10 #page default size? 10??
         max-page-size: 2000 #?? ??? size
 
-logging.level:
-  org.hibernate.SQL: debug
-  org.hibernate.type: trace
+#logging.level:
+#  org.hibernate.SQL: debug
+#  org.hibernate.type: trace

@@ -6,6 +6,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+//TODO CORS?
 @Slf4j
 public class HeaderFilter implements Filter {
 
@@ -23,5 +24,4 @@ public class HeaderFilter implements Filter {
 
         chain.doFilter(request, response);
     }
-
 }

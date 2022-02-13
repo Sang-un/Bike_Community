@@ -1,140 +1,96 @@
 package bike.community.security.jwt;
 
-import bike.community.model.user.User;
 import io.jsonwebtoken.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
-import java.security.Key;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import javax.annotation.PostConstruct;
+import java.util.*;
 
 import static bike.community.security.jwt.JwtProperties.*;
 
 @Slf4j
-@Component/**/
+@Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TokenUtils {
+    public static final String EMAIL = "email";
+    public static final String NICKNAME = "nickname";
+    public static final String ROLE = "role";
 
-    private static final String secretKey = SECRET;
+    private String secretKey = SECRET;
 
-    public static String generateJwtToken(User user) {
-        JwtBuilder builder = Jwts.builder()
-                .setSubject(user.getEmail())
-                .setHeader(createHeader())
-                .setClaims(createClaims(user))
-                .setExpiration(createExpireDateForOneYear())
-                .signWith(SignatureAlgorithm.HS256, createSigningKey());
-
-        return builder.compact();
+    @PostConstruct
+    private void init() {
+        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createAccessToken(String email, String nickname, String role){
-//       return JWT.create()
-//                .withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_EXPIRED_TIME))
-//                .withIssuer("LEEE")
-//                .withClaim("email", email)
-//                .withClaim("nickname", nickname)
-//                .withClaim("role", role)
-//                .sign(Algorithm.HMAC512(ACCESS_SECRET));
+    public String createAccessJwtToken(String email, String nickname, String role){
+        Claims claims = Jwts.claims()
+                .setSubject(ACCESS_NAME)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date((new Date()).getTime() + ACCESS_EXPIRED_TIME));
+
+        claims.put(EMAIL, email);
+        claims.put(NICKNAME, nickname);
+        claims.put(ROLE, role);
 
         return Jwts.builder()
-                .setIssuer(ISSUER)
-                .setSubject(email+"/"+nickname+"/"+role )
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + ACCESS_EXPIRED_TIME))
-                .signWith(SignatureAlgorithm.HS512, SECRET)
+                .setHeaderParam("typ", "JWT")
+                .setClaims(claims)
+                .signWith(SignatureAlgorithm.HS256,  secretKey)
                 .compact();
     }
 
-    public String createRefreshToken(String email, String nickname, String role){
-        return Jwts.builder()
-                .setIssuer(ISSUER)
-                .setSubject(email+"/"+nickname+"/"+role )
+    public String createRefreshJwtToken(String email, String nickname, String role){
+        Claims claims = Jwts.claims()
+                .setSubject(REFRESH_NAME)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + REFRESH_EXPIRED_TIME))
-                .signWith(SignatureAlgorithm.HS512, SECRET)
+                .setExpiration(new Date((new Date()).getTime() + REFRESH_EXPIRED_TIME));
+
+        claims.put(EMAIL, email);
+        claims.put(NICKNAME, nickname);
+        claims.put(ROLE, role);
+
+        return Jwts.builder()
+                .setHeaderParam("typ", "JWT")
+                .setClaims(claims)
+                .signWith(SignatureAlgorithm.HS256,  secretKey)
                 .compact();
     }
 
-    public boolean isValidToken(String token) {
+    public boolean isValidToken(String jwt) {
         try {
-            Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token);
+            Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwt).getBody();
             return true;
-        } catch (ExpiredJwtException exception) {
+        } catch (ExpiredJwtException exception) {//토큰 유효기간 지남
             log.error("Token Expired");
             return false;
-        } catch (JwtException exception) {
+        } catch (JwtException exception) {//토큰 변조
             log.error("Token Tampered");
             return false;
-        } catch (NullPointerException exception) {
+        } catch (NullPointerException exception) {//토큰 null
             log.error("Token is null");
             return false;
         }
     }
 
-    public static String getTokenFromHeader(String header) {
-        return header.split(" ")[1];
+    private Claims getJwtBody(String jwt) {
+        return Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(jwt).getBody();
     }
 
-    public String get(String token, String key){
-        if(key.equals("email"))
-            return getUserEmailFromToken(token);
-        else if(key.equals("role"))
-            return getRoleFromToken(token);
-        else return null;
+    public String getEmailFromJwt(String jwt){
+        return (String) getJwtBody(jwt).get(EMAIL);
     }
 
-    private static Date createExpireDateForOneYear() {
-        // 토큰 만료시간은 30일으로 설정
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.DATE, 30);
-        return c.getTime();
+    public String getNicknameFromJwt(String jwt){
+        return (String) getJwtBody(jwt).get(NICKNAME);
     }
 
-    private static Map<String, Object> createHeader() {
-        Map<String, Object> header = new HashMap<>();
-        header.put("typ", "JWT");
-        header.put("alg", "HS256");
-        header.put("regDate", System.currentTimeMillis());
-        return header;
-    }
-
-    private static Map<String, Object> createClaims(User user) {
-        // 공개 클레임에 사용자의 이름과 이메일을 설정하여 정보를 조회할 수 있다.
-        Map<String, Object> claims = new HashMap<>();
-
-        claims.put("email", user.getEmail());
-        claims.put("role", user.getRole());
-
-        return claims;
-    }
-
-    private static Key createSigningKey() {
-        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(secretKey);
-        return new SecretKeySpec(apiKeySecretBytes, SignatureAlgorithm.HS256.getJcaName());
-    }
-
-    private static Claims getClaimsFormToken(String token) {
-        return Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretKey))
-                .parseClaimsJws(token).getBody();
-    }
-
-    private static String getUserEmailFromToken(String token) {
-        Claims claims = getClaimsFormToken(token);
-        String sub = (String) claims.get("sub");
-        return sub.split("/")[0];
-
-    }
-
-    private static String getRoleFromToken(String token) {
-        Claims claims = getClaimsFormToken(token);
-        return claims.get("role").toString();
+    public String getRoleFromJwt(String jwt){
+        return (String) getJwtBody(jwt).get(ROLE);
     }
 }
