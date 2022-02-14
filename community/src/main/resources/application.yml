@@ -5,21 +5,24 @@ spring:
     username: root
     password: 1234
 
-  profiles:
-    active: local #local
-  redis:
-    host: 127.0.0.1
-    port: 6379
-server:
-  port: 8080
-
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
-        #        show_sql: true
+        show_sql: true #콘솔 창에 날라가는 sql을 보고싶을 때. 개발단계에서는 켜두는 것을 권장
+        default_batch_fetch_size: 100
         format_sql: true
+
+  profiles:
+    active: local #local
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+  server:
+    port: 8080
+
   data:
     web:
       pageable:

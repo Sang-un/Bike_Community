@@ -29,16 +29,20 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.projectlombok:lombok:1.18.20'// jpa
-	implementation 'mysql:mysql-connector-java' // db
-	runtimeOnly 'com.h2database:h2' // db for test
+    implementation 'org.projectlombok:lombok:1.18.20'
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'//validation
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'//redis
 	implementation 'org.testng:testng:7.1.0'
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+	// - database 관련 --
+	implementation 'mysql:mysql-connector-java' // db
+	runtimeOnly 'mysql:mysql-connector-java' // compileOnly도 추가해야 jpa로 테이블 만들어주는 것으로 추정
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'//redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'//jpa
+	// --- db 관련 끝 ---
 
 	//querydsl 추가
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
