@@ -20,7 +20,7 @@ public class RedisService {
     public String setAccessJwtToken(String email, String nickname, String role){
         String accessToken = tokenUtils.createAccessJwtToken(email, nickname, role);
         ValueOperations<String, String> values = redisTemplate.opsForValue();
-        values.set(email+REDIS_AT, accessToken, Duration.ofMinutes(60));
+        values.set(email+REDIS_AT, accessToken, Duration.ofMinutes(20));
         return accessToken;
     }
 

@@ -22,7 +22,6 @@ public class UserController{
 
     private final UserService userService;
 
-
     @PostMapping("/api/join")
     public Header<AfterJoinUserResponse> join(@RequestBody @Valid JoinUserRequest user, BindingResult bindingResult){
         if (bindingResult.hasErrors()) return responseError();

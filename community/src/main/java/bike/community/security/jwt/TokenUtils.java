@@ -27,35 +27,43 @@ public final class TokenUtils {
     }
 
     public String createAccessJwtToken(String email, String nickname, String role){
+
         Claims claims = Jwts.claims()
                 .setSubject(ACCESS_NAME)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + ACCESS_EXPIRED_TIME));
+                .setIssuedAt(new Date());
 
         claims.put(EMAIL, email);
         claims.put(NICKNAME, nickname);
         claims.put(ROLE, role);
 
+        Date ext = new Date();
+        ext.setTime(ext.getTime() + ACCESS_EXPIRED_TIME);
+
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .setClaims(claims)
+                .setExpiration(ext)
                 .signWith(SignatureAlgorithm.HS256,  secretKey)
                 .compact();
     }
 
     public String createRefreshJwtToken(String email, String nickname, String role){
+
         Claims claims = Jwts.claims()
                 .setSubject(REFRESH_NAME)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + REFRESH_EXPIRED_TIME));
+                .setIssuedAt(new Date());
 
         claims.put(EMAIL, email);
         claims.put(NICKNAME, nickname);
         claims.put(ROLE, role);
 
+        Date ext = new Date();
+        ext.setTime(ext.getTime() + REFRESH_EXPIRED_TIME);
+
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .setClaims(claims)
+                .setExpiration(ext)
                 .signWith(SignatureAlgorithm.HS256,  secretKey)
                 .compact();
     }

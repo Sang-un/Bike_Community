@@ -1,10 +1,11 @@
 package bike.community.security.jwt;
 
 public interface JwtProperties {
-    public static String SECRET = "secretkeyhohoho";
-    public static String ISSUER = "LEETOKEN";
-    public static long ACCESS_EXPIRED_TIME = (10*60*60*10*10)/60L;//1시간
-    public static long REFRESH_EXPIRED_TIME = 10*60*60*10*10*24*14L;//2주
+    public static String SECRET = "THIS_IS_OUR_SECRET";
+    // 1000 * 60 = 1분.
+    // 1000*60L*60*24 = 1일.
+    public static long ACCESS_EXPIRED_TIME = 1000*60L*30L; // 20분
+    public static long REFRESH_EXPIRED_TIME = (1000*60L*60*24)*7L; // 7일
     public static final String AUTH_HEADER = "Authorization";
     public static final String TOKEN_TYPE = "Bearer ";
     public static String ACCESS_NAME = "ACCESS_TOKEN";
