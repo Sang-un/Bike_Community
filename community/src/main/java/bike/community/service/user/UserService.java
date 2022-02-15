@@ -5,11 +5,14 @@ import bike.community.model.common.Address;
 import bike.community.model.network.Header;
 import bike.community.model.network.request.user.JoinUserRequest;
 import bike.community.model.network.response.user.AfterJoinUserResponse;
+import bike.community.model.network.response.user.UserInfoResponse;
 import bike.community.model.network.response.user.UserResponse;
 import bike.community.model.entity.user.User;
 import bike.community.repository.user.UserRepository;
+import bike.community.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.codec.binary.StringUtils;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,6 +79,16 @@ public class UserService {
         String s = StringUtils.newStringUtf8(bytes);
         redisService.logout(s);
         return Header.OK("로그아웃되었습니다.");
+    }
+
+    public Header<UserInfoResponse> userInfo(Authentication authentication) {
+        UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
+        String email = principal.getUsername();
+        String nickname = principal.getNickname();
+        System.out.println(nickname);
+        System.out.println(email);
+        UserInfoResponse userInfoResponse = new UserInfoResponse(email, nickname);
+        return Header.OK(userInfoResponse);
     }
 
     public boolean hasUserEmailOf(String email) {

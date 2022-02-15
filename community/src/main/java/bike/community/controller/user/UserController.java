@@ -3,9 +3,12 @@ package bike.community.controller.user;
 import bike.community.model.network.Header;
 import bike.community.model.network.request.user.JoinUserRequest;
 import bike.community.model.network.response.user.AfterJoinUserResponse;
+import bike.community.model.network.response.user.UserInfoResponse;
+import bike.community.security.UserDetailsImpl;
 import bike.community.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +29,12 @@ public class UserController{
     public Header<AfterJoinUserResponse> join(@RequestBody @Valid JoinUserRequest user, BindingResult bindingResult){
         if (bindingResult.hasErrors()) return responseError();
         return userService.join(user);
+    }
+
+    @GetMapping("/api/userinfo")
+    public Header<UserInfoResponse> userInfo(Authentication authentication) {
+        System.out.println("/api/userinfo:~~~#######");
+        return userService.userInfo(authentication);
     }
 
     @GetMapping("/api/logout")
