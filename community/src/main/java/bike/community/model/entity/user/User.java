@@ -38,6 +38,8 @@ public class User extends DateBaseEntity implements Serializable {
     @Embedded
     private Address address;
 
+    private String photoURL;
+
     //for oauth
     private String provider;
     private String providerId;
@@ -51,7 +53,7 @@ public class User extends DateBaseEntity implements Serializable {
     @OneToMany(mappedBy="user")
     private List<ClubUser> clubs = new ArrayList<>();
 
-    public static User create(String email, String password, String username, String sex, String phone, String birthday, String nickname, Address address) {
+    public static User create(String email, String password, String username, String sex, String phone, String birthday, String nickname, Address address, String photoURL) {
         User user = new User();
         user.email = email;
         user.password = password;
@@ -62,6 +64,7 @@ public class User extends DateBaseEntity implements Serializable {
         user.nickname = nickname;
         user.role = UserRole.ROLE_USER;
         user.address = address;
+        user.photoURL = photoURL;
         return user;
     }
 

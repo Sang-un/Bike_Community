@@ -28,7 +28,7 @@ public class FreeBoardService {
 
     @Transactional
     public Header<FreeBoardResponse> create(FreeBoardRequest freeBoardRequest) {
-        User user = userRepository.findUserByNickname(freeBoardRequest.getUserNickname());
+        User user = userRepository.findUserByNickname(freeBoardRequest.getNickname());
         Free freeBoard = Free.create(freeBoardRequest.getTitle(), freeBoardRequest.getContent(), user);
         freeBoardRepository.save(freeBoard);
         FreeBoardResponse freeBoardResponse = FreeBoardResponse.builder()

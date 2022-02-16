@@ -36,9 +36,11 @@ public class UserController{
         System.out.println("/api/userinfo:~~~#######");
         return userService.userInfo(authentication);
     }
+    //TODO 회원 정보 수정 api 만들기
 
     @GetMapping("/api/logout")
     public Header<String> logout(HttpServletRequest request){
+        log.info("로그아웃");
         return userService.logout(request);
     }
 
