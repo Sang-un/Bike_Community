@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RequiredArgsConstructor
 @RestController
 public class FreeBoardController {
@@ -19,8 +21,8 @@ public class FreeBoardController {
 
     //게시물 작성하기
     @PostMapping("/api/board/free")
-    public Header<FreeBoardResponse> create(@RequestBody FreeBoardRequest freeBoardRequest){
-        return freeBoardService.create(freeBoardRequest);
+    public Header<FreeBoardResponse> create(@RequestBody FreeBoardRequest freeBoardRequest, HttpServletRequest request){
+        return freeBoardService.create(freeBoardRequest, request);
     }
 
     //게시판 들어갔을 때 전체 게시물들 보기

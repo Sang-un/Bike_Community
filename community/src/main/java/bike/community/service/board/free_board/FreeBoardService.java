@@ -10,12 +10,14 @@ import bike.community.model.network.response.post.board.free.search_condition.Fr
 import bike.community.model.network.response.user.UserWriterResponse;
 import bike.community.repository.board.free_board.FreeBoardRepository;
 import bike.community.repository.user.UserRepository;
+import bike.community.security.jwt.TokenUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 
 
 @Transactional(readOnly = true)
@@ -25,9 +27,29 @@ public class FreeBoardService {
 
     private final FreeBoardRepository freeBoardRepository;
     private final UserRepository userRepository;
+    private final TokenUtils tokenUtils;
 
     @Transactional
     public Header<FreeBoardResponse> create(FreeBoardRequest freeBoardRequest) {
+        User user = userRepository.findUserByNickname(freeBoardRequest.getNickname());
+        Free freeBoard = Free.create(freeBoardRequest.getTitle(), freeBoardRequest.getContent(), user);
+        freeBoardRepository.save(freeBoard);
+        FreeBoardResponse freeBoardResponse = FreeBoardResponse.builder()
+                .id(freeBoard.getId())
+                .title(freeBoard.getTitle())
+                .content(freeBoard.getContent())
+                .user(
+                        UserWriterResponse.builder().email(user.getEmail()).nickname(user.getNickname()).build()
+                )
+                .build();
+        return Header.OK(freeBoardResponse);
+    }
+
+    @Transactional
+    public Header<FreeBoardResponse> create(FreeBoardRequest freeBoardRequest, HttpServletRequest request) {
+        System.out.println("kkkkkkkkk");
+        String nicknameFromJwt = tokenUtils.getNicknameFromJwt(request);
+        System.out.println("nicknameFromJwt = " + nicknameFromJwt);
         User user = userRepository.findUserByNickname(freeBoardRequest.getNickname());
         Free freeBoard = Free.create(freeBoardRequest.getTitle(), freeBoardRequest.getContent(), user);
         freeBoardRepository.save(freeBoard);

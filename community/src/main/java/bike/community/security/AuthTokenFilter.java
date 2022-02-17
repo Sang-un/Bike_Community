@@ -46,9 +46,10 @@ public class AuthTokenFilter extends BasicAuthenticationFilter {
         try {
             if(PatternMatchUtils.simpleMatch(NO_SECURITY_PATH, request.getRequestURI())) chain.doFilter(request, response);
             else{
-                String jwt = parseJwt(request);
-                if (jwt != null && tokenUtils.isValidToken(jwt)) {
-                    String email = tokenUtils.getEmailFromJwt(jwt);
+                if (tokenUtils.isValidToken(request)) {
+                    String s = tokenUtils.parseJwt(request);
+                    System.out.println("s = " + s);
+                    String email = tokenUtils.getEmailFromJwt(request);
                     UserDetails userDetails = userDetailsService.loadUserByUsername(email);
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -63,13 +64,6 @@ public class AuthTokenFilter extends BasicAuthenticationFilter {
         }
     }
 
-
-    private String parseJwt(HttpServletRequest request) {
-        String headerAuth = request.getHeader(AUTH_HEADER);
-        String substring = headerAuth.substring(7);
-        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith(TOKEN_TYPE)) return headerAuth.substring(7);
-        return null;
-    }
 
     private void tokenError(HttpServletResponse response) throws IOException {
         Header<Object> error = Header.ERROR("This user have no token. login please.");

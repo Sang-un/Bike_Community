@@ -1,10 +1,7 @@
 package bike.community.config.security;
 
 import bike.community.config.cors.CorsConfig;
-import bike.community.security.AuthTokenFilter;
-import bike.community.security.CustomAuthenticationFilter;
-import bike.community.security.CustomAuthenticationProvider;
-import bike.community.security.CustomLoginSuccessHandler;
+import bike.community.security.*;
 import bike.community.security.jwt.TokenUtils;
 import bike.community.component.redis.RedisService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.CorsFilter;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -31,37 +29,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final ObjectMapper objectMapper;
     private final TokenUtils tokenUtils;
     private final CorsConfig corsConfig;
+    private final CorsFilter corsFilter;
+    private final HeaderFilter headerFilter;
 
-//            http
-//                    .addFilter(corsConfig.corsFilter())
-//                    .csrf().disable()
-//    // 세션 사용 안 함
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .formLogin().disable()
-//    // Basic: Authorization에 id, pw 넣어서 보냄
-//    // Bearer: Authorization에 token 넣어서 보냄
-//                .httpBasic().disable()
-//
-//                .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtTokenProvider, redisProvider))
-//            .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository, jwtTokenProvider, redisProvider))
-//            .authorizeRequests()
-//                .antMatchers("/api/auth/**")
-//                .access("hasRole('ROLE_GENERAL') or hasRole('ROLE_STUDENT') or hasRole('ROLE_COUNCIL') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DEVELOPER')")
-//                .antMatchers("/api/auth-student/**")
-//                .access("hasRole('ROLE_STUDENT') or hasRole('ROLE_COUNCIL') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DEVELOPER')")
-//                .antMatchers("/api/auth-council/**")
-//                .access("hasRole('ROLE_COUNCIL') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DEVELOPER')")
-//                .antMatchers("/api/auth-admin/**")
-//                .access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DEVELOPER')")
-//                .anyRequest().permitAll();
-//        http.addFilterBefore(exceptionHandlerFilter, JwtAuthorizationFilter.class);
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http
                 .addFilter(corsConfig.corsFilter())
+//                .addFilterBefore(headerFilter, corsFilter)
                 .csrf().disable()
                 .formLogin()
                 .disable()
