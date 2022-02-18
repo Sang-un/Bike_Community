@@ -56,32 +56,4 @@ public class UserDetailsImpl implements UserDetails {
     public String getRole() {
         return user.getRole().toString();
     }
-
-    public String getAddress() {
-        return user.getAddress().getAddress();
-    }
-
-    public String getDetailAddress() {
-        return user.getAddress().getDetailAddress();
-    }
-
-    public String getZipcode() {
-        return user.getAddress().getZipcode();
-    }
-
-    public String getSex() {
-        return user.getSex();
-    }
-
-    public String getBirthday() {
-        return user.getBirthday();
-    }
-
-    public String getPhone() {
-        return user.getPhone();
-    }
-
-    public String getRealUsername() {
-        return user.getUsername();
-    }
 }

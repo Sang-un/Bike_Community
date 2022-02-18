@@ -39,7 +39,5 @@ public class JoinUserRequest {
     @NotBlank @NotNull
     private String nickname; //사용할 닉네임
 
-    private String photoURL;
-
     private Address address;
 }

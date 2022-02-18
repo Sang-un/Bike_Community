@@ -49,8 +49,7 @@ public class UserService {
                 joinUser.getPhone(),
                 joinUser.getBirthday(),
                 joinUser.getNickname(),
-                joinUser.getAddress(),
-                joinUser.getPhotoURL());
+                joinUser.getAddress());
 
         User saveUser = userRepository.save(user);
         AfterJoinUserResponse afterJoinUser = AfterJoinUserResponse
@@ -74,10 +73,8 @@ public class UserService {
         return userRepository.hasEmailAndNicknameOf(email, nickname);
     }
 
-    // TODO 로그아웃시에 인코딩 안됨
     public Header<String> logout(HttpServletRequest request) {
         String jwtToken = request.getHeader(AUTH_HEADER);
-        System.out.println("jwtToken = " + jwtToken);
         byte[] bytes = jwtToken.getBytes(StandardCharsets.UTF_8);
         String s = StringUtils.newStringUtf8(bytes);
         redisService.logout(s);
@@ -86,17 +83,11 @@ public class UserService {
 
     public Header<UserInfoResponse> userInfo(Authentication authentication) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
-        UserInfoResponse userInfoResponse = UserInfoResponse.builder()
-                .email(principal.getUsername())
-                .nickname(principal.getNickname())
-                .username(principal.getRealUsername())
-                .phone(principal.getPhone())
-                .address(principal.getAddress())
-                .detail_address(principal.getDetailAddress())
-                .zipcode(principal.getZipcode())
-                .birthday(principal.getBirthday())
-                .sex(principal.getSex())
-                .build();
+        String email = principal.getUsername();
+        String nickname = principal.getNickname();
+        System.out.println(nickname);
+        System.out.println(email);
+        UserInfoResponse userInfoResponse = new UserInfoResponse(email, nickname);
         return Header.OK(userInfoResponse);
     }
 
