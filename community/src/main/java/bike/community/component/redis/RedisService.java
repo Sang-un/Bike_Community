@@ -19,6 +19,7 @@ public class RedisService {
 
     public String setAccessJwtToken(String email, String nickname, String role){
         String accessToken = tokenUtils.createAccessJwtToken(email, nickname, role);
+        System.out.println("RedisService.setAccessJwtToken.accessToken = "+accessToken);
         ValueOperations<String, String> values = redisTemplate.opsForValue();
         values.set(email+REDIS_AT, accessToken, Duration.ofMinutes(20));
         return accessToken;
@@ -33,6 +34,7 @@ public class RedisService {
 
     public boolean isValidAccessJwtToken(String email){
         String jwtToken = getJwtToken(email + REDIS_AT);
+        if(jwtToken==null) return false;
         return tokenUtils.isValidToken(jwtToken);
     }
 

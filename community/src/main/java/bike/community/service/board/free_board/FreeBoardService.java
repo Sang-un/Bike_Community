@@ -29,21 +29,21 @@ public class FreeBoardService {
     private final UserRepository userRepository;
     private final TokenUtils tokenUtils;
 
-    @Transactional
-    public Header<FreeBoardResponse> create(FreeBoardRequest freeBoardRequest) {
-        User user = userRepository.findUserByNickname(freeBoardRequest.getUserNickname());
-        Free freeBoard = Free.create(freeBoardRequest.getTitle(), freeBoardRequest.getContent(), user);
-        freeBoardRepository.save(freeBoard);
-        FreeBoardResponse freeBoardResponse = FreeBoardResponse.builder()
-                .id(freeBoard.getId())
-                .title(freeBoard.getTitle())
-                .content(freeBoard.getContent())
-                .user(
-                        UserWriterResponse.builder().email(user.getEmail()).nickname(user.getNickname()).build()
-                )
-                .build();
-        return Header.OK(freeBoardResponse);
-    }
+//    @Transactional
+//    public Header<FreeBoardResponse> create(FreeBoardRequest freeBoardRequest) {
+//        User user = userRepository.findUserByNickname(freeBoardRequest.getNickname());
+//        Free freeBoard = Free.create(freeBoardRequest.getTitle(), freeBoardRequest.getContent(), user);
+//        freeBoardRepository.save(freeBoard);
+//        FreeBoardResponse freeBoardResponse = FreeBoardResponse.builder()
+//                .id(freeBoard.getId())
+//                .title(freeBoard.getTitle())
+//                .content(freeBoard.getContent())
+//                .user(
+//                        UserWriterResponse.builder().email(user.getEmail()).nickname(user.getNickname()).build()
+//                )
+//                .build();
+//        return Header.OK(freeBoardResponse);
+//    }
 
     @Transactional
     public Header<FreeBoardResponse> create(FreeBoardRequest freeBoardRequest, HttpServletRequest request) {

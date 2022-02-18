@@ -9,5 +9,5 @@ public class FreeBoardRequest {
 
     private String content;
 
-    private String userNickname;
+    private String nickname;
 }

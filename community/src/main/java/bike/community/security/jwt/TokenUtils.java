@@ -23,10 +23,10 @@ public final class TokenUtils {
 
     private String secretKey = SECRET;
 
-    @PostConstruct
-    private void init() {
-        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
-    }
+//    @PostConstruct
+//    private void init() {
+//        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+//    }
 
     public String createAccessJwtToken(String email, String nickname, String role){
 
@@ -72,7 +72,7 @@ public final class TokenUtils {
 
     public boolean isValidToken(HttpServletRequest request) {
         String justToken = parseJwt(request);
-        System.out.println("justToken = " + justToken);
+        System.out.println("isValidToken(HttpServletRequest request).justToken = " + justToken);
         try {
             Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(justToken).getBody();
             return true;
@@ -89,7 +89,7 @@ public final class TokenUtils {
     }
 
     public boolean isValidToken(String justToken) {
-        System.out.println("justToken = " + justToken);
+        System.out.println("isValidToken(String justToken).justToken = " + justToken);
         try {
             Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(justToken).getBody();
             return true;
@@ -133,13 +133,16 @@ public final class TokenUtils {
         return (String) getJwtBody(jwt).get(ROLE);
     }
 
+    //TODO 왜 글쓰기 요청만 Bearer 가 두개 붙어 오는가?
     public String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader(AUTH_HEADER);
-        String[] headerAuths = headerAuth.split(" ");
-        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith(TOKEN_TYPE)){
-//            System.out.println("headerAuth.substring(7):"+headerAuth.substring(7));
-            return headerAuths[1];
-        }
+        if(headerAuth.split(" ").length==3) return headerAuth.split(" ")[2];
+        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith(TOKEN_TYPE)) return headerAuth.substring(7); // e부터 시작하는 jwt 토큰
+        return null;
+    }
+
+    public String parseJwt(String token) {
+        if (StringUtils.hasText(token) && token.startsWith(TOKEN_TYPE)) return token.substring(7); // e부터 시작하는 jwt 토큰
         return null;
     }
 }

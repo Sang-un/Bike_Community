@@ -47,8 +47,6 @@ public class AuthTokenFilter extends BasicAuthenticationFilter {
             if(PatternMatchUtils.simpleMatch(NO_SECURITY_PATH, request.getRequestURI())) chain.doFilter(request, response);
             else{
                 if (tokenUtils.isValidToken(request)) {
-                    String s = tokenUtils.parseJwt(request);
-                    System.out.println("s = " + s);
                     String email = tokenUtils.getEmailFromJwt(request);
                     UserDetails userDetails = userDetailsService.loadUserByUsername(email);
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
