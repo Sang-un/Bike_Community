@@ -1,7 +1,9 @@
 package bike.community.service.board.free_board;
 
+import bike.community.component.FileStore;
 import bike.community.model.entity.board.AttachedFile;
 import bike.community.model.entity.board.Free;
+import bike.community.model.entity.board.ImageFiles;
 import bike.community.model.entity.user.User;
 import bike.community.model.network.Header;
 import bike.community.model.network.request.post.board.free.FreeBoardRequest;
@@ -9,6 +11,7 @@ import bike.community.model.network.response.post.board.free.FreeBoardPageRespon
 import bike.community.model.network.response.post.board.free.FreeBoardResponse;
 import bike.community.model.network.response.post.board.free.search_condition.FreeBoardSearchCond;
 import bike.community.model.network.response.user.UserWriterResponse;
+import bike.community.repository.board.AttachedFileRepository;
 import bike.community.repository.board.free_board.FreeBoardRepository;
 import bike.community.repository.user.UserRepository;
 import bike.community.security.jwt.TokenUtils;
@@ -17,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -31,6 +35,7 @@ public class FreeBoardService {
 
     private final FreeBoardRepository freeBoardRepository;
     private final UserRepository userRepository;
+    private final AttachedFileRepository attachedFileRepository;
     private final TokenUtils tokenUtils;
 
 //    @Transactional
@@ -103,5 +108,13 @@ public class FreeBoardService {
 
     public Header<Page<FreeBoardPageResponse>> searchByCond(FreeBoardSearchCond cond, Pageable pageable) {
         return Header.OK(freeBoardRepository.searchByCond(cond, pageable));
+    }
+
+    @Transactional
+    public Header<ImageFiles> saveImages(List<MultipartFile> imageFiles) throws IOException {
+        FileStore fileStore = new FileStore();
+        List<AttachedFile> attachedFiles = fileStore.storeFiles(imageFiles);
+        for (AttachedFile attachedFile : attachedFiles) attachedFileRepository.save(attachedFile);
+        return Header.OK(new ImageFiles(attachedFiles));
     }
 }
