@@ -87,6 +87,15 @@ public class UserService {
         String nickname = principal.getNickname();
         System.out.println(nickname);
         System.out.println(email);
+        System.out.println("-0-0-0-0-0-0-0-0-");
+        System.out.println(principal.getUsername());
+        System.out.println(principal.getRealUsername());
+        System.out.println(principal.getAddress());
+        System.out.println(principal.getDetailAddress());
+        System.out.println(principal.getZipcode());
+        System.out.println(principal.getBirthday());
+        System.out.println(principal.getPhone());
+        System.out.println(principal.getSex());
         UserInfoResponse userInfoResponse =
                 UserInfoResponse.builder()
                         .email(principal.getUsername())

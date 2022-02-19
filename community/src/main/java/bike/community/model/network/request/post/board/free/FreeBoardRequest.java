@@ -1,6 +1,9 @@
 package bike.community.model.network.request.post.board.free;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Data
 public class FreeBoardRequest {
@@ -9,5 +12,7 @@ public class FreeBoardRequest {
 
     private String content;
 
-    private String nickname;
+    private String nickname;// TODO 이거 없애기. 토큰을 까서 확인하자
+
+    private List<MultipartFile> imageFiles;
 }

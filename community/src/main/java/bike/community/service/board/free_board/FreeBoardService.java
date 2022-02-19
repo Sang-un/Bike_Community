@@ -47,10 +47,9 @@ public class FreeBoardService {
 
     @Transactional
     public Header<FreeBoardResponse> create(FreeBoardRequest freeBoardRequest, HttpServletRequest request) {
-        System.out.println("kkkkkkkkk");
-        String nicknameFromJwt = tokenUtils.getNicknameFromJwt(request);
-        System.out.println("nicknameFromJwt = " + nicknameFromJwt);
-        User user = userRepository.findUserByNickname(freeBoardRequest.getNickname());
+        String nickname = tokenUtils.getNicknameFromJwt(request);
+        String email = tokenUtils.getEmailFromJwt(request);
+        User user = userRepository.findUserByNickname(nickname);
         Free freeBoard = Free.create(freeBoardRequest.getTitle(), freeBoardRequest.getContent(), user);
         freeBoardRepository.save(freeBoard);
         FreeBoardResponse freeBoardResponse = FreeBoardResponse.builder()
@@ -58,7 +57,7 @@ public class FreeBoardService {
                 .title(freeBoard.getTitle())
                 .content(freeBoard.getContent())
                 .user(
-                        UserWriterResponse.builder().email(user.getEmail()).nickname(user.getNickname()).build()
+                        UserWriterResponse.builder().email(email).nickname(nickname).build()
                 )
                 .build();
         return Header.OK(freeBoardResponse);
@@ -71,7 +70,15 @@ public class FreeBoardService {
     public Header<FreeBoardResponse> findOne(Long id) {
         if(freeBoardRepository.findById(id).isPresent()){
             Free freeBoard = freeBoardRepository.findById(id).get();
-            FreeBoardResponse result = FreeBoardResponse.builder().id(freeBoard.getId()).title(freeBoard.getTitle()).content(freeBoard.getContent()).build();
+            FreeBoardResponse result = FreeBoardResponse.builder()
+                    .id(freeBoard.getId())
+                    .title(freeBoard.getTitle())
+                    .content(freeBoard.getContent())
+                    .user(UserWriterResponse.builder()
+                            .email(freeBoard.getUser().getEmail())
+                            .nickname(freeBoard.getUser().getNickname())
+                            .build())
+                    .build();
             return Header.OK(result);
         }
         return Header.ERROR("게시물이 존재하지 않습니다.");

@@ -1,6 +1,5 @@
 package bike.community.model.network.response.post.board.free;
 
-import bike.community.model.network.response.user.UserResponse;
 import bike.community.model.network.response.user.UserWriterResponse;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Builder;
