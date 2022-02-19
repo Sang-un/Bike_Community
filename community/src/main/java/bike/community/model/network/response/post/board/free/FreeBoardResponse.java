@@ -14,14 +14,18 @@ public class FreeBoardResponse {
     private String title;
     private String content;
     private UserWriterResponse user;
-    private List<String> filenames = new ArrayList<>();
+//    private List<String> filenames = new ArrayList<>();
 
     @QueryProjection
-    public FreeBoardResponse(Long id, String title, String content, List<String> filenames, UserWriterResponse user) {
+    public FreeBoardResponse(Long id,
+                             String title,
+                             String content,
+//                             List<String> filenames,
+                             UserWriterResponse user) {
         this.id = id;
         this.title = title;
         this.content = content;
-        for (String filename : filenames) this.filenames.add("http://localhost:8080/api/"+filename);
+//        for (String filename : filenames) this.filenames.add("http://localhost:8080/api/"+filename);
         this.user = user;
     }
 }

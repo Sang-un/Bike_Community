@@ -31,7 +31,7 @@ spring:
       sort:
         sort-parameter: desc
 file:
-  dir: /Users/leechanyoung/Downloads/bikecImages
+  dir: /Users/leechanyoung/Downloads/bikecImages/
 #logging.level:
 #  org.hibernate.SQL: debug
 #  org.hibernate.type: trace

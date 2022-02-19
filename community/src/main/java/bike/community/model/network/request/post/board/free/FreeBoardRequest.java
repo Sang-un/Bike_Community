@@ -14,5 +14,5 @@ public class FreeBoardRequest {
 
     private String nickname;// TODO 이거 없애기. 토큰을 까서 확인하자
 
-    private List<MultipartFile> imageFiles;
+//    private List<MultipartFile> imageFiles;
 }

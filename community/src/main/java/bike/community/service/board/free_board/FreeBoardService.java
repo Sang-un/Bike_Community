@@ -35,8 +35,10 @@ public class FreeBoardService {
 
     private final FreeBoardRepository freeBoardRepository;
     private final UserRepository userRepository;
-    private final AttachedFileRepository attachedFileRepository;
     private final TokenUtils tokenUtils;
+
+//    private final AttachedFileRepository attachedFileRepository;
+//    private final FileStore fileStore;
 
 //    @Transactional
 //    public Header<FreeBoardResponse> create(FreeBoardRequest freeBoardRequest) {
@@ -58,13 +60,16 @@ public class FreeBoardService {
     public Header<FreeBoardResponse> create(FreeBoardRequest freeBoardRequest, HttpServletRequest request) throws IOException {
         User user = userRepository.findUserByNickname(tokenUtils.getNicknameFromJwt(request));
 
-        Free freeBoard = Free.create(freeBoardRequest.getTitle(), freeBoardRequest.getContent(), freeBoardRequest.getImageFiles(), user);
+        Free freeBoard = Free.create(freeBoardRequest.getTitle(),
+                freeBoardRequest.getContent(),
+//                freeBoardRequest.getImageFiles(),
+                user);
         freeBoardRepository.save(freeBoard);
 
         /// -- 저장된 filename 들을 가져온다. --
-        List<AttachedFile> attachedFiles = freeBoard.getAttachedFiles();
-        List<String> imageFiles = new ArrayList<>();
-        for (AttachedFile attachedFile : attachedFiles) imageFiles.add(attachedFile.getStoreFilename());
+//        List<AttachedFile> attachedFiles = freeBoard.getAttachedFiles();
+//        List<String> imageFiles = new ArrayList<>();
+//        for (AttachedFile attachedFile : attachedFiles) imageFiles.add(attachedFile.getStoreFilename());
         // --------------------------------
 
         FreeBoardResponse freeBoardResponse
@@ -72,7 +77,7 @@ public class FreeBoardService {
                             freeBoard.getId(),
                             freeBoard.getTitle(),
                             freeBoard.getContent(),
-                            imageFiles,
+//                            imageFiles,
                             new UserWriterResponse(user.getNickname(), user.getEmail())
                         );
 
@@ -87,9 +92,9 @@ public class FreeBoardService {
         if(freeBoardRepository.findById(id).isPresent()){
             Free freeBoard = freeBoardRepository.findById(id).get();
 
-            List<AttachedFile> attachedFiles = freeBoard.getAttachedFiles();
-            List<String> imageFiles = new ArrayList<>();
-            for (AttachedFile attachedFile : attachedFiles) imageFiles.add(attachedFile.getStoreFilename());
+//            List<AttachedFile> attachedFiles = freeBoard.getAttachedFiles();
+//            List<String> imageFiles = new ArrayList<>();
+//            for (AttachedFile attachedFile : attachedFiles) imageFiles.add(attachedFile.getStoreFilename());
             // --------------------------------
 
             FreeBoardResponse freeBoardResponse
@@ -97,7 +102,7 @@ public class FreeBoardService {
                     freeBoard.getId(),
                     freeBoard.getTitle(),
                     freeBoard.getContent(),
-                    imageFiles,
+//                    imageFiles,
                     new UserWriterResponse(freeBoard.getUser().getNickname(), freeBoard.getUser().getEmail())
             );
 
@@ -110,11 +115,5 @@ public class FreeBoardService {
         return Header.OK(freeBoardRepository.searchByCond(cond, pageable));
     }
 
-    @Transactional
-    public Header<ImageFiles> saveImages(List<MultipartFile> imageFiles) throws IOException {
-        FileStore fileStore = new FileStore();
-        List<AttachedFile> attachedFiles = fileStore.storeFiles(imageFiles);
-        for (AttachedFile attachedFile : attachedFiles) attachedFileRepository.save(attachedFile);
-        return Header.OK(new ImageFiles(attachedFiles));
-    }
+
 }

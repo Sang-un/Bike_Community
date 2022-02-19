@@ -45,8 +45,8 @@ public class Board extends DateBaseEntity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, cascade=ALL)
     protected User user;
 
-    @OneToMany(mappedBy="board", cascade=CascadeType.ALL)
-    private List<AttachedFile> attachedFiles = new ArrayList<>();
+//    @OneToMany(mappedBy="board", cascade=CascadeType.ALL)
+//    private List<AttachedFile> attachedFiles = new ArrayList<>();
 
     @Override
     public void prePersist() {
@@ -58,12 +58,12 @@ public class Board extends DateBaseEntity implements Serializable {
         board.title = request.getTitle();
         board.content = request.getContent();
         board.user = user;
-        FileStore fileStore = new FileStore();
-        List<AttachedFile> attachedFiles = fileStore.storeFiles(request.getImageFiles());
-        for (AttachedFile attachedFile : attachedFiles) {
-            board.getAttachedFiles().add(attachedFile);
-            attachedFile.addBoard(board);
-        }
+//        FileStore fileStore = new FileStore();
+//        List<AttachedFile> attachedFiles = fileStore.storeFiles(request.getImageFiles());
+//        for (AttachedFile attachedFile : attachedFiles) {
+//            board.getAttachedFiles().add(attachedFile);
+//            attachedFile.addBoard(board);
+//        }
         return board;
     }
 }

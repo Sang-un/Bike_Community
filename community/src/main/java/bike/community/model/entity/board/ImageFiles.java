@@ -8,9 +8,11 @@ import java.util.List;
 @Data
 public class ImageFiles {
 
-    private List<String> imageFiles = new ArrayList<>();
+    private final String url = "http://localhost:8080/api/image/";
+    private List<String> imagePaths = new ArrayList<>();
 
     public ImageFiles(List<AttachedFile> attachedFiles) {
-        for (AttachedFile attachedFile : attachedFiles) this.imageFiles.add(attachedFile.getStoreFilename());
+        for (AttachedFile attachedFile : attachedFiles)
+            this.imagePaths.add(url+attachedFile.getStoreFilename());
     }
 }

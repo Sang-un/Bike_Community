@@ -27,28 +27,11 @@ import java.util.List;
 public class FreeBoardController {
 
     private final FreeBoardService freeBoardService;
-    private final FileStore fileStore;
-    @Value("${file.dir}")
-    private String fileDir;
 
     //게시물 작성하기
     @PostMapping("/api/board/free")
-    public Header<ImageFiles> create(List<MultipartFile> imageFiles) throws IOException {
-        return freeBoardService.saveImages(imageFiles);
-    }
-
-    //게시물 작성하기
-    @PostMapping("/api/board/free/image")
     public Header<FreeBoardResponse> create(@RequestBody FreeBoardRequest freeBoardRequest, HttpServletRequest request) throws IOException {
         return freeBoardService.create(freeBoardRequest, request);
-    }
-
-    @GetMapping("/api/images/{filename}")
-    public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
-        // sdh1df14-12ee-2353-1593-sd34dfg434.png (filename) - > fileStore.getFullPath(filename)하면
-        // file"/Users/leechanyoung/Downloads/image/communityImageFiles/sdh1df14-12ee-2353-1593-sd34dfg434.png 로 바뀐다.
-//        fileStore.getFullPath(filename);
-        return new UrlResource("file:"+fileDir+filename);
     }
 
     //게시판 들어갔을 때 전체 게시물들 보기
