@@ -28,6 +28,8 @@ spring:
       pageable:
         default-page-size: 10 #page default size? 10??
         max-page-size: 2000 #?? ??? size
+      sort:
+        sort-parameter: desc
 
 #logging.level:
 #  org.hibernate.SQL: debug

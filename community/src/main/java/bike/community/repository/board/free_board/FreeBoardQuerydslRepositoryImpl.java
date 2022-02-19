@@ -39,6 +39,7 @@ public class FreeBoardQuerydslRepositoryImpl implements FreeBoardQuerydslReposit
                 .leftJoin(free.user, user)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
+                .orderBy(free.id.desc())//최신등록순으로
                 .fetchResults();
         return new PageImpl<>(results.getResults(), pageable, results.getTotal());
     }
