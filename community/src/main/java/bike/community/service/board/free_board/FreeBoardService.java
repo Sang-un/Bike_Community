@@ -1,5 +1,6 @@
 package bike.community.service.board.free_board;
 
+import bike.community.model.entity.board.AttachedFile;
 import bike.community.model.entity.board.Free;
 import bike.community.model.entity.user.User;
 import bike.community.model.network.Header;
@@ -18,6 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Transactional(readOnly = true)
@@ -46,20 +50,27 @@ public class FreeBoardService {
 //    }
 
     @Transactional
-    public Header<FreeBoardResponse> create(FreeBoardRequest freeBoardRequest, HttpServletRequest request) {
-        String nickname = tokenUtils.getNicknameFromJwt(request);
-        String email = tokenUtils.getEmailFromJwt(request);
-        User user = userRepository.findUserByNickname(nickname);
-        Free freeBoard = Free.create(freeBoardRequest.getTitle(), freeBoardRequest.getContent(), user);
+    public Header<FreeBoardResponse> create(FreeBoardRequest freeBoardRequest, HttpServletRequest request) throws IOException {
+        User user = userRepository.findUserByNickname(tokenUtils.getNicknameFromJwt(request));
+
+        Free freeBoard = Free.create(freeBoardRequest.getTitle(), freeBoardRequest.getContent(), freeBoardRequest.getImageFiles(), user);
         freeBoardRepository.save(freeBoard);
-        FreeBoardResponse freeBoardResponse = FreeBoardResponse.builder()
-                .id(freeBoard.getId())
-                .title(freeBoard.getTitle())
-                .content(freeBoard.getContent())
-                .user(
-                        UserWriterResponse.builder().email(email).nickname(nickname).build()
-                )
-                .build();
+
+        /// -- 저장된 filename 들을 가져온다. --
+        List<AttachedFile> attachedFiles = freeBoard.getAttachedFiles();
+        List<String> imageFiles = new ArrayList<>();
+        for (AttachedFile attachedFile : attachedFiles) imageFiles.add(attachedFile.getStoreFilename());
+        // --------------------------------
+
+        FreeBoardResponse freeBoardResponse
+                = new FreeBoardResponse(
+                            freeBoard.getId(),
+                            freeBoard.getTitle(),
+                            freeBoard.getContent(),
+                            imageFiles,
+                            new UserWriterResponse(user.getNickname(), user.getEmail())
+                        );
+
         return Header.OK(freeBoardResponse);
     }
 
@@ -70,16 +81,22 @@ public class FreeBoardService {
     public Header<FreeBoardResponse> findOne(Long id) {
         if(freeBoardRepository.findById(id).isPresent()){
             Free freeBoard = freeBoardRepository.findById(id).get();
-            FreeBoardResponse result = FreeBoardResponse.builder()
-                    .id(freeBoard.getId())
-                    .title(freeBoard.getTitle())
-                    .content(freeBoard.getContent())
-                    .user(UserWriterResponse.builder()
-                            .email(freeBoard.getUser().getEmail())
-                            .nickname(freeBoard.getUser().getNickname())
-                            .build())
-                    .build();
-            return Header.OK(result);
+
+            List<AttachedFile> attachedFiles = freeBoard.getAttachedFiles();
+            List<String> imageFiles = new ArrayList<>();
+            for (AttachedFile attachedFile : attachedFiles) imageFiles.add(attachedFile.getStoreFilename());
+            // --------------------------------
+
+            FreeBoardResponse freeBoardResponse
+                    = new FreeBoardResponse(
+                    freeBoard.getId(),
+                    freeBoard.getTitle(),
+                    freeBoard.getContent(),
+                    imageFiles,
+                    new UserWriterResponse(freeBoard.getUser().getNickname(), freeBoard.getUser().getEmail())
+            );
+
+            return Header.OK(freeBoardResponse);
         }
         return Header.ERROR("게시물이 존재하지 않습니다.");
     }
