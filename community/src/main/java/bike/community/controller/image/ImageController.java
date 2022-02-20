@@ -30,7 +30,7 @@ public class ImageController {
 
     /* -------------이미지--------------- */
     //이미지 저장. url 만들기
-    @PostMapping("/api/images")
+    @PostMapping("/api/image")
     public Header<ImageFile> saveImage(MultipartFile imageFile) throws IOException {
         return imageService.saveImage(imageFile);
     }

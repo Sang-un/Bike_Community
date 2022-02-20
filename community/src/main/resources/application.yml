@@ -1,3 +1,4 @@
+## DATABASE - MYSQL
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/bikec?serverTimezone=UTC&characterEncoding=UTF-8
@@ -5,6 +6,7 @@ spring:
     username: root
     password: 1234
 
+#### JPA
   jpa:
     hibernate:
       ddl-auto: update
@@ -16,6 +18,8 @@ spring:
 
   profiles:
     active: local #local
+
+#### REDIS
   redis:
     host: 127.0.0.1
     port: 6379
@@ -23,6 +27,7 @@ spring:
   server:
     port: 8080
 
+#### 페이징 관련
   data:
     web:
       pageable:
@@ -30,9 +35,10 @@ spring:
         max-page-size: 2000 #?? ??? size
       sort:
         sort-parameter: desc
+
+#### 이미지 파일 저장 경로
 file:
   dir: /Users/leechanyoung/Downloads/bikecImages/
-
 
 #logging.level:
 #  org.hibernate.SQL: debug
