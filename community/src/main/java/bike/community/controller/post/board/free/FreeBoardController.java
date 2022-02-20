@@ -1,7 +1,5 @@
 package bike.community.controller.post.board.free;
 
-import bike.community.component.FileStore;
-import bike.community.model.entity.board.ImageFiles;
 import bike.community.model.network.Header;
 import bike.community.model.network.request.post.board.free.FreeBoardRequest;
 import bike.community.model.network.response.post.board.free.FreeBoardPageResponse;
@@ -9,18 +7,12 @@ import bike.community.model.network.response.post.board.free.FreeBoardResponse;
 import bike.community.model.network.response.post.board.free.search_condition.FreeBoardSearchCond;
 import bike.community.service.board.free_board.FreeBoardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController

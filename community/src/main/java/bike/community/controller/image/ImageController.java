@@ -1,6 +1,7 @@
 package bike.community.controller.image;
 
-import bike.community.model.entity.board.ImageFiles;
+import bike.community.model.entity.board.image.ImageFile;
+import bike.community.model.entity.board.image.ImageFiles;
 import bike.community.model.network.Header;
 import bike.community.service.image.ImageService;
 import lombok.RequiredArgsConstructor;
@@ -29,10 +30,16 @@ public class ImageController {
 
     /* -------------이미지--------------- */
     //이미지 저장. url 만들기
-    @PostMapping("/api/image")
-    public Header<ImageFiles> saveImage(List<MultipartFile> imageFiles) throws IOException {
+    @PostMapping("/api/images")
+    public Header<ImageFile> saveImage(MultipartFile imageFile) throws IOException {
+        return imageService.saveImage(imageFile);
+    }
+
+    @PostMapping("/api/images")
+    public Header<ImageFiles> saveImages(List<MultipartFile> imageFiles) throws IOException {
         return imageService.saveImages(imageFiles);
     }
+
 
     @GetMapping("/api/image/{filename}")
     public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {

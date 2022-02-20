@@ -1,4 +1,6 @@
-package bike.community.model.entity.board;
+package bike.community.model.entity.board.image;
+
+import bike.community.model.entity.board.Board;
 
 import javax.persistence.*;
 
