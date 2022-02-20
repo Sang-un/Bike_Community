@@ -1,6 +1,6 @@
 package bike.community.component.redis;
 
-import bike.community.security.jwt.TokenUtils;
+import bike.community.model.security.jwt.TokenUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 
-import static bike.community.security.jwt.JwtProperties.*;
+import static bike.community.model.security.jwt.JwtProperties.*;
 
 @RequiredArgsConstructor
 @Service

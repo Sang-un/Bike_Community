@@ -1,4 +1,4 @@
-package bike.community.security;
+package bike.community.model.security;
 
 import bike.community.model.network.response.user.AfterJoinUserResponse;
 import bike.community.model.entity.user.User;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static bike.community.security.jwt.JwtProperties.*;
+import static bike.community.model.security.jwt.JwtProperties.*;
 
 
 @RequiredArgsConstructor

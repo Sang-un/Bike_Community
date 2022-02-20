@@ -24,39 +24,44 @@ public class AwsS3Service {
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
+    @Value("${cloud.aws.region.static}")
+    private String region;
 
     private final AmazonS3 amazonS3;
 
-    public List<String> uploadImage(List<MultipartFile> multipartFile) {
+    public List<String> uploadImages(List<MultipartFile> multipartFile) {
         List<String> fileNameList = new ArrayList<>();
 
         multipartFile.forEach(file -> {
-            String fileName = createFileName(file.getOriginalFilename());
-            ObjectMetadata objectMetadata = new ObjectMetadata();
-            objectMetadata.setContentLength(file.getSize());
-            objectMetadata.setContentType(file.getContentType());
-
-            try(InputStream inputStream = file.getInputStream()) {
-                amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
-                        .withCannedAcl(CannedAccessControlList.PublicRead));
-            } catch(IOException e) {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
-            }
-
+            String fileName = getFilenameAndPutS3(file);
             fileNameList.add(fileName);
         });
 
         return fileNameList;
     }
 
+    public String uploadImage(MultipartFile file) {
+        return getFilenameAndPutS3(file);
+    }
+
+    private String getFilenameAndPutS3(MultipartFile file) {
+        String filename = createFileName(file.getOriginalFilename());
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(file.getSize());
+        objectMetadata.setContentType(file.getContentType());
+
+        try(InputStream inputStream = file.getInputStream()) {
+            amazonS3.putObject(new PutObjectRequest(bucket, filename, inputStream, objectMetadata)
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
+        } catch(IOException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
+        }
+        return "https://"+bucket+".s3."+region+".amazonaws.com/"+filename;
+    }
+
     public void deleteImage(String fileName) {
         amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
     }
-
-//    private String putS3(File uploadFile, String fileName) {
-//        amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
-//        return amazonS3Client.getUrl(bucket, fileName).toString();
-//    }
 
     private String createFileName(String fileName) {
         return UUID.randomUUID().toString().concat(getFileExtension(fileName));
@@ -69,4 +74,6 @@ public class AwsS3Service {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "잘못된 형식의 파일(" + fileName + ") 입니다.");
         }
     }
+
+
 }

@@ -4,7 +4,6 @@ import bike.community.model.network.Header;
 import bike.community.model.network.request.user.JoinUserRequest;
 import bike.community.model.network.response.user.AfterJoinUserResponse;
 import bike.community.model.network.response.user.UserInfoResponse;
-import bike.community.security.UserDetailsImpl;
 import bike.community.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

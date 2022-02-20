@@ -10,7 +10,7 @@ import bike.community.model.network.response.post.board.free.search_condition.Fr
 import bike.community.model.network.response.user.UserWriterResponse;
 import bike.community.repository.board.free_board.FreeBoardRepository;
 import bike.community.repository.user.UserRepository;
-import bike.community.security.jwt.TokenUtils;
+import bike.community.model.security.jwt.TokenUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

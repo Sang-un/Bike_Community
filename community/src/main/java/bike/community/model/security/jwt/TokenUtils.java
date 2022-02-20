@@ -1,4 +1,4 @@
-package bike.community.security.jwt;
+package bike.community.model.security.jwt;
 
 import io.jsonwebtoken.*;
 import lombok.AccessLevel;
@@ -7,11 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
-import static bike.community.security.jwt.JwtProperties.*;
+import static bike.community.model.security.jwt.JwtProperties.*;
 
 @Slf4j
 @Component

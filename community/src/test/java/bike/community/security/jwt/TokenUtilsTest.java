@@ -1,16 +1,11 @@
 package bike.community.security.jwt;
 
-import lombok.RequiredArgsConstructor;
+import bike.community.model.security.jwt.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
 
-import static bike.community.security.jwt.JwtProperties.SPACE;
-import static bike.community.security.jwt.JwtProperties.TOKEN_TYPE;
-import static org.junit.jupiter.api.Assertions.*;
+import static bike.community.model.security.jwt.JwtProperties.TOKEN_TYPE;
 
 
 @Slf4j

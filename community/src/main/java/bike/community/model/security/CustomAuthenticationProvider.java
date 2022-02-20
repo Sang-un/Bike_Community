@@ -1,4 +1,4 @@
-package bike.community.security;
+package bike.community.model.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,8 +1,8 @@
 package bike.community.config.security;
 
 import bike.community.config.cors.CorsConfig;
-import bike.community.security.*;
-import bike.community.security.jwt.TokenUtils;
+import bike.community.model.security.*;
+import bike.community.model.security.jwt.TokenUtils;
 import bike.community.component.redis.RedisService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

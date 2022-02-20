@@ -1,7 +1,7 @@
-package bike.community.security;
+package bike.community.model.security;
 
 import bike.community.model.network.Header;
-import bike.community.security.jwt.TokenUtils;
+import bike.community.model.security.jwt.TokenUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.util.PatternMatchUtils;
-import org.springframework.util.StringUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -21,15 +20,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static bike.community.security.jwt.JwtProperties.AUTH_HEADER;
-import static bike.community.security.jwt.JwtProperties.TOKEN_TYPE;
-
 @Slf4j
 public class AuthTokenFilter extends BasicAuthenticationFilter {
     private final ObjectMapper objectMapper;
     private final TokenUtils tokenUtils;
     private final UserDetailsService userDetailsService;
-    private static final String[] NO_SECURITY_PATH = {"/api/guest*", "/api/join*", "/api/logout*"};
+    private static final String[] NO_SECURITY_PATH = {"/api/guest*", "/api/join*", "/api/logout*", "/swagger*"};
 
     public AuthTokenFilter(AuthenticationManager authenticationManager,
                            ObjectMapper objectMapper,

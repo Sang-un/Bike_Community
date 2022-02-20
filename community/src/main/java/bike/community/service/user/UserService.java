@@ -9,7 +9,7 @@ import bike.community.model.network.response.user.UserInfoResponse;
 import bike.community.model.network.response.user.UserResponse;
 import bike.community.model.entity.user.User;
 import bike.community.repository.user.UserRepository;
-import bike.community.security.UserDetailsImpl;
+import bike.community.model.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.springframework.security.core.Authentication;
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import static bike.community.security.jwt.JwtProperties.AUTH_HEADER;
+import static bike.community.model.security.jwt.JwtProperties.AUTH_HEADER;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
