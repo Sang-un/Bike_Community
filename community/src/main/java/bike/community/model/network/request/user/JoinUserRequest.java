@@ -39,5 +39,6 @@ public class JoinUserRequest {
     @NotBlank @NotNull
     private String nickname; //사용할 닉네임
 
+    @NotNull
     private Address address;
 }

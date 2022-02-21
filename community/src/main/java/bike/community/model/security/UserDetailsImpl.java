@@ -58,15 +58,19 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public String getAddress() {
-        return user.getAddress().getAddress();
+        if(user.getAddress()!=null) return user.getAddress().getAddress();
+        else return "주소";
+
     }
 
     public String getDetailAddress() {
-        return user.getAddress().getDetailAddress();
+        if(user.getAddress()!=null) return user.getAddress().getDetailAddress();
+        else return "주소";
     }
 
     public String getZipcode() {
-        return user.getAddress().getZipcode();
+        if(user.getAddress()!=null) return user.getAddress().getZipcode();
+        else return "우편번호";
     }
 
     public String getSex() {
