@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final TokenUtils tokenUtils;
     private final CorsConfig corsConfig;
     private final CorsFilter corsFilter;
-    private final HeaderFilter headerFilter;
+//    private final HeaderFilter headerFilter;
 
 
     @Override

@@ -21,19 +21,16 @@ import static javax.persistence.CascadeType.ALL;
 @Entity @Getter
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 @DiscriminatorColumn
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)//단일 테이블 전략
+@Inheritance(strategy=InheritanceType.JOINED)//단일 테이블 전략
 public class Board extends DateBaseEntity implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id; //TODO 필드 접근자 protected로 수정
 
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id; //TODO 필드 접근자 protected로 수정
     // 제목
     protected String title;
-
     // 내용
     @Lob
     protected String content;
-
     // TODO 상운이 한테 말하기. 이거 쓸 필요 없음
     // 게시판 종류
 //    @Enumerated(EnumType.STRING)
@@ -45,9 +42,6 @@ public class Board extends DateBaseEntity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, cascade=ALL)
     protected User user;
 
-//    @OneToMany(mappedBy="board", cascade=CascadeType.ALL)
-//    private List<AttachedFile> attachedFiles = new ArrayList<>();
-
     @Override
     public void prePersist() {
         views = views == null ? 0L : views;
@@ -58,12 +52,6 @@ public class Board extends DateBaseEntity implements Serializable {
         board.title = request.getTitle();
         board.content = request.getContent();
         board.user = user;
-//        FileStore fileStore = new FileStore();
-//        List<AttachedFile> attachedFiles = fileStore.storeFiles(request.getImageFiles());
-//        for (AttachedFile attachedFile : attachedFiles) {
-//            board.getAttachedFiles().add(attachedFile);
-//            attachedFile.addBoard(board);
-//        }
         return board;
     }
 }

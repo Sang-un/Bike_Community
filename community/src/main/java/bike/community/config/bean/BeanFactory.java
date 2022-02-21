@@ -19,8 +19,8 @@ public class BeanFactory {
     @Bean
     public LogTraceAspect logTraceAspect(LogTrace logTrace){return new LogTraceAspect(logTrace);}
 
-    @Bean
-    public HeaderFilter headerFilter(){
-        return new HeaderFilter();
-    }
+//    @Bean
+//    public HeaderFilter headerFilter(){
+//        return new HeaderFilter();
+//    }
 }

@@ -83,6 +83,7 @@ public class UserService {
 
     public Header<UserInfoResponse> userInfo(Authentication authentication) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
+        System.out.println(principal);
         String email = principal.getUsername();
         String nickname = principal.getNickname();
         System.out.println(nickname);

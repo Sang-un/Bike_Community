@@ -56,7 +56,7 @@ public class AwsS3Service {
         } catch(IOException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
         }
-        return "https://"+bucket+".s3."+region+".amazonaws.com/"+filename;
+        return imageUrl(filename);
     }
 
     public void deleteImage(String fileName) {
@@ -75,5 +75,8 @@ public class AwsS3Service {
         }
     }
 
+    public String imageUrl(String filename){
+        return "https://"+bucket+".s3."+region+".amazonaws.com/"+filename;
+    }
 
 }

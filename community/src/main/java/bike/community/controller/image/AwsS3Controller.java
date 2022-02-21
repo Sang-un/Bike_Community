@@ -22,14 +22,14 @@ public class AwsS3Controller {
      */
     @ApiOperation(value = "Amazon S3에 이미지 업로드", notes = "Amazon S3에 이미지 업로드 ")
     @PostMapping("/api/s3/images")
-    public Header<List<String>> uploadImages(@ApiParam(value="img 파일들(여러 파일 업로드 가능)", required = true) @RequestPart List<MultipartFile> multipartFile) {
-        return Header.OK(awsS3Service.uploadImages(multipartFile));
+    public Header<List<String>> uploadImages(@ApiParam(value="img 파일들(여러 파일 업로드 가능)", required = true) @RequestPart List<MultipartFile> imageFiles) {
+        return Header.OK(awsS3Service.uploadImages(imageFiles));
     }
 
     @ApiOperation(value = "Amazon S3에 이미지 업로드", notes = "Amazon S3에 이미지 업로드 ")
     @PostMapping("/api/s3/image")
-    public Header<String> uploadImage(@ApiParam(value="img 파일들(여러 파일 업로드 가능)", required = true) @RequestPart MultipartFile multipartFile) {
-        return Header.OK(awsS3Service.uploadImage(multipartFile));
+    public Header<String> uploadImage(@ApiParam(value="img 파일들(여러 파일 업로드 가능)", required = true) @RequestPart MultipartFile imageFile) {
+        return Header.OK(awsS3Service.uploadImage(imageFile));
     }
 
     /**
