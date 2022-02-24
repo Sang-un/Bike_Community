@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,9 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final ObjectMapper objectMapper;
     private final TokenUtils tokenUtils;
     private final CorsConfig corsConfig;
-    private final CorsFilter corsFilter;
-//    private final HeaderFilter headerFilter;
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -43,16 +41,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .disable()
                 .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/user/**")
-                .access("hasRole('ROLE_USER')")
-                .antMatchers("/admin/**")
-                .access("hasRole('ROLE_ADMIN')")
-                .anyRequest().permitAll();
+                .antMatchers("/api/guest/**", "/api/join/**", "/api/logout", "/swagger").permitAll()
+                .antMatchers("/api/user/**").access("hasRole('ROLE_USER')")
+                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .anyRequest().permitAll()
 
+                .and()
+                .apply(securityConfigurerAdapter());
 
 //                .and()
 //                    .authorizeRequests()
@@ -80,11 +79,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthTokenFilter authTokenFilter() throws Exception {
-        return new AuthTokenFilter(authenticationManager(), objectMapper, tokenUtils, userDetailsService);
+        return new AuthTokenFilter(authenticationManager(), tokenUtils, userDetailsService);
     }
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) {
         authenticationManagerBuilder.authenticationProvider(customAuthenticationProvider());
+    }
+
+
+    private AuthTokenFilterConfig securityConfigurerAdapter() throws Exception {
+        return new AuthTokenFilterConfig(authenticationManager(), objectMapper,tokenUtils,userDetailsService);
     }
 }

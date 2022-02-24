@@ -28,7 +28,7 @@ public class AuthTokenFilterConfig extends SecurityConfigurerAdapter<DefaultSecu
 
     @Override
     public void configure(HttpSecurity http) {
-        AuthTokenFilter customFilter = new AuthTokenFilter(authenticationManager, objectMapper,tokenUtils,userDetailsService);
+        AuthTokenFilter customFilter = new AuthTokenFilter(authenticationManager,tokenUtils,userDetailsService);
         http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
