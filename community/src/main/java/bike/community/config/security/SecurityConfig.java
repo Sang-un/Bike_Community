@@ -89,6 +89,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     private AuthTokenFilterConfig securityConfigurerAdapter() throws Exception {
-        return new AuthTokenFilterConfig(authenticationManager(), objectMapper,tokenUtils,userDetailsService);
+        return new AuthTokenFilterConfig(authenticationManager(), tokenUtils,userDetailsService);
     }
 }

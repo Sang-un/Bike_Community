@@ -11,17 +11,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 public class AuthTokenFilterConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
-    private final ObjectMapper objectMapper;
     private final TokenUtils tokenUtils;
     private final UserDetailsService userDetailsService;
     private final AuthenticationManager authenticationManager;
 
     public AuthTokenFilterConfig(AuthenticationManager authenticationManager,
-                           ObjectMapper objectMapper,
                            TokenUtils tokenUtils,
                            UserDetailsService userDetailsService) {
         this.authenticationManager = authenticationManager;
-        this.objectMapper = objectMapper;
         this.tokenUtils = tokenUtils;
         this.userDetailsService = userDetailsService;
     }
