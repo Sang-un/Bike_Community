@@ -34,5 +34,4 @@ public class CommentService {
         InstaBoardResp instaBoardResp = InstaBoardResp.create(instaBoard.getId(), instaBoard.getContent(), instaBoard.getImages(), instaBoard.getComments(), boardWriter);
         return Header.OK(instaBoardResp);
     }
-
 }

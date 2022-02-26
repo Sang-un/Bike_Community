@@ -5,14 +5,13 @@ import bike.community.model.entity.user.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 @Entity
-public class Comment {
+public class Comment{
 
     @Id @GeneratedValue
     private Long id;
@@ -26,9 +25,6 @@ public class Comment {
     @ManyToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name="instaBoard_id")
     private InstaBoard instaBoard;
-
-    @ColumnDefault("0")
-    private int heart;
 
     public static Comment create(String comment, User user) {
         Comment Comment = new Comment();

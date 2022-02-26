@@ -32,4 +32,9 @@ public class InstaBoardService {
         InstaBoardResp instaBoardResp = InstaBoardResp.create(instaBoard.getId(), instaBoard.getContent(), instaBoard.getImages(), instaBoard.getComments(), boardWriter);
         return Header.OK(instaBoardResp);
     }
+
+    public Header<InstaBoardResp> findById(Long boardId) {
+
+        return null;
+    }
 }

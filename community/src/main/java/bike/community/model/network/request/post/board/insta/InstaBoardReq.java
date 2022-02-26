@@ -9,5 +9,4 @@ import java.util.List;
 public class InstaBoardReq {
     private String content;
     private List<MultipartFile> images;
-
 }
