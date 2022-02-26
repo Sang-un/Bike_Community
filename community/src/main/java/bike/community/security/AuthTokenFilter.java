@@ -1,7 +1,7 @@
-package bike.community.model.security;
+package bike.community.security;
 
-import bike.community.model.security.jwt.JwtProperties;
-import bike.community.model.security.jwt.TokenUtils;
+import bike.community.security.jwt.TokenUtils;
+import bike.community.security.jwt.JwtProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -50,29 +50,10 @@ public class AuthTokenFilter extends BasicAuthenticationFilter {
             e.printStackTrace();
         }
     }
-//
-//
-//    private void tokenError(HttpServletResponse response) throws IOException {
-//        Header<Object> error = Header.ERROR("This user have no token. login please.");
-//        String errorStr = objectMapper.writeValueAsString(error);
-//        PrintWriter out = response.getWriter();
-//        out.print(errorStr);
-//        out.flush();
-//    }
-//
-//    private void tokenError(HttpServletResponse response, String message) throws IOException {
-//        Header<Object> error = Header.ERROR(message);
-//        String errorStr = objectMapper.writeValueAsString(error);
-//        PrintWriter out = response.getWriter();
-//        out.print(errorStr);
-//        out.flush();
-//    }
 
     private String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(JwtProperties.AUTH_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
-        }
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(JwtProperties.TOKEN_TYPE)) return bearerToken.substring(7);
         return null;
     }
 }

@@ -1,7 +1,6 @@
-package bike.community.model.security.jwt;
+package bike.community.security.jwt;
 
 import io.jsonwebtoken.*;
-import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -10,22 +9,17 @@ import org.springframework.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
-import static bike.community.model.security.jwt.JwtProperties.*;
+import static bike.community.security.jwt.JwtProperties.*;
 
 @Slf4j
 @Component
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class TokenUtils {
+@NoArgsConstructor
+public class TokenUtils {
     public static final String EMAIL = "email";
     public static final String NICKNAME = "nickname";
     public static final String ROLE = "role";
 
     private String secretKey = SECRET;
-
-//    @PostConstruct
-//    private void init() {
-//        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
-//    }
 
     public String createAccessJwtToken(String email, String nickname, String role){
 
@@ -69,26 +63,25 @@ public final class TokenUtils {
                 .compact();
     }
 
-    public boolean isValidToken(HttpServletRequest request) {
-        String justToken = parseJwt(request);
-        System.out.println("isValidToken(HttpServletRequest request).justToken = " + justToken);
-        try {
-            Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(justToken).getBody();
-            return true;
-        } catch (ExpiredJwtException exception) {//토큰 유효기간 지남
-            log.error("Token Expired");
-            return false;
-        } catch (JwtException exception) {//토큰 변조
-            log.error("Token Tampered");
-            return false;
-        } catch (NullPointerException exception) {//토큰 null
-            log.error("Token is null");
-            return false;
-        }
-    }
+//    public boolean isValidToken(HttpServletRequest request) {
+//        String justToken = parseJwt(request);
+//        System.out.println("isValidToken(HttpServletRequest request).justToken = " + justToken);
+//        try {
+//            Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(justToken).getBody();
+//            return true;
+//        } catch (ExpiredJwtException exception) {//토큰 유효기간 지남
+//            log.error("Token Expired");
+//            return false;
+//        } catch (JwtException exception) {//토큰 변조
+//            log.error("Token Tampered");
+//            return false;
+//        } catch (NullPointerException exception) {//토큰 null
+//            log.error("Token is null");
+//            return false;
+//        }
+//    }
 
     public boolean isValidToken(String justToken) {
-        System.out.println("isValidToken(String justToken).justToken = " + justToken);
         try {
             Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(justToken).getBody();
             return true;
@@ -100,6 +93,9 @@ public final class TokenUtils {
             return false;
         } catch (NullPointerException exception) {//토큰 null
             log.error("Token is null");
+            return false;
+        } catch (Exception exception){
+            log.error("Undefined ERROR");
             return false;
         }
     }
@@ -135,7 +131,12 @@ public final class TokenUtils {
     //TODO 왜 글쓰기 요청만 Bearer 가 두개 붙어 오는가?
     public String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader(AUTH_HEADER);
-        if(headerAuth.split(" ").length==3) return headerAuth.split(" ")[2];
+        if(headerAuth.split(" ").length==3){
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!");
+            System.out.println(headerAuth);
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!");
+            return headerAuth.split(" ")[2];
+        }
         if (StringUtils.hasText(headerAuth) && headerAuth.startsWith(TOKEN_TYPE)) return headerAuth.substring(7); // e부터 시작하는 jwt 토큰
         return null;
     }

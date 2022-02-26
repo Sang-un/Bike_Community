@@ -1,11 +1,10 @@
 package bike.community.security.jwt;
 
-import bike.community.model.security.jwt.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static bike.community.model.security.jwt.JwtProperties.TOKEN_TYPE;
+import static bike.community.security.jwt.JwtProperties.TOKEN_TYPE;
 
 
 @Slf4j

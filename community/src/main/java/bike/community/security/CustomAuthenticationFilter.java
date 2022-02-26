@@ -1,4 +1,4 @@
-package bike.community.model.security;
+package bike.community.security;
 
 import bike.community.model.network.Header;
 import bike.community.model.network.request.user.JoinUserRequest;

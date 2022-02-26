@@ -1,4 +1,4 @@
-package bike.community.model.security.jwt;
+package bike.community.security.jwt;
 
 public interface JwtProperties {
     public static String SECRET = "THIS_IS_OUR_SECRET";

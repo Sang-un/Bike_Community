@@ -1,14 +1,16 @@
 package bike.community.config.security;
 
-import bike.community.config.cors.CorsConfig;
-import bike.community.model.security.*;
-import bike.community.model.security.jwt.TokenUtils;
 import bike.community.component.redis.RedisService;
+import bike.community.config.cors.CorsConfig;
+import bike.community.security.AuthTokenFilter;
+import bike.community.security.CustomAuthenticationFilter;
+import bike.community.security.CustomAuthenticationProvider;
+import bike.community.security.CustomLoginSuccessHandler;
+import bike.community.security.jwt.TokenUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,7 +19,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.filter.CorsFilter;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -36,26 +37,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .addFilter(corsConfig.corsFilter())
-//                .addFilterBefore(headerFilter, corsFilter)
                 .csrf().disable()
                 .formLogin()
                 .disable()
                 .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-//                .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/guest/**", "/api/join/**", "/api/logout", "/swagger").permitAll()
-                .antMatchers("/api/user/**").access("hasRole('ROLE_USER')")
+                .antMatchers("/api/user/**", "api/board/**").access("hasRole('ROLE_USER')")
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()
 
                 .and()
                 .apply(securityConfigurerAdapter());
-
-//                .and()
-//                    .authorizeRequests()
-//                    .anyRequest().permitAll();
     }
 
     @Bean

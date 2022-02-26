@@ -1,4 +1,4 @@
-package bike.community.model.security;
+package bike.community.security;
 
 import bike.community.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
