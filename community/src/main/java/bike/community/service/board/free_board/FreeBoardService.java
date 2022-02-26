@@ -32,8 +32,8 @@ public class FreeBoardService {
 
     @Transactional
     public Header<FreeBoardResponse> create(FreeBoardRequest freeBoardRequest, HttpServletRequest request) throws IOException {
-        User user = userRepository.findUserByNickname(tokenUtils.getNicknameFromJwt(request));
-        Free freeBoard = Free.create(freeBoardRequest.getTitle(), freeBoardRequest.getContent(),user);
+        User user = userRepository.findUserByEmail(tokenUtils.getEmailFromJwt(request));
+        Free freeBoard = Free.create(freeBoardRequest.getTitle(), freeBoardRequest.getContent(), user);
         freeBoardRepository.save(freeBoard);
 
         FreeBoardResponse freeBoardResponse
@@ -43,7 +43,6 @@ public class FreeBoardService {
                             freeBoard.getContent(),
                             new UserWriterResponse(user.getNickname(), user.getEmail())
                         );
-
         return Header.OK(freeBoardResponse);
     }
 

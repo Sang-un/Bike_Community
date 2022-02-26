@@ -20,7 +20,6 @@ public class FreeBoardResponse {
     public FreeBoardResponse(Long id,
                              String title,
                              String content,
-//                             List<String> filenames,
                              UserWriterResponse user) {
         this.id = id;
         this.title = title;

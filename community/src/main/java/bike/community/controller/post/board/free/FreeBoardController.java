@@ -26,6 +26,12 @@ public class FreeBoardController {
         return freeBoardService.create(freeBoardRequest, request);
     }
 
+    //게시물 작성하기
+    @GetMapping("/api/board/free/test")
+    public Header<FreeBoardResponse> create() throws IOException {
+        return freeBoardService.create();
+    }
+
     //게시판 들어갔을 때 전체 게시물들 보기
     @GetMapping("/api/board/free")
     public Header<Page<FreeBoardPageResponse>> searchPaging(Pageable pageable){return freeBoardService.searchPaging(pageable);}

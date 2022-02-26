@@ -40,11 +40,11 @@ class FreeCommunityTest {
     @Test
     @Transactional
     void createBoard() {
-
-        User user = new User("kk", "하하");
-        userRepository.save(user);
-
-        Board bike = Board.create( "bmww질렀습니다.", "bmww질렀습니다라구요 하하", user);
-        BoardRepository.save(bike);
+//
+//        User user = new User("kk", "하하");
+//        userRepository.save(user);
+//
+//        Board bike = Board.create( "bmww질렀습니다.", "bmww질렀습니다라구요 하하", user);
+//        BoardRepository.save(bike);
     }
 }

@@ -25,16 +25,12 @@ import static javax.persistence.CascadeType.ALL;
 public class Board extends DateBaseEntity implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id; //TODO 필드 접근자 protected로 수정
-    // 제목
+    protected Long id;
+
     protected String title;
-    // 내용
+
     @Lob
     protected String content;
-    // TODO 상운이 한테 말하기. 이거 쓸 필요 없음
-    // 게시판 종류
-//    @Enumerated(EnumType.STRING)
-//    private BoardType type;
 
     @ColumnDefault("0")
     protected Long views;
