@@ -5,6 +5,7 @@ import bike.community.model.common.Address;
 import bike.community.model.common.DateBaseEntity;
 import bike.community.model.entity.board.Board;
 import bike.community.model.entity.board.Free;
+import bike.community.model.entity.board.insta.InstaBoard;
 import bike.community.model.entity.club.Club;
 import bike.community.model.entity.club.ClubUser;
 import bike.community.model.enumclass.UserRole;
@@ -49,6 +50,9 @@ public class User extends DateBaseEntity implements Serializable {
     private List<Board> boards = new ArrayList<>();
 
     @OneToMany(mappedBy="user")
+    private List<InstaBoard> instaBoards = new ArrayList<>();
+
+    @OneToMany(mappedBy="user")
     private List<ClubUser> clubs = new ArrayList<>();
 
     public static User create(String email, String password, String username, String sex, String phone, String birthday, String nickname, Address address) {
@@ -71,6 +75,12 @@ public class User extends DateBaseEntity implements Serializable {
 
     //for test
     public User(String email, String nickname) {
+        this.email = email;
+        this.nickname = nickname;
+    }
+
+    public User(Long id, String email, String nickname) {
+        this.id = id;
         this.email = email;
         this.nickname = nickname;
     }
