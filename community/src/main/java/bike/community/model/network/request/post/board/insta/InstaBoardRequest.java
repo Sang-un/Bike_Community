@@ -6,7 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Data
-public class InstaBoardReq {
+public class InstaBoardRequest {
     private String content;
+    private MultipartFile thumbnailImageUrl;
     private List<MultipartFile> images;
 }

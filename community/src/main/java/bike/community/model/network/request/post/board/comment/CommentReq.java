@@ -5,5 +5,4 @@ import lombok.Data;
 @Data
 public class CommentReq {
     private String comment;
-    private Long boardId;
 }

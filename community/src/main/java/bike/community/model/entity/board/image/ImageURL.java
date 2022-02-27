@@ -16,7 +16,7 @@ public class ImageURL {
 
     private String url;
 
-    @ManyToOne//(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="instaBoard_id")
     private InstaBoard instaBoard;
 

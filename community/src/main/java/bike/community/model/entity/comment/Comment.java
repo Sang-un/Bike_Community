@@ -18,17 +18,20 @@ public class Comment{
 
     private String comment;
 
-    @ManyToOne//(fetch=FetchType.LAZY)
+    private String commentWriter;
+
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
 
-    @ManyToOne//(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="instaBoard_id")
     private InstaBoard instaBoard;
 
-    public static Comment create(String comment, User user) {
+    public static Comment create(String comment, User commentWriter) {
         Comment Comment = new Comment();
-        Comment.user = user;
+        Comment.user = commentWriter;
+        Comment.commentWriter = commentWriter.getNickname();
         Comment.comment = comment;
         return Comment;
     }

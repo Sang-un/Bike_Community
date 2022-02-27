@@ -23,8 +23,12 @@ public class InstaBoard extends DateBaseEntity{
 
     private String content;
 
+    private String boardWriter;
+
     @ColumnDefault("0")
     private int heart;
+
+    private String thumbnailImageUrl;
 
     @OneToMany(mappedBy="instaBoard", cascade=CascadeType.ALL)
     private List<ImageURL> images = new ArrayList<>();
@@ -36,10 +40,12 @@ public class InstaBoard extends DateBaseEntity{
     @JoinColumn(name="user_id")
     private User user;
 
-    public static InstaBoard create(String content, List<String> imageURLs, User user) {
+    public static InstaBoard create(String content, String thumbnailImageUrl, List<String> imageURLs, User user) {
         InstaBoard instaBoard = new InstaBoard();
         instaBoard.content = content;
+        instaBoard.thumbnailImageUrl = thumbnailImageUrl;
         instaBoard.user = user;
+        instaBoard.boardWriter = user.getNickname();
         for (String imageURL : imageURLs) instaBoard.images.add(ImageURL.create(imageURL, instaBoard));
         return instaBoard;
     }
